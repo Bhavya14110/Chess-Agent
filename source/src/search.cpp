@@ -36,6 +36,7 @@ namespace {
 struct Stack {
     Move mv;          // move played to reach the next ply
     int piece;        // piece that moved
+    int staticeval;
     Move killers[2];
 };
 
@@ -170,6 +171,24 @@ struct Searcher {
         int oldalpha = alpha;
         Move bestmv = NOMOVE;
 
+        int staticeval = NOSCORE;
+        if (!inchk) staticeval = (tthit && h.eval != NOSCORE) ? h.eval : evaluate(pos);
+        ss[ply].staticeval = staticeval;
+
+        // null move: if we're still above beta after passing, this node is almost surely a cutoff.
+        // never with only pawns left (zugzwang) and never twice in a row
+        if (!pvnode && !inchk && depth >= 3 && staticeval >= beta && pos.hasnonpawn(pos.stm) &&
+            ply > 0 && ss[ply - 1].mv != NOMOVE && std::abs(beta) < MATEBOUND) {
+            int r = 3 + depth / 4 + std::min((staticeval - beta) / 200, 3);
+            ss[ply].mv = NOMOVE;
+            ss[ply].piece = NOPIECE;
+            pos.makenull();
+            int score = -negamax(-beta, -beta + 1, depth - r, ply + 1);
+            pos.unmakenull();
+            if (stopflag.load(std::memory_order_relaxed)) return 0;
+            if (score >= beta) return score >= MATEBOUND ? beta : score;
+        }
+
         MovePicker mp(pos, hist, ttmove, ss[ply].killers[0], ss[ply].killers[1], countermove(ply));
         Move quiets[MAXMOVES];
         int nquiets = 0;
@@ -212,7 +231,7 @@ struct Searcher {
             if (!isnoisy(m) && nquiets < MAXMOVES) quiets[nquiets++] = m;
         }
         if (!legal) return inchk ? -MATE + ply : 0;
-        tt.store(pos.key(), ply, bestmv, best, NOSCORE, depth,
+        tt.store(pos.key(), ply, bestmv, best, staticeval, depth,
                  best >= beta ? BLOWER : best > oldalpha ? BEXACT : BUPPER);
         return best;
     }
