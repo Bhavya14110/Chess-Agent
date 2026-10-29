@@ -34,16 +34,18 @@ static const char* benchfens[] = {
 
 static void bench(int depth) {
     u64 total = 0;
-    i64 t0 = nowms();
+    i64 ms = 0;
     Position pos;
     for (const char* f : benchfens) {
         pos.setfen(f);
         search::newgame();
         Limits lim;
         lim.depth = depth;
+        i64 t0 = nowms();
         total += search::searchsync(pos, lim, false).nodes;
+        ms += nowms() - t0;
     }
-    i64 ms = std::max<i64>(1, nowms() - t0);
+    ms = std::max<i64>(1, ms);
     std::printf("%llu nodes %llu nps\n", (unsigned long long)total, (unsigned long long)(total * 1000 / ms));
     std::fflush(stdout);
 }

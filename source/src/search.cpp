@@ -62,10 +62,10 @@ struct Searcher {
         return v * 8 - ptype(p.board[mfrom(m)]);
     }
 
-    void scoremoves(MoveList& ml) {
+    void scoremoves(MoveList& ml, Move ttmove) {
         for (int i = 0; i < ml.n; i++) {
             Move m = ml.mv[i];
-            ml.sc[i] = isnoisy(m) ? 1000000 + mvvlva(pos, m) : 0;
+            ml.sc[i] = m == ttmove ? (1 << 30) : isnoisy(m) ? 1000000 + mvvlva(pos, m) : 0;
         }
     }
 
@@ -86,6 +86,14 @@ struct Searcher {
         bool inchk = pos.incheck();
         if (ply >= MAXPLY - 1) return inchk ? 0 : evaluate(pos);
 
+        TTHit h;
+        bool tthit = tt.probe(pos.key(), ply, h);
+        if (tthit && (h.bound == BEXACT || (h.bound == BLOWER && h.score >= beta) || (h.bound == BUPPER && h.score <= alpha)))
+            return h.score;
+        Move ttmove = tthit ? h.move : NOMOVE;
+        int oldalpha = alpha;
+        Move bestmv = NOMOVE;
+
         int best = -INF;
         if (!inchk) {
             best = evaluate(pos);
@@ -95,7 +103,7 @@ struct Searcher {
         MoveList ml;
         if (inchk) genall(pos, ml);
         else gennoisy(pos, ml);
-        scoremoves(ml);
+        scoremoves(ml, ttmove);
         int legal = 0;
         for (int i = 0; i < ml.n; i++) {
             Move m = pickbest(ml, i);
@@ -112,11 +120,14 @@ struct Searcher {
                 best = score;
                 if (score > alpha) {
                     alpha = score;
+                    bestmv = m;
                     if (alpha >= beta) break;
                 }
             }
         }
         if (inchk && !legal) return -MATE + ply;
+        tt.store(pos.key(), ply, bestmv, best, NOSCORE, 0,
+                 best >= beta ? BLOWER : best > oldalpha ? BEXACT : BUPPER);
         return best;
     }
 
@@ -137,12 +148,18 @@ struct Searcher {
         }
         bool inchk = pos.incheck();
 
+        TTHit h;
+        bool tthit = tt.probe(pos.key(), ply, h);
+        Move ttmove = root ? rootbest : tthit ? h.move : NOMOVE;
+        if (!root && tthit && h.depth >= depth &&
+            (h.bound == BEXACT || (h.bound == BLOWER && h.score >= beta) || (h.bound == BUPPER && h.score <= alpha)))
+            return h.score;
+        int oldalpha = alpha;
+        Move bestmv = NOMOVE;
+
         MoveList ml;
         genall(pos, ml);
-        scoremoves(ml);
-        if (root && rootbest != NOMOVE)
-            for (int i = 0; i < ml.n; i++)
-                if (ml.mv[i] == rootbest) ml.sc[i] = 1 << 30;
+        scoremoves(ml, ttmove);
 
         int best = -INF, legal = 0;
         for (int i = 0; i < ml.n; i++) {
@@ -157,6 +174,7 @@ struct Searcher {
                 best = score;
                 if (score > alpha) {
                     alpha = score;
+                    bestmv = m;
                     pv[ply][ply] = m;
                     for (int j = ply + 1; j < pvlen[ply + 1]; j++) pv[ply][j] = pv[ply + 1][j];
                     pvlen[ply] = pvlen[ply + 1];
@@ -169,6 +187,8 @@ struct Searcher {
             }
         }
         if (!legal) return inchk ? -MATE + ply : 0;
+        tt.store(pos.key(), ply, bestmv, best, NOSCORE, depth,
+                 best >= beta ? BLOWER : best > oldalpha ? BEXACT : BUPPER);
         return best;
     }
 
