@@ -29,3 +29,7 @@ __pycache__/
 
 # tools we download/build for testing only
 tools-bin/
+
+# nnue pipeline smoke-test artefacts (synthetic data, never a real net)
+source/train/synthetic/
+source/train/testvectors_synthetic.txt

@@ -182,6 +182,41 @@ def decode_batch(recs: np.ndarray, lam: float):
     }
 
 
+def decode_batch_torch(raw, lam: float):
+    """Same decode as decode_batch(), but in torch on raw.device (GPU decoding keeps the
+    CPU free). raw: uint8 tensor [N, 32] of records.
+    Returns (stm_idx, nstm_idx, offsets, target) tensors on raw.device."""
+    import torch
+
+    dev = raw.device
+    n = raw.shape[0]
+    raw = raw.to(torch.int64)
+    shifts = torch.arange(8, device=dev)
+    bits = ((raw[:, :8, None] >> shifts) & 1).reshape(n, 64)        # bit k of byte b = square 8b+k
+    row, sq = torch.nonzero(bits, as_tuple=True)                       # row-major, squares ascending
+    rank = torch.cumsum(bits, dim=1) - 1
+    k = rank[row, sq]
+    pcs = raw[:, 8:24]
+    nib = torch.stack([pcs & 0x0F, pcs >> 4], dim=2).reshape(n, 32)    # nibble 2i = low, 2i+1 = high
+    code = nib[row, k]
+    colour = torch.div(code, 6, rounding_mode="floor")
+    w = code * 64 + sq
+    b = ((1 - colour) * 6 + (code - colour * 6)) * 64 + (sq ^ 56)
+    stm = raw[:, 27]
+    btm = stm[row] == 1
+    stm_idx = torch.where(btm, b, w)
+    nstm_idx = torch.where(btm, w, b)
+    counts = bits.sum(dim=1)
+    offsets = torch.cumsum(counts, dim=0) - counts
+    score = raw[:, 24] | (raw[:, 25] << 8)
+    score = torch.where(score >= 32768, score - 65536, score).to(torch.float32)
+    score_stm = torch.where(stm == 1, -score, score)
+    res_white = raw[:, 26].to(torch.float32) * 0.5
+    result_stm = torch.where(stm == 1, 1.0 - res_white, res_white)
+    target = lam * torch.sigmoid(score_stm / 400.0) + (1.0 - lam) * result_stm
+    return stm_idx, nstm_idx, offsets, target
+
+
 # --------------------------------------------------------------------------------------
 # FEN helpers (no python-chess needed)
 # --------------------------------------------------------------------------------------
@@ -274,16 +309,19 @@ class BatchLoader:
 
     Each epoch the index space [lo, hi) is cut into contiguous chunks; chunk order is
     shuffled, `buffer_chunks` chunks are read together, permuted, and served as batches.
-    Decoding runs in a background thread so it overlaps with the optimiser step.
+    Reading/shuffling (and numpy decoding unless raw=True) runs in a background thread so
+    it overlaps with the optimiser step.
     """
 
     def __init__(self, store: RecordStore, lo: int, hi: int, batch: int, lam: float,
                  seed: int, chunk: int = 1 << 20, buffer_chunks: int = 4,
-                 shuffle: bool = True, prefetch: int = 4, drop_last: bool = True):
+                 shuffle: bool = True, prefetch: int = 4, drop_last: bool = True,
+                 raw: bool = False):
         self.store, self.lo, self.hi = store, lo, hi
         self.batch, self.lam, self.seed = batch, lam, seed
         self.chunk, self.buffer_chunks = chunk, buffer_chunks
         self.shuffle, self.prefetch, self.drop_last = shuffle, prefetch, drop_last
+        self.raw = raw  # True: yield uint8 [n,32] record bytes (decode later, e.g. on GPU)
 
     def num_batches(self, limit: int | None = None) -> int:
         n = self.hi - self.lo if limit is None else min(limit, self.hi - self.lo)
@@ -310,7 +348,9 @@ class BatchLoader:
                 pos = 0
                 while remaining > 0 and len(buf) - pos >= (1 if last_group and not self.drop_last else self.batch):
                     take = min(self.batch, remaining, len(buf) - pos)
-                    q.put(decode_batch(buf[pos:pos + take], self.lam))
+                    part = buf[pos:pos + take]
+                    q.put(np.ascontiguousarray(part).view(np.uint8).reshape(-1, RECORD_SIZE)
+                          if self.raw else decode_batch(part, self.lam))
                     pos += take
                     remaining -= take
                     if stop.is_set():
@@ -386,6 +426,18 @@ def _selftest(n_games: int = 200, seed: int = 1):
         assert abs(d["target"][i] - t) < 1e-5
         fs, fn = fen_features(fen)
         assert list(fs) == stm_ref and list(fn) == nstm_ref
+    try:
+        import torch
+    except ImportError:
+        torch = None
+    if torch is not None:
+        devs = ["cpu"] + (["cuda"] if torch.cuda.is_available() else [])
+        for dev in devs:
+            raw_t = torch.from_numpy(recs.view(np.uint8).reshape(-1, RECORD_SIZE).copy()).to(dev)
+            si, ni, off, tg = (x.cpu().numpy() for x in decode_batch_torch(raw_t, 0.75))
+            assert (si == d["stm_idx"]).all() and (ni == d["nstm_idx"]).all()
+            assert (off == d["offsets"]).all() and np.allclose(tg, d["target"], atol=1e-6)
+        print(f"torch decoder matches numpy decoder on {devs}")
     print(f"dataset selftest OK: {len(boards)} positions round-tripped")
 
 

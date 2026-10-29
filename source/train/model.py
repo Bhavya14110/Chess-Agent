@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 
 NUM_FEATURES = 768
 SCALE = 400.0
@@ -30,6 +31,11 @@ def screlu(x: torch.Tensor) -> torch.Tensor:
     return torch.clamp(x, 0.0, 1.0).square()
 
 
+def fake_quant(w: torch.Tensor, scale: float) -> torch.Tensor:
+    """Round onto the 1/scale grid in the forward pass, identity gradient (straight-through)."""
+    return w + (torch.round(w * scale) / scale - w).detach()
+
+
 class CorvusNNUE(nn.Module):
     def __init__(self, hidden: int = 256):
         super().__init__()
@@ -37,6 +43,10 @@ class CorvusNNUE(nn.Module):
         self.ft = nn.EmbeddingBag(NUM_FEATURES, hidden, mode="sum")
         self.ft_bias = nn.Parameter(torch.zeros(hidden))
         self.out = nn.Linear(2 * hidden, 1)
+        # quantisation-aware training: when True the forward pass uses weights rounded onto
+        # the export grid (ft: 1/QA, out_w: 1/QB, out_b: 1/(QA*QB)), so the float model
+        # equals the exported integer net up to the final truncating divisions.
+        self.qat = False
         with torch.no_grad():
             # ~32 active features: keep initial accumulators mostly inside (0, 1)
             self.ft.weight.uniform_(-0.1, 0.1)
@@ -45,11 +55,20 @@ class CorvusNNUE(nn.Module):
             self.out.weight.uniform_(-bound, bound)
             self.out.bias.zero_()
 
+    def effective_weights(self):
+        fw, fb = self.ft.weight, self.ft_bias
+        ow, ob = self.out.weight, self.out.bias
+        if self.qat:
+            fw, fb = fake_quant(fw, QA), fake_quant(fb, QA)
+            ow, ob = fake_quant(ow, QB), fake_quant(ob, QA * QB)
+        return fw, fb, ow, ob
+
     def forward(self, stm_idx, nstm_idx, offsets):
-        a = self.ft(stm_idx, offsets) + self.ft_bias
-        b = self.ft(nstm_idx, offsets) + self.ft_bias
+        fw, fb, ow, ob = self.effective_weights()
+        a = F.embedding_bag(stm_idx, fw, offsets, mode="sum") + fb
+        b = F.embedding_bag(nstm_idx, fw, offsets, mode="sum") + fb
         x = torch.cat([screlu(a), screlu(b)], dim=1)
-        return self.out(x).squeeze(1)  # net_out; eval_cp = net_out * SCALE
+        return F.linear(x, ow, ob).squeeze(1)  # net_out; eval_cp = net_out * SCALE
 
     @torch.no_grad()
     def clip_weights(self):
@@ -58,15 +77,16 @@ class CorvusNNUE(nn.Module):
         self.out.weight.clamp_(-OUT_CLIP, OUT_CLIP)
 
     def float_params(self):
-        """numpy copies: ft_w [768,H], ft_b [H], out_w [2H], out_b scalar."""
-        return (self.ft.weight.detach().cpu().double().numpy(),
-                self.ft_bias.detach().cpu().double().numpy(),
-                self.out.weight.detach().cpu().double().numpy().reshape(-1),
-                float(self.out.bias.detach().cpu().double().item()))
+        """numpy copies of the weights the forward pass uses (fake-quantised if self.qat):
+        ft_w [768,H], ft_b [H], out_w [2H], out_b scalar."""
+        with torch.no_grad():
+            fw, fb, ow, ob = (t.detach().cpu().double() for t in self.effective_weights())
+        return fw.numpy(), fb.numpy(), ow.numpy().reshape(-1), float(ob.item())
 
 
 def load_model_from_checkpoint(path: str, map_location="cpu") -> CorvusNNUE:
     ck = torch.load(path, map_location=map_location, weights_only=False)
     model = CorvusNNUE(int(ck["hidden"]))
     model.load_state_dict(ck["model"])
+    model.qat = bool(ck.get("qat", False))
     return model

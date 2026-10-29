@@ -20,7 +20,7 @@ import numpy as np
 import torch
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from dataset import BatchLoader, RecordStore  # noqa: E402
+from dataset import BatchLoader, RecordStore, decode_batch_torch  # noqa: E402
 from model import CorvusNNUE, QA, QB, SCALE, FT_CLIP, OUT_CLIP  # noqa: E402
 
 
@@ -44,6 +44,9 @@ def parse_args(argv=None):
     p.add_argument("--step-every", type=int, default=4, help="step schedule: epochs per decay")
     p.add_argument("--step-gamma", type=float, default=0.3, help="step schedule: lr multiplier")
     p.add_argument("--wd", type=float, default=0.01, help="AdamW weight decay")
+    p.add_argument("--qat-epochs", type=int, default=1,
+                   help="last N epochs use quantisation-aware training (weights rounded onto "
+                        "the export grid in the forward pass, straight-through gradients); 0 = off")
     p.add_argument("--batch", type=int, default=16384)
     p.add_argument("--chunk", type=int, default=1 << 20, help="records per shuffle chunk")
     p.add_argument("--buffer-chunks", type=int, default=4, help="chunks mixed per shuffle buffer")
@@ -73,20 +76,20 @@ def lr_at(args, step: int, total_steps: int, steps_per_epoch: int) -> float:
     return args.lr * (args.step_gamma ** (epoch // args.step_every))
 
 
-def to_device(b, device):
-    nb = device.type == "cuda"
-    return (torch.from_numpy(b["stm_idx"]).to(device, non_blocking=nb),
-            torch.from_numpy(b["nstm_idx"]).to(device, non_blocking=nb),
-            torch.from_numpy(b["offsets"]).to(device, non_blocking=nb),
-            torch.from_numpy(b["target"]).to(device, non_blocking=nb))
+def to_device(raw, device, lam):
+    """raw uint8 [n,32] records -> decoded tensors on `device` (decoded there)."""
+    t = torch.from_numpy(raw)
+    if device.type == "cuda":
+        t = t.pin_memory().to(device, non_blocking=True)
+    return decode_batch_torch(t, lam)
 
 
 @torch.no_grad()
-def evaluate(model, loader, device) -> float:
+def evaluate(model, loader, device, lam) -> float:
     model.eval()
     tot, n = 0.0, 0
     for b in loader.epoch(0):
-        si, ni, off, tgt = to_device(b, device)
+        si, ni, off, tgt = to_device(b, device, lam)
         pred = torch.sigmoid(model(si, ni, off))
         tot += float(((pred - tgt) ** 2).sum())
         n += len(tgt)
@@ -116,9 +119,9 @@ def main(argv=None):
         tr_lo, tr_hi = 0, len(store) - n_val
         va_lo, va_hi = tr_hi, len(store)
     train_loader = BatchLoader(store, tr_lo, tr_hi, args.batch, args.lam, args.seed,
-                               chunk=args.chunk, buffer_chunks=args.buffer_chunks)
+                               chunk=args.chunk, buffer_chunks=args.buffer_chunks, raw=True)
     val_loader = BatchLoader(val_store, va_lo, va_hi, args.batch, args.lam, args.seed,
-                             chunk=args.chunk, shuffle=False, drop_last=False) if va_hi > va_lo else None
+                             chunk=args.chunk, shuffle=False, drop_last=False, raw=True) if va_hi > va_lo else None
     epoch_limit = args.epoch_size or None
     steps_per_epoch = train_loader.num_batches(epoch_limit)
     if steps_per_epoch == 0:
@@ -160,13 +163,14 @@ def main(argv=None):
 
     model.train()
     for epoch in range(start_epoch, args.epochs):
+        model.qat = epoch >= args.epochs - args.qat_epochs
         t0 = time.perf_counter()
         run_loss, run_n, seen = 0.0, 0, 0
         loss_sum = torch.zeros((), device=device)
         for i, b in enumerate(train_loader.epoch(epoch, epoch_limit)):
             for g in opt.param_groups:
                 g["lr"] = lr_at(args, step, total_steps, steps_per_epoch)
-            si, ni, off, tgt = to_device(b, device)
+            si, ni, off, tgt = to_device(b, device, args.lam)
             pred = torch.sigmoid(model(si, ni, off))
             loss = torch.mean((pred - tgt) ** 2)
             opt.zero_grad(set_to_none=True)
@@ -186,16 +190,16 @@ def main(argv=None):
             torch.cuda.synchronize()
         el = time.perf_counter() - t0
         train_loss = float(loss_sum) / max(1, run_n)
-        val_loss = evaluate(model, val_loader, device) if val_loader else None
+        val_loss = evaluate(model, val_loader, device, args.lam) if val_loader else None
         rec = {"epoch": epoch + 1, "train_loss": train_loss, "val_loss": val_loss,
                "positions": seen, "seconds": el, "pos_per_s": seen / el,
-               "lr_end": opt.param_groups[0]["lr"]}
+               "lr_end": opt.param_groups[0]["lr"], "qat": model.qat}
         history.append(rec)
         print(f"epoch {epoch + 1}/{args.epochs} train {train_loss:.6f} "
               f"val {val_loss if val_loss is None else f'{val_loss:.6f}'} "
-              f"{el:.1f}s {seen / el:,.0f} pos/s", flush=True)
+              f"{el:.1f}s {seen / el:,.0f} pos/s{' (QAT)' if model.qat else ''}", flush=True)
         ck = {"model": model.state_dict(), "optimizer": opt.state_dict(), "epoch": epoch + 1,
-              "step": step, "hidden": args.hidden, "args": vars(args), "history": history,
+              "step": step, "hidden": args.hidden, "qat": model.qat, "args": vars(args), "history": history,
               "torch_rng": torch.get_rng_state()}
         path = os.path.join(args.out, f"epoch{epoch + 1:03d}.pt")
         torch.save(ck, path)

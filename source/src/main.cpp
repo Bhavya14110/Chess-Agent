@@ -4,6 +4,8 @@
 #include "timeman.h"
 #include "tt.h"
 #include "tune.h"
+#include "nnue.h"
+#include <fstream>
 #include "datagen.h"
 #include <filesystem>
 #include <cstdio>
@@ -182,6 +184,30 @@ int main(int argc, char** argv) {
     evalinit();
     search::init();
 
+    // nnuetest <net file> <vectors file>: our C++ inference vs the python reference ("FEN;eval" lines)
+    if (argc >= 4 && !std::strcmp(argv[1], "nnuetest")) {
+        if (!nnue::loadfile(argv[2])) {
+            std::printf("can't load %s\n", argv[2]);
+            return 1;
+        }
+        std::ifstream in(argv[3]);
+        std::string line;
+        Position pos;
+        auto* acc = new nnue::Accumulator;
+        int n = 0, bad = 0;
+        while (std::getline(in, line)) {
+            auto p = line.find(';');
+            if (p == std::string::npos || !pos.setfen(line.substr(0, p))) continue;
+            int want = std::stoi(line.substr(p + 1));
+            nnue::refresh(pos, *acc);
+            int got = nnue::evaluate(*acc, pos.stm);
+            n++;
+            if (got != want && bad++ < 5) std::printf("mismatch %s: want %d got %d\n", line.c_str(), want, got);
+        }
+        delete acc;
+        std::printf("%d vectors, %d mismatches (H=%d)\n", n, bad, nnue::H);
+        return bad ? 1 : 0;
+    }
     // datagen <outdir> <threads> <nodes> <maxpositions> <seed>
     if (argc >= 7 && !std::strcmp(argv[1], "datagen")) {
         DatagenConfig cfg;
