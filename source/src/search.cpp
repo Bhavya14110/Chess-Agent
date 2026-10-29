@@ -4,6 +4,7 @@
 #include "timeman.h"
 #include "tt.h"
 #include <algorithm>
+#include <cmath>
 #include <cstdio>
 #include <cstring>
 #include <memory>
@@ -30,6 +31,9 @@ std::string scorestr(int score) {
 }
 
 using search::stopflag;
+
+// late move reduction amounts, indexed by [depth][move number]
+static int lmrtab[64][64];
 
 namespace {
 
@@ -189,7 +193,8 @@ struct Searcher {
             if (score >= beta) return score >= MATEBOUND ? beta : score;
         }
 
-        MovePicker mp(pos, hist, ttmove, ss[ply].killers[0], ss[ply].killers[1], countermove(ply));
+        Move cm = countermove(ply);
+        MovePicker mp(pos, hist, ttmove, ss[ply].killers[0], ss[ply].killers[1], cm);
         Move quiets[MAXMOVES];
         int nquiets = 0;
         int best = -INF, legal = 0;
@@ -197,15 +202,30 @@ struct Searcher {
         while ((m = mp.next()) != NOMOVE) {
             if (!pos.legal(m)) continue;
             legal++;
+            bool quiet = !isnoisy(m);
+            int hscore = quiet ? hist.butterfly[pos.stm][m & 4095] : 0;
+            bool refutation = m == ss[ply].killers[0] || m == ss[ply].killers[1] || m == cm;
             makemove(m, ply);
+            bool givescheck = pos.incheck();
             // checks get searched one ply deeper so we don't stop in the middle of a forcing line
-            int newdepth = depth - 1 + (pos.incheck() ? 1 : 0);
+            int newdepth = depth - 1 + (givescheck ? 1 : 0);
             int score;
             if (legal == 1) {
                 score = -negamax(-beta, -alpha, newdepth, ply + 1);
             } else {
-                // PVS: prove the move is no better with a null window, re-search if it is
-                score = -negamax(-alpha - 1, -alpha, newdepth, ply + 1);
+                // late quiet moves are probably bad: look at them with less depth first
+                int r = 0;
+                if (depth >= 3 && quiet && legal > 1 + pvnode) {
+                    r = lmrtab[std::min(depth, 63)][std::min(legal, 63)];
+                    r -= pvnode;
+                    r -= refutation;
+                    r -= givescheck;
+                    r -= hscore / 6000;
+                    r = std::clamp(r, 0, newdepth - 1);
+                }
+                score = -negamax(-alpha - 1, -alpha, newdepth - r, ply + 1);
+                if (score > alpha && r > 0) score = -negamax(-alpha - 1, -alpha, newdepth, ply + 1);
+                // PVS: the null window said it's better, so get the real score
                 if (score > alpha && score < beta) score = -negamax(-beta, -alpha, newdepth, ply + 1);
             }
             pos.unmake();
@@ -312,6 +332,8 @@ std::atomic<bool> searching{false};
 } // namespace
 
 void search::init() {
+    for (int d = 1; d < 64; d++)
+        for (int m = 1; m < 64; m++) lmrtab[d][m] = int(0.75 + std::log(d) * std::log(m) / 2.25);
     tt.resize(64);
     mainsearcher = std::make_unique<Searcher>();
 }
