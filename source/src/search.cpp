@@ -58,16 +58,19 @@ struct Searcher {
     Stack stackbuf[MAXPLY + 8];
     Stack* ss = stackbuf + 4;   // a few entries of slack so ss[ply - k] is always valid
     Histories hist;
+    TT* ttab = &tt;   // datagen threads bring their own table
+    std::atomic<bool> ownstop{false};
+    std::atomic<bool>* stopp = &stopflag;   // the uci search shares the global flag
 
     Move rootbest = NOMOVE;
     int rootscore = 0;
     int completed = 0;
 
     bool timeup() {
-        if (stopflag.load(std::memory_order_relaxed)) return true;
+        if (stopp->load(std::memory_order_relaxed)) return true;
         if (!mainthread) return false;
-        if (lim.nodes && nodes >= lim.nodes) return stopflag = true;
-        if ((nodes & 1023) == 0 && tm.timed && tm.elapsed() >= tm.hard) return stopflag = true;
+        if (lim.nodes && nodes >= lim.nodes) return *stopp = true;
+        if ((nodes & 1023) == 0 && tm.timed && tm.elapsed() >= tm.hard) return *stopp = true;
         return false;
     }
 
@@ -76,7 +79,7 @@ struct Searcher {
         ss[ply].piece = pos.board[mfrom(m)];
         ss[ply].ch = hist.cont[ss[ply].piece][mto(m)];
         pos.make(m);
-        tt.prefetch(pos.key());
+        ttab->prefetch(pos.key());
     }
 
     Move countermove(int ply) const {
@@ -114,7 +117,7 @@ struct Searcher {
 
         bool pvnode = beta - alpha > 1;
         TTHit h;
-        bool tthit = tt.probe(pos.key(), ply, h);
+        bool tthit = ttab->probe(pos.key(), ply, h);
         if (!pvnode && tthit && (h.bound == BEXACT || (h.bound == BLOWER && h.score >= beta) || (h.bound == BUPPER && h.score <= alpha)))
             return h.score;
         Move ttmove = tthit ? h.move : NOMOVE;
@@ -139,7 +142,7 @@ struct Searcher {
             makemove(m, ply);
             int score = -qsearch(-beta, -alpha, ply + 1);
             pos.unmake();
-            if (stopflag.load(std::memory_order_relaxed)) return 0;
+            if (stopp->load(std::memory_order_relaxed)) return 0;
             if (score > best) {
                 best = score;
                 if (score > alpha) {
@@ -150,7 +153,7 @@ struct Searcher {
             }
         }
         if (inchk && !legal) return -MATE + ply;
-        tt.store(pos.key(), ply, bestmv, best, NOSCORE, 0,
+        ttab->store(pos.key(), ply, bestmv, best, NOSCORE, 0,
                  best >= beta ? BLOWER : best > oldalpha ? BEXACT : BUPPER);
         return best;
     }
@@ -175,7 +178,7 @@ struct Searcher {
         ss[ply + 1].killers[0] = ss[ply + 1].killers[1] = NOMOVE;
 
         TTHit h;
-        bool tthit = tt.probe(pos.key(), ply, h);
+        bool tthit = ttab->probe(pos.key(), ply, h);
         Move ttmove = root ? rootbest : tthit ? h.move : NOMOVE;
         if (!pvnode && tthit && h.depth >= depth &&
             (h.bound == BEXACT || (h.bound == BLOWER && h.score >= beta) || (h.bound == BUPPER && h.score <= alpha)))
@@ -208,7 +211,7 @@ struct Searcher {
             pos.makenull();
             int score = -negamax(-beta, -beta + 1, depth - r, ply + 1);
             pos.unmakenull();
-            if (stopflag.load(std::memory_order_relaxed)) return 0;
+            if (stopp->load(std::memory_order_relaxed)) return 0;
             if (score >= beta) return score >= MATEBOUND ? beta : score;
         }
 
@@ -270,7 +273,7 @@ struct Searcher {
                 if (score > alpha && score < beta) score = -negamax(-beta, -alpha, newdepth, ply + 1);
             }
             pos.unmake();
-            if (stopflag.load(std::memory_order_relaxed)) return 0;
+            if (stopp->load(std::memory_order_relaxed)) return 0;
             if (score > best) {
                 best = score;
                 if (score > alpha) {
@@ -292,7 +295,7 @@ struct Searcher {
             if (!isnoisy(m) && nquiets < MAXMOVES) quiets[nquiets++] = m;
         }
         if (!legal) return inchk ? -MATE + ply : 0;
-        tt.store(pos.key(), ply, bestmv, best, staticeval, depth,
+        ttab->store(pos.key(), ply, bestmv, best, staticeval, depth,
                  best >= beta ? BLOWER : best > oldalpha ? BEXACT : BUPPER);
         return best;
     }
@@ -331,7 +334,7 @@ struct Searcher {
                 int alpha = std::max(rootscore - delta, -INF), beta = std::min(rootscore + delta, INF);
                 while (true) {
                     score = negamax(alpha, beta, d, 0);
-                    if (stopflag.load()) break;
+                    if (stopp->load()) break;
                     if (score <= alpha) {
                         beta = (alpha + beta) / 2;
                         alpha = std::max(score - delta, -INF);
@@ -347,7 +350,7 @@ struct Searcher {
             }
             // a half-finished iteration is still usable: rootbest only changes
             // when a root move was searched all the way through
-            if (stopflag.load()) break;
+            if (stopp->load()) break;
             completed = d;
             rootscore = score;
             if (print && mainthread) {
@@ -436,4 +439,35 @@ int search::qsearchscore(const Position& pos) {
     s->mainthread = false;
     s->nodes = 0;
     return s->qsearch(-INF, INF, 0);
+}
+
+// self-contained searcher with its own tt, for datagen (no uci output, no globals touched)
+struct SearchHandle::Impl {
+    Searcher s;
+    TT table;
+};
+
+SearchHandle::SearchHandle(size_t ttmb) : p(std::make_unique<Impl>()) {
+    p->table.resize(ttmb);
+    p->s.ttab = &p->table;
+}
+SearchHandle::~SearchHandle() = default;
+
+void SearchHandle::newgame() {
+    p->table.clear();
+    p->s.hist.clear();
+}
+
+SearchResult SearchHandle::search(const Position& pos, const Limits& lim) {
+    Searcher& s = p->s;
+    std::memcpy(static_cast<void*>(&s.pos), &pos, sizeof(Position));
+    s.lim = lim;
+    s.tm.init(lim, pos.stm, 0);
+    s.print = false;
+    s.mainthread = true;
+    s.stopp = &s.ownstop;
+    s.ownstop = false;
+    p->table.newsearch();
+    s.iterate();
+    return {s.rootbest, s.rootscore, s.completed, s.nodes};
 }

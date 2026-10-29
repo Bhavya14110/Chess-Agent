@@ -4,6 +4,8 @@
 #include "timeman.h"
 #include "tt.h"
 #include "tune.h"
+#include "datagen.h"
+#include <filesystem>
 #include <cstdio>
 #include <cstring>
 #include <iostream>
@@ -180,6 +182,18 @@ int main(int argc, char** argv) {
     evalinit();
     search::init();
 
+    // datagen <outdir> <threads> <nodes> <maxpositions> <seed>
+    if (argc >= 7 && !std::strcmp(argv[1], "datagen")) {
+        DatagenConfig cfg;
+        cfg.outdir = argv[2];
+        cfg.threads = std::atoi(argv[3]);
+        cfg.nodes = std::strtoull(argv[4], nullptr, 10);
+        cfg.maxpositions = std::strtoull(argv[5], nullptr, 10);
+        cfg.seed = std::strtoull(argv[6], nullptr, 10);
+        std::filesystem::create_directories(cfg.outdir);
+        datagen(cfg);
+        return 0;
+    }
     // tune <quiet positions file> <epochs> <threads> <lr> <out header>
     if (argc >= 7 && !std::strcmp(argv[1], "tune")) {
         tune(argv[2], std::atoi(argv[3]), std::atoi(argv[4]), std::atof(argv[5]), argv[6]);

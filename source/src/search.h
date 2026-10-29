@@ -1,6 +1,7 @@
 #pragma once
 #include "movegen.h"
 #include <atomic>
+#include <memory>
 #include <string>
 
 struct Limits {
@@ -37,6 +38,18 @@ SearchResult searchsync(const Position& pos, const Limits& lim, bool print);
 int qsearchscore(const Position& pos);
 
 } // namespace search
+
+class SearchHandle {
+public:
+    explicit SearchHandle(size_t ttmb);
+    ~SearchHandle();
+    void newgame();
+    SearchResult search(const Position& pos, const Limits& lim);
+
+private:
+    struct Impl;
+    std::unique_ptr<Impl> p;
+};
 
 void uciout(const std::string& s);
 std::string scorestr(int score);
