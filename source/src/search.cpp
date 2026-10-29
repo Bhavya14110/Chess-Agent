@@ -427,3 +427,13 @@ SearchResult search::searchsync(const Position& pos, const Limits& lim, bool pri
     s->iterate();
     return {s->rootbest, s->rootscore, s->completed, s->nodes};
 }
+
+int search::qsearchscore(const Position& pos) {
+    // one searcher per thread, reused: they're big
+    thread_local std::unique_ptr<Searcher> s;
+    if (!s) s = std::make_unique<Searcher>();
+    std::memcpy(static_cast<void*>(&s->pos), &pos, sizeof(Position));
+    s->mainthread = false;
+    s->nodes = 0;
+    return s->qsearch(-INF, INF, 0);
+}

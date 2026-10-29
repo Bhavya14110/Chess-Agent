@@ -33,6 +33,8 @@ void wait();
 bool running();
 // blocking search without uci output (bench, datagen, tests)
 SearchResult searchsync(const Position& pos, const Limits& lim, bool print);
+// plain full-window qsearch score (stm pov), used by the quiet-position filter
+int qsearchscore(const Position& pos);
 
 } // namespace search
 

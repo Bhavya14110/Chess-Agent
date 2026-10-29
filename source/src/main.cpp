@@ -3,6 +3,7 @@
 #include "search.h"
 #include "timeman.h"
 #include "tt.h"
+#include "tune.h"
 #include <cstdio>
 #include <cstring>
 #include <iostream>
@@ -179,6 +180,21 @@ int main(int argc, char** argv) {
     evalinit();
     search::init();
 
+    // tune <quiet positions file> <epochs> <threads> <lr> <out header>
+    if (argc >= 7 && !std::strcmp(argv[1], "tune")) {
+        tune(argv[2], std::atoi(argv[3]), std::atoi(argv[4]), std::atof(argv[5]), argv[6]);
+        return 0;
+    }
+    // quiet <in fen;result file> <out file> <threads>
+    if (argc >= 5 && !std::strcmp(argv[1], "quiet")) {
+        quietfilter(argv[2], argv[3], std::atoi(argv[4]));
+        return 0;
+    }
+    // writeparams <out>: dump the current eval table (e.g. the hand-picked defaults)
+    if (argc >= 3 && !std::strcmp(argv[1], "writeparams")) {
+        writeparams(argv[2]);
+        return 0;
+    }
     if (argc >= 2 && !std::strcmp(argv[1], "bench")) {
         bench(argc >= 3 ? std::atoi(argv[2]) : 10);
         return 0;

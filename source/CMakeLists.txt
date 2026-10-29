@@ -14,7 +14,7 @@ option(PEXT "use BMI2 pext for sliding attacks (only if the cpu does it fast)" O
 file(GLOB SRC CONFIGURE_DEPENDS ${CMAKE_SOURCE_DIR}/src/*.cpp)
 add_executable(corvus ${SRC})
 
-target_compile_options(corvus PRIVATE -Wall -Wextra -Wno-unused-parameter)
+target_compile_options(corvus PRIVATE -Wall -Wextra -Wno-unused-parameter -Wno-deprecated-enum-enum-conversion)
 # release never aborts on asserts
 set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG")
 
