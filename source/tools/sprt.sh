@@ -24,6 +24,9 @@ log="$root/logs/sprt/${label}-${stamp}.log"
   -resign movecount=4 score=800 twosided=true \
   -ratinginterval 200 -recover \
   -pgnout file="$root/logs/sprt/${label}-${stamp}.pgn" min=true \
-  > "$log" 2>&1 || true
+  > "$log" 2>&1 &
+fcpid=$!
+"$root/source/tools/lowprio.sh" "$fcpid"
+wait "$fcpid" || true
 echo "$log"
 tail -n 25 "$log"

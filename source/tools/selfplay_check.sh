@@ -19,5 +19,8 @@ rm -f "$pgn"
   -openings file="$root/source/tests/openings_v1.epd" format=epd order=random \
   -repeat -games 2 -rounds $((games / 2)) -concurrency "$conc" \
   -pgnout file="$pgn" timeleft=true \
-  > "$log" 2>&1 || true
+  > "$log" 2>&1 &
+fcpid=$!
+"$root/source/tools/lowprio.sh" "$fcpid"
+wait "$fcpid" || true
 python "$root/source/tools/pgn_failures.py" "$pgn" | tee -a "$log"
