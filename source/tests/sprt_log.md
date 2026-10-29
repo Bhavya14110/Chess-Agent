@@ -8,3 +8,6 @@ Draw adjudication (move 40+, |score| < 8 for 8 moves) and resignation (|score| >
 | commit | change | vs | TC | result | games | Elo ± err | LLR |
 |---|---|---|---|---|---|---|---|
 | 489daab | SEE: skip losing captures in qsearch | p2-base | 8+0.08 | **H1 accepted** | 2482 | +26.8 ± 11.6 | 2.97 |
+| 26c9dcd+fix | transposition table (fixed key check) | p3-02-see | 8+0.08 | **INVALID** (re-run) | 528 | (-151) | � |
+
+Note on the invalid TT run: 317/528 games were lost on time (~100 ms overruns, both builds) because the engines ran at Windows Idle priority while the data-extraction job used every core at a higher priority. Time-control SPRTs must not share the CPU with other heavy jobs; re-run planned under clean conditions.

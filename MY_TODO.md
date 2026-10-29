@@ -106,3 +106,6 @@ Ask the organisers for the exact list of usernames.
   `config.example.yml` must still contain only `PUT_BOT_PLAY_TOKEN_HERE`.
 - [ ] `README.md` at the repo root states the exact launch command (`Corvus.exe`, run from `engine/`) and the bot username.
 - [ ] Both tokens are stored in the password manager, and the `bot:play` token has not been shared with anyone outside the team.
+
+## During every competition game
+- Close or pause anything heavy on the hosting laptop (downloads, games, builds, training). If the engine is starved of CPU it can overrun its clock by 100+ ms and lose on time. Keep the laptop plugged in and set to never sleep.

@@ -58,7 +58,16 @@ _(filled in at the end of the run)_
 ## Phase 3 (features committed one per commit, SPRT queue running)
 p3-02 SEE in qsearch, p3-03 TT, p3-04 staged ordering, p3-05 PVS, p3-06 aspiration, p3-07 check ext, p3-08 NMP, p3-09 LMR, p3-10 RFP/FP/LMP/SEE pruning, p3-11 IIR, p3-12 continuation history. Results go to source/tests/sprt_log.md.
 
+## Phase 6 prep (done early, by the NNUE helper agent + main session)
+- PyTorch 2.14.1+cu126 installed; trainer runs on the RTX 4060 (~0.5M pos/s incl. loading). Synthetic smoke test: quantised vs float max 1.02 cp, mean 0.51 cp over 10k positions (QAT on the last epoch; without it QB=64 costs ~16 cp mean).
+- C++ inference (`nnuetest`) matches the python integer reference on 1000 vectors: 0 mismatches, both AVX2 and portable scalar builds.
+
+## Lesson: CPU starvation causes time losses
+- With engines at Idle priority and another job saturating all cores, 317/528 games in the TT SPRT were lost on time (~100 ms overruns). Rules for testing from now on: no other heavy job while a time-control SPRT runs; engines at BelowNormal (not Idle) with concurrency <= ~14.
+- Same lesson for competition day: the hosting laptop must run nothing heavy while the bot plays (added to MY_TODO).
+
 ## Status
+- **PAUSED by the user (2026-10-29 ~19:05 IST)**: SPRT queue stopped (resume from p3f-03-tt), Lichess position extraction (agent, PID 23572) suspended with NtSuspendProcess � resume with NtResumeProcess.
 - Phase: 3 SPRTs running; Phase 4 HCE + tuner + quiet filter written; Phase 5 datagen written.
 - Running jobs: SPRT queue (`source/tools/sprt_queue.sh logs/queue_p3.txt`, log logs/sprt_queue_p3.out, per-test logs in logs/sprt/); Lichess download (agent); NNUE trainer smoke test (agent).
 - Next step: quiet-filter Lichess positions → Texel tune → SPRT tuned vs untuned → package v-submit-hce.
