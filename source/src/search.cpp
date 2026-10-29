@@ -100,6 +100,8 @@ struct Searcher {
         for (int i = 0; i < ml.n; i++) {
             Move m = pickbest(ml, i);
             if (!inchk && ispromo(m) && promotype(m) != QUEEN) continue;
+            // captures that lose material by SEE aren't worth looking at in qsearch
+            if (!inchk && !pos.see(m, 0)) continue;
             if (!pos.legal(m)) continue;
             legal++;
             pos.make(m);
