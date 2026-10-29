@@ -42,6 +42,7 @@ struct Stack {
     int piece;        // piece that moved
     int staticeval;
     Move killers[2];
+    int16_t* ch;      // continuation history row for the move played here
 };
 
 struct Searcher {
@@ -73,6 +74,7 @@ struct Searcher {
     void makemove(Move m, int ply) {
         ss[ply].mv = m;
         ss[ply].piece = pos.board[mfrom(m)];
+        ss[ply].ch = hist.cont[ss[ply].piece][mto(m)];
         pos.make(m);
         tt.prefetch(pos.key());
     }
@@ -86,9 +88,15 @@ struct Searcher {
     void updatequiets(Move best, const Move* tried, int ntried, int depth, int ply) {
         int bonus = std::min(16 * depth * depth + 32 * depth, 1600);
         int us = pos.stm;
-        histupdate(hist.butterfly[us][best & 4095], bonus);
+        auto upd = [&](Move m, int b) {
+            histupdate(hist.butterfly[us][m & 4095], b);
+            int pc = pos.board[mfrom(m)] * 64 + mto(m);
+            if (ply >= 1 && ss[ply - 1].piece != NOPIECE) histupdate(ss[ply - 1].ch[pc], b);
+            if (ply >= 2 && ss[ply - 2].piece != NOPIECE) histupdate(ss[ply - 2].ch[pc], b);
+        };
+        upd(best, bonus);
         for (int i = 0; i < ntried; i++)
-            if (tried[i] != best) histupdate(hist.butterfly[us][tried[i] & 4095], -bonus);
+            if (tried[i] != best) upd(tried[i], -bonus);
         if (ss[ply].killers[0] != best) {
             ss[ply].killers[1] = ss[ply].killers[0];
             ss[ply].killers[0] = best;
@@ -196,6 +204,7 @@ struct Searcher {
             int r = 3 + depth / 4 + std::min((staticeval - beta) / 200, 3);
             ss[ply].mv = NOMOVE;
             ss[ply].piece = NOPIECE;
+            ss[ply].ch = hist.cont[12][0];
             pos.makenull();
             int score = -negamax(-beta, -beta + 1, depth - r, ply + 1);
             pos.unmakenull();
@@ -204,7 +213,9 @@ struct Searcher {
         }
 
         Move cm = countermove(ply);
-        MovePicker mp(pos, hist, ttmove, ss[ply].killers[0], ss[ply].killers[1], cm);
+        const int16_t* ch1 = ply >= 1 ? ss[ply - 1].ch : nullptr;
+        const int16_t* ch2 = ply >= 2 ? ss[ply - 2].ch : nullptr;
+        MovePicker mp(pos, hist, ttmove, ss[ply].killers[0], ss[ply].killers[1], cm, ch1, ch2);
         Move quiets[MAXMOVES];
         int nquiets = 0;
         int best = -INF, legal = 0;
@@ -232,7 +243,8 @@ struct Searcher {
             }
             if (!pos.legal(m)) continue;
             legal++;
-            int hscore = quiet ? hist.butterfly[pos.stm][m & 4095] : 0;
+            int pcidx = pos.board[mfrom(m)] * 64 + mto(m);
+            int hscore = quiet ? hist.butterfly[pos.stm][m & 4095] + (ch1 ? ch1[pcidx] : 0) + (ch2 ? ch2[pcidx] : 0) : 0;
             bool refutation = m == ss[ply].killers[0] || m == ss[ply].killers[1] || m == cm;
             makemove(m, ply);
             bool givescheck = pos.incheck();
@@ -249,7 +261,7 @@ struct Searcher {
                     r -= pvnode;
                     r -= refutation;
                     r -= givescheck;
-                    r -= hscore / 6000;
+                    r -= hscore / 8000;
                     r = std::clamp(r, 0, newdepth - 1);
                 }
                 score = -negamax(-alpha - 1, -alpha, newdepth - r, ply + 1);
@@ -294,7 +306,11 @@ struct Searcher {
 
     void iterate() {
         nodes = 0;
-        for (auto& st : stackbuf) st = Stack{};
+        for (auto& st : stackbuf) {
+            st = Stack{};
+            st.piece = NOPIECE;
+            st.ch = hist.cont[12][0];
+        }
         completed = 0;
         rootbest = NOMOVE;
         // always have a legal move ready, even if we get stopped right away

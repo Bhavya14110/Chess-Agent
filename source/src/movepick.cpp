@@ -4,6 +4,7 @@
 void Histories::clear() {
     std::memset(butterfly, 0, sizeof(butterfly));
     std::memset(counter, 0, sizeof(counter));
+    std::memset(cont, 0, sizeof(cont));
 }
 
 Move MovePicker::pick(MoveList& ml, int& i) {
@@ -29,7 +30,8 @@ void MovePicker::scorenoisy() {
 void MovePicker::scorequiet() {
     for (int i = 0; i < quiet.n; i++) {
         Move m = quiet.mv[i];
-        quiet.sc[i] = hist.butterfly[pos.stm][m & 4095];
+        int pc = pos.board[mfrom(m)] * 64 + mto(m);
+        quiet.sc[i] = hist.butterfly[pos.stm][m & 4095] + (ch1 ? ch1[pc] : 0) + (ch2 ? ch2[pc] : 0);
     }
 }
 
