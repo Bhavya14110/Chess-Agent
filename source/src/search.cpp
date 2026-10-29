@@ -179,13 +179,15 @@ struct Searcher {
             if (!pos.legal(m)) continue;
             legal++;
             makemove(m, ply);
+            // checks get searched one ply deeper so we don't stop in the middle of a forcing line
+            int newdepth = depth - 1 + (pos.incheck() ? 1 : 0);
             int score;
             if (legal == 1) {
-                score = -negamax(-beta, -alpha, depth - 1, ply + 1);
+                score = -negamax(-beta, -alpha, newdepth, ply + 1);
             } else {
                 // PVS: prove the move is no better with a null window, re-search if it is
-                score = -negamax(-alpha - 1, -alpha, depth - 1, ply + 1);
-                if (score > alpha && score < beta) score = -negamax(-beta, -alpha, depth - 1, ply + 1);
+                score = -negamax(-alpha - 1, -alpha, newdepth, ply + 1);
+                if (score > alpha && score < beta) score = -negamax(-beta, -alpha, newdepth, ply + 1);
             }
             pos.unmake();
             if (stopflag.load(std::memory_order_relaxed)) return 0;

@@ -5,9 +5,12 @@
 # testing time (it never touches the real engine).
 set -euo pipefail
 root="$(cd "$(dirname "$0")/../.." && pwd)"
-new="$1"; old="$2"; label="$3"
+new="$(cygpath -w "$(realpath "$1")")"; old="$(cygpath -w "$(realpath "$2")")"; label="$3"
 tc="${4:-8+0.08}"; elo0="${5:-0}"; elo1="${6:-5}"; conc="${7:-16}"
 fc="$root/tools-bin/fastchess/fastchess.exe"
+# fastchess is linked against the mingw runtime dlls
+W="$(ls -d /c/Users/*/AppData/Local/Microsoft/WinGet/Packages/BrechtSanders.WinLibs*/mingw64/bin 2>/dev/null | head -1 || true)"
+[ -n "$W" ] && export PATH="$W:$PATH"
 book="${BOOK:-$root/source/tests/openings_v1.epd}"
 mkdir -p "$root/logs/sprt"
 stamp="$(date +%Y%m%d-%H%M%S)"

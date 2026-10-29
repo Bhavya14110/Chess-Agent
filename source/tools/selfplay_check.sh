@@ -4,8 +4,12 @@
 # usage: source/tools/selfplay_check.sh ENGINE.exe GAMES TC CONC LABEL [OTHER.exe]
 set -euo pipefail
 root="$(cd "$(dirname "$0")/../.." && pwd)"
-eng="$1"; games="$2"; tc="$3"; conc="$4"; label="$5"; other="${6:-$1}"
+eng="$(cygpath -w "$(realpath "$1")")"; games="$2"; tc="$3"; conc="$4"; label="$5"
+other="$(cygpath -w "$(realpath "${6:-$1}")")"   # fastchess wants native absolute paths
 fc="$root/tools-bin/fastchess/fastchess.exe"
+# fastchess is linked against the mingw runtime dlls
+W="$(ls -d /c/Users/*/AppData/Local/Microsoft/WinGet/Packages/BrechtSanders.WinLibs*/mingw64/bin 2>/dev/null | head -1 || true)"
+[ -n "$W" ] && export PATH="$W:$PATH"
 mkdir -p "$root/logs/selfplay"
 pgn="$root/logs/selfplay/${label}.pgn"
 log="$root/logs/selfplay/${label}.log"
