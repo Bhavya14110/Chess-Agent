@@ -10,8 +10,8 @@ _(filled in at the end of the run)_
 | Team name / repo folder | `chess-agent` (this repo root) | not given; default chosen |
 | Engine name | `Corvus` | not given; picked a short original name |
 | Lichess bot username | `TBD by you` (suggested: `CorvusChessBot`) | account must be created by you (see MY_TODO.md) |
-| Submission date | unknown | not given; logged in OPEN_QUESTIONS.md |
-| Days available | assumed 14 | not given |
+| Submission / competition date | **2026-11-03** | given by the user on 2026-10-29 |
+| Days available | ~4 (from 2026-10-29) | target: `v-submit-final` tagged by 2026-11-01, leaving 2 days for the bot account + live test |
 | Host | Windows 11 Home, Intel i7-14650HX (16 cores: 8P+8E, 24 threads), 15.7 GB RAM, AVX2 yes, BMI2 yes (no AVX-512) | detected via Win32_Processor / nproc |
 | Training compute | NVIDIA RTX 4060 Laptop 8 GB, CUDA 13.1 driver; PyTorch 2.14.1 on Python 3.10 | detected via nvidia-smi / pip |
 | Free disk | ~549 GB on C: | df -h |
