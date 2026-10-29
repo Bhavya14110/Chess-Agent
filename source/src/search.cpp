@@ -179,6 +179,13 @@ struct Searcher {
         if (!inchk) staticeval = (tthit && h.eval != NOSCORE) ? h.eval : evaluate(pos);
         ss[ply].staticeval = staticeval;
 
+        bool improving = !inchk && ply >= 2 && ss[ply - 2].staticeval != NOSCORE && staticeval > ss[ply - 2].staticeval;
+
+        // reverse futility: way above beta at low depth, assume it holds
+        if (!pvnode && !inchk && depth <= 8 && std::abs(beta) < MATEBOUND &&
+            staticeval - 80 * (depth - improving) >= beta)
+            return (staticeval + beta) / 2;
+
         // null move: if we're still above beta after passing, this node is almost surely a cutoff.
         // never with only pawns left (zugzwang) and never twice in a row
         if (!pvnode && !inchk && depth >= 3 && staticeval >= beta && pos.hasnonpawn(pos.stm) &&
@@ -199,10 +206,29 @@ struct Searcher {
         int nquiets = 0;
         int best = -INF, legal = 0;
         Move m;
-        while ((m = mp.next()) != NOMOVE) {
+        bool skipquiets = false;
+        while ((m = mp.next(skipquiets)) != NOMOVE) {
+            bool quiet = !isnoisy(m);
+            // pruning of moves that very likely don't matter, once we have something to fall back on
+            if (!root && best > -MATEBOUND) {
+                if (quiet) {
+                    // late move pruning: enough quiets tried at low depth
+                    if (depth <= 8 && nquiets >= (3 + depth * depth) / (improving ? 1 : 2)) {
+                        skipquiets = true;
+                        continue;
+                    }
+                    // futility: even a big positional gain won't reach alpha
+                    if (!inchk && depth <= 8 && staticeval + 100 + 100 * depth <= alpha) {
+                        skipquiets = true;
+                        continue;
+                    }
+                    if (depth <= 8 && !pos.see(m, -60 * depth)) continue;
+                } else if (depth <= 6 && !pos.see(m, -100 * depth)) {
+                    continue;
+                }
+            }
             if (!pos.legal(m)) continue;
             legal++;
-            bool quiet = !isnoisy(m);
             int hscore = quiet ? hist.butterfly[pos.stm][m & 4095] : 0;
             bool refutation = m == ss[ply].killers[0] || m == ss[ply].killers[1] || m == cm;
             makemove(m, ply);
