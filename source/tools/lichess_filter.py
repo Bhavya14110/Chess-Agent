@@ -10,6 +10,7 @@ Filters (all must hold):
   * Termination == "Normal" (rejects "Time forfeit", "Abandoned", "Rules infraction", ...)
   * Result in {1-0, 0-1, 1/2-1/2}
   * Variant missing or "Standard", and no SetUp/FEN header (game starts from the initial position)
+  * neither player has WhiteTitle/BlackTitle "BOT" (Lichess bot accounts are engines)
 
 Kept games are written with their tag pairs and a re-built movetext that contains ONLY move
 numbers, SAN moves and the result: every {...} comment ([%eval], [%clk], ...), every NAG /
@@ -17,8 +18,9 @@ annotation glyph (!, ?, !?, ?!, $n -- on Lichess these come from computer analys
 (...) variation are removed.
 
 Robustness: each Range segment is retried with exponential backoff (default 12 attempts) on
-any network error, short read, or bad status, so connection drops are resumed transparently
-at the exact byte offset. If the server does not advertise byte ranges, the script falls back
+any network error, short read, bad status, or if one 8 MB request takes longer than 300 s
+(trickling connection), so connection drops are resumed transparently at the exact byte
+offset. If the server does not advertise byte ranges, the script falls back
 to one plain streaming GET (no resume possible -- a network error then ends the run, but all
 games kept so far are already flushed to --out). A run cannot be resumed across processes
 (the zstd frame state lives in memory); just re-run it.
@@ -26,7 +28,8 @@ games kept so far are already flushed to --out). A run cannot be resumed across 
 usage:
   python source/tools/lichess_filter.py --url https://database.lichess.org/standard/lichess_db_standard_rated_2026-09.pgn.zst \
       --out data/lichess/filtered.pgn --max-games 1000000 [--max-seconds 9000] [--stats data/lichess/filter_stats.json]
---url may also be a local .pgn.zst path (handy for tests). Create the file given by --stop-file
+--url may also be a local .pgn.zst path, or a local plain .pgn (re-applies all filters, e.g. to
+an older output file). Create the file given by --stop-file
 to make a running job stop cleanly (flush + stats) at the next game boundary.
 """
 import argparse, io, json, os, re, sys, threading, time
@@ -53,13 +56,27 @@ class _Resp:
         self.status, self.headers, self.body = status, headers, body
 
 
-def _http_get(url, headers, timeout, sess=None):
+def _read_with_deadline(read, deadline):
+    """read the whole body in 64 KB pieces; abort if it takes longer than `deadline` seconds
+    (a per-recv socket timeout alone does not catch a connection that trickles bytes)"""
+    t0, parts = time.monotonic(), []
+    while True:
+        piece = read(1 << 16)
+        if not piece:
+            return b"".join(parts)
+        parts.append(piece)
+        if time.monotonic() - t0 > deadline:
+            raise IOError(f"segment too slow (> {deadline:.0f}s), aborting this request")
+
+
+def _http_get(url, headers, timeout, sess=None, deadline=300):
     if requests is not None:
-        r = (sess or requests).get(url, headers=headers, timeout=timeout)
-        return _Resp(r.status_code, {k.lower(): v for k, v in r.headers.items()}, r.content)
+        with (sess or requests).get(url, headers=headers, timeout=timeout, stream=True) as r:
+            body = _read_with_deadline(r.raw.read, deadline) if r.status_code == 206 else b""
+            return _Resp(r.status_code, {k.lower(): v for k, v in r.headers.items()}, body)
     req = urllib.request.Request(url, headers=headers)
     with urllib.request.urlopen(req, timeout=timeout[1]) as r:
-        return _Resp(r.status, {k.lower(): v for k, v in r.headers.items()}, r.read())
+        return _Resp(r.status, {k.lower(): v for k, v in r.headers.items()}, _read_with_deadline(r.read, deadline))
 
 
 def _http_head(url):
@@ -291,6 +308,10 @@ def filter_game(g, a, why):
     if tags.get(b"Variant", b"Standard") != b"Standard" or b"FEN" in tags or b"SetUp" in tags:
         why["variant"] += 1
         return None
+    # Lichess BOT accounts are engines: any game with a BOT player is not a human game
+    if tags.get(b"WhiteTitle") == b"BOT" or tags.get(b"BlackTitle") == b"BOT":
+        why["bot_player"] += 1
+        return None
     clean = clean_movetext(mt, res)
     if clean is None:
         why["bad_movetext"] += 1
@@ -315,8 +336,11 @@ def main():
 
     t0 = time.time()
     raw, size = open_source(a.url, a.conns, a.segment_mb << 20)
-    dctx = zstandard.ZstdDecompressor(max_window_size=1 << 31)
-    reader = dctx.stream_reader(raw, read_size=1 << 20, read_across_frames=True)
+    if os.path.exists(a.url) and not a.url.endswith(".zst"):
+        reader = raw  # plain local PGN
+    else:
+        dctx = zstandard.ZstdDecompressor(max_window_size=1 << 31)
+        reader = dctx.stream_reader(raw, read_size=1 << 20, read_across_frames=True)
     os.makedirs(os.path.dirname(os.path.abspath(a.out)), exist_ok=True)
     out = open(a.out, "wb")
 
@@ -402,7 +426,7 @@ def main():
             "rejects": dict(why), "stop_reason": stop_reason,
             "filters": {"min_elo_both": a.min_elo, "min_base_seconds": a.min_base,
                         "termination": "Normal", "results": ["1-0", "0-1", "1/2-1/2"],
-                        "variant": "Standard, no SetUp/FEN"},
+                        "variant": "Standard, no SetUp/FEN", "no_bot_players": True},
             "wall_seconds": round(time.time() - t0, 1),
             "started_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(t0)),
         }
