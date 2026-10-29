@@ -1,0 +1,8 @@
+# Python 3.10 for training / data tooling / tests (the engine itself is C++ and needs none of this).
+# lichess-bot has its own requirements.txt and needs Python >= 3.11 (see lichess-bot/README.md).
+chess==1.11.2          # rules utility only: PGN parsing, perft cross-checks, test drivers
+numpy==2.2.1
+zstandard==0.25.0      # streaming the Lichess .pgn.zst database
+requests==2.32.3
+torch==2.14.1          # NNUE training; a CUDA build is optional (see source/train/README.md)
+pdfminer.six==20260107 # only for reading the rules PDFs

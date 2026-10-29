@@ -27,6 +27,15 @@ else()
   target_compile_options(corvus PRIVATE -march=x86-64 -mpopcnt -mtune=generic)
 endif()
 
+# bake the nnue weights into the exe so there's no file path to get wrong at the venue
+set(NET "${CMAKE_SOURCE_DIR}/../engine/corvus.nnue" CACHE FILEPATH "nnue file to embed")
+if(EXISTS "${NET}")
+  file(REAL_PATH "${NET}" NETABS)
+  target_compile_definitions(corvus PRIVATE EMBED_NET=${NETABS})
+  set_property(SOURCE ${CMAKE_SOURCE_DIR}/src/nnue.cpp APPEND PROPERTY OBJECT_DEPENDS "${NETABS}")
+  message(STATUS "embedding net ${NETABS}")
+endif()
+
 find_package(Threads REQUIRED)
 target_link_libraries(corvus PRIVATE Threads::Threads)
 if(WIN32)

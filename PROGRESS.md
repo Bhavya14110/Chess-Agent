@@ -46,7 +46,10 @@ _(filled in at the end of the run)_
 - CPW perft suite, full depth, all exact (`python source/tests/perft_suite.py ./engine/Corvus.exe`):
   startpos d6 119,060,324; Kiwipete d5 193,690,690; pos3 d7 178,633,661; pos4 d6 706,045,033 (+mirror); pos5 d5 89,941,194; pos6 d5 164,075,551. 2.16G nodes in 11.6 s ≈ **186 Mnps** (legal movegen, bulk count at leaves, native PEXT build).
 - 1000 random-playout positions vs python-chess at depth 3: 1000/1000 OK, incremental Zobrist == recomputed at every node.
-- 1000 Lichess-game positions: run by the data agent (see logs/perft_lichess.txt when done).
+- 1000 Lichess-game positions (first 5000 kept games of the 2026-09 2200+ filter) vs python-chess at depth 3: **1000/1000 OK**.
+
+## Bug found and fixed (important for reading the SPRT log)
+- TT verified entries with `key >> 48` while the bucket index also comes from the high key bits, so the check was nearly useless and other positions' entries were accepted. Symptom: uci_test sometimes missed a mate in 1 after earlier searches; PVS looked like it exploded on Kiwipete. Fixed in 3fc0d33 (use the low 16 bits). All Phase 3 SPRTs from the TT feature onward were re-run on rebuilt binaries (`p3f-*`) that carry the fix.
 
 ## Phase 2 (code done; gate games pending)
 - `source/tools/uci_test.py`: 17 checks (uci, isready mid-search, setoption, ucinewgame, position startpos/fen+moves incl. ep/promo/castling/50-move, 300-ply move list, go wtime/btime/winc/binc, movetime, depth, nodes, movestogo, infinite+stop, quit mid-search, panic at 300 ms, stdout cleanliness) — PASS on native and portable builds.
