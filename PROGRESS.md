@@ -51,7 +51,8 @@ _(filled in at the end of the run)_
 ## Bug found and fixed (important for reading the SPRT log)
 - TT verified entries with `key >> 48` while the bucket index also comes from the high key bits, so the check was nearly useless and other positions' entries were accepted. Symptom: uci_test sometimes missed a mate in 1 after earlier searches; PVS looked like it exploded on Kiwipete. Fixed in 3fc0d33 (use the low 16 bits). All Phase 3 SPRTs from the TT feature onward were re-run on rebuilt binaries (`p3f-*`) that carry the fix.
 
-## Phase 2 (code done; gate games pending)
+## Phase 2 (uci_test PASS; 10+0.1 gate PASS; 3+2 gate running)
+- 10+0.1 self-play, 500 games, conc 6 (build p4-hce-untuned2): 500/500 normal terminations, **0 time losses / illegal moves / crashes / stalls** (+161 =184 -155 colour-wise). Log: logs/selfplay/gate2-10s.log
 - `source/tools/uci_test.py`: 17 checks (uci, isready mid-search, setoption, ucinewgame, position startpos/fen+moves incl. ep/promo/castling/50-move, 300-ply move list, go wtime/btime/winc/binc, movetime, depth, nodes, movestogo, infinite+stop, quit mid-search, panic at 300 ms, stdout cleanliness) — PASS on native and portable builds.
 
 ## Phase 3 (features committed one per commit, SPRT queue running)
