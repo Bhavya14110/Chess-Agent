@@ -5,6 +5,7 @@
 #include "tt.h"
 #include <algorithm>
 #include <cmath>
+#include <functional>
 #include <cstdio>
 #include <cstring>
 #include <memory>
@@ -59,6 +60,8 @@ struct Searcher {
     Stack* ss = stackbuf + 4;   // a few entries of slack so ss[ply - k] is always valid
     Histories hist;
     TT* ttab = &tt;   // datagen threads bring their own table
+    int threadid = 0;
+    std::function<u64()> totalnodes;   // set for the uci main thread to report all threads' nodes
     std::atomic<bool> ownstop{false};
     std::atomic<bool>* stopp = &stopflag;   // the uci search shares the global flag
 
@@ -326,6 +329,8 @@ struct Searcher {
         Move prevbest = NOMOVE;
         int stable = 0;
         for (int d = 1; d <= lim.depth; d++) {
+            // helper threads skip a depth now and then so they explore different trees
+            if (threadid > 0 && d > 2 && (d + threadid) % 3 == 0) continue;
             seldepth = 0;
             int score;
             if (d >= 4) {
@@ -355,10 +360,11 @@ struct Searcher {
             rootscore = score;
             if (print && mainthread) {
                 i64 ms = std::max<i64>(1, tm.elapsed());
+                u64 n = totalnodes ? totalnodes() : nodes;
                 uciout("info depth " + std::to_string(d) + " seldepth " + std::to_string(seldepth) +
-                       " score " + scorestr(score) + " nodes " + std::to_string(nodes) +
-                       " nps " + std::to_string(nodes * 1000 / ms) + " time " + std::to_string(ms) +
-                       " pv " + pvstring());
+                       " score " + scorestr(score) + " nodes " + std::to_string(n) +
+                       " nps " + std::to_string(n * 1000 / ms) + " time " + std::to_string(ms) +
+                       " hashfull " + std::to_string(ttab->hashfull()) + " pv " + pvstring());
             }
             if (rootbest == prevbest) stable = std::min(stable + 1, 6);
             else stable = 0;
@@ -373,7 +379,8 @@ struct Searcher {
     }
 };
 
-std::unique_ptr<Searcher> mainsearcher;
+// lazy smp: every thread searches the same root with the shared tt; thread 0 owns the clock and the answer
+std::vector<std::unique_ptr<Searcher>> pool;
 std::thread searchthread;
 std::atomic<bool> searching{false};
 
@@ -383,30 +390,49 @@ void search::init() {
     for (int d = 1; d < 64; d++)
         for (int m = 1; m < 64; m++) lmrtab[d][m] = int(0.75 + std::log(d) * std::log(m) / 2.25);
     tt.resize(64);
-    mainsearcher = std::make_unique<Searcher>();
+    pool.clear();
+    pool.push_back(std::make_unique<Searcher>());
 }
 
 void search::newgame() {
     wait();
     tt.clear();
-    mainsearcher->hist.clear();
+    for (auto& p : pool) p->hist.clear();
 }
 
 void search::go(const Position& pos, const Limits& lim) {
     wait();
     stopflag = false;
     searching = true;
-    Searcher& s = *mainsearcher;
-    std::memcpy(static_cast<void*>(&s.pos), &pos, sizeof(Position));
-    s.lim = lim;
-    s.tm.init(lim, pos.stm, moveoverhead);
-    s.print = true;
-    s.mainthread = true;
-    searchthread = std::thread([&s, lim] {
+    while ((int)pool.size() < nthreads) pool.push_back(std::make_unique<Searcher>());
+    while ((int)pool.size() > nthreads) pool.pop_back();
+    for (int i = 0; i < nthreads; i++) {
+        Searcher& s = *pool[i];
+        std::memcpy(static_cast<void*>(&s.pos), &pos, sizeof(Position));
+        s.lim = lim;
+        s.tm.init(lim, pos.stm, moveoverhead);
+        if (i > 0) s.tm.timed = false;   // helpers just run until thread 0 says stop
+        s.print = i == 0;
+        s.mainthread = i == 0;
+        s.threadid = i;
+        s.nodes = 0;
+        s.totalnodes = nullptr;
+    }
+    pool[0]->totalnodes = [] {
+        u64 n = 0;
+        for (auto& p : pool) n += p->nodes;
+        return n;
+    };
+    searchthread = std::thread([lim] {
         tt.newsearch();
+        std::vector<std::thread> helpers;
+        for (size_t i = 1; i < pool.size(); i++) helpers.emplace_back([i] { pool[i]->iterate(); });
+        Searcher& s = *pool[0];
         s.iterate();
         // with "go infinite" we must not answer until told to stop
         while (lim.infinite && !stopflag.load()) std::this_thread::sleep_for(std::chrono::milliseconds(1));
+        stopflag = true;
+        for (auto& h : helpers) h.join();
         uciout("bestmove " + movestr(s.rootbest));
         searching = false;
     });

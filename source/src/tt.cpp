@@ -32,7 +32,7 @@ void TT::clear() {
 
 bool TT::probe(u64 key, int ply, TTHit& out) const {
     const TTBucket& b = tab[index(key)];
-    u16 k = u16(key >> 48);
+    u16 k = u16(key);   // low bits: the bucket index already uses the high ones
     for (const auto& e : b.e) {
         if (e.key16 == k && (e.genbound & 3)) {
             out.move = e.move;
@@ -48,7 +48,7 @@ bool TT::probe(u64 key, int ply, TTHit& out) const {
 
 void TT::store(u64 key, int ply, Move m, int score, int eval, int depth, int bound) {
     TTBucket& b = tab[index(key)];
-    u16 k = u16(key >> 48);
+    u16 k = u16(key);   // low bits: the bucket index already uses the high ones
     TTEntry* rep = &b.e[0];
     for (auto& e : b.e) {
         if (e.key16 == k || !(e.genbound & 3)) {
