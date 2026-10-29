@@ -1,0 +1,31 @@
+# build output
+build/
+build-*/
+*.o
+*.obj
+
+# data and logs (big, regenerable)
+data/
+logs/
+*.pgn
+*.pgn.zst
+*.bin
+*.binpack
+
+# nets while training (final net is copied into engine/ explicitly)
+source/train/checkpoints/
+source/train/runs/
+*.pt
+
+# lichess-bot secrets
+config.yml
+lichess-bot/lichess-bot-src/
+*.token
+
+# python
+__pycache__/
+*.pyc
+.venv/
+
+# tools we download/build for testing only
+tools-bin/
