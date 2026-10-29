@@ -18,7 +18,7 @@ log="$root/logs/sprt/${label}-${stamp}.log"
 "$fc" -engine cmd="$new" name=new -engine cmd="$old" name=old \
   -each tc="$tc" option.Hash=16 option.Threads=1 proto=uci \
   -openings file="$book" format=epd order=random \
-  -repeat -games 2 -rounds 50000 -concurrency "$conc" \
+  -repeat -games 2 -rounds "${ROUNDS:-50000}" -concurrency "$conc" \
   -sprt elo0="$elo0" elo1="$elo1" alpha=0.05 beta=0.05 model=normalized \
   -draw movenumber=40 movecount=8 score=8 \
   -resign movecount=4 score=800 twosided=true \
@@ -26,7 +26,7 @@ log="$root/logs/sprt/${label}-${stamp}.log"
   -pgnout file="$root/logs/sprt/${label}-${stamp}.pgn" min=true \
   > "$log" 2>&1 &
 fcpid=$!
-"$root/source/tools/lowprio.sh" "$fcpid"
+"$root/source/tools/lowprio.sh" "$fcpid" "${PRIO:-Normal}"
 wait "$fcpid" || true
 echo "$log"
 tail -n 25 "$log"

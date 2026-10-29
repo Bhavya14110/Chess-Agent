@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-# drop a running process (cygwin/msys pid) to Windows "Idle" priority. engines that fastchess
-# starts afterwards inherit it, so long test runs stay out of the way of whoever uses the laptop.
-pid="$1"
+# set a running process (cygwin/msys pid) to a Windows priority class, BelowNormal by default.
+# engines that fastchess starts afterwards inherit it. Idle starved the engines and caused
+# time losses when anything else ran, so only use it for jobs without a clock.
+pid="$1"; cls="${2:-${PRIO:-BelowNormal}}"
 win="$(cat /proc/"$pid"/winpid 2>/dev/null || echo "$pid")"
-powershell -NoProfile -Command "try { (Get-Process -Id $win).PriorityClass = 'Idle' } catch {}" >/dev/null 2>&1
+powershell -NoProfile -Command "try { (Get-Process -Id $win).PriorityClass = '$cls' } catch {}" >/dev/null 2>&1

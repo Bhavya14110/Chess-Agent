@@ -10,6 +10,6 @@ while read -r new old label tc e0 e1; do
   [ -z "$new" ] && continue
   case "$new" in \#*) continue;; esac
   echo "=== $label ($(date)) ==="
-  "$root/source/tools/sprt.sh" "$root/tools-bin/versions/$new.exe" "$root/tools-bin/versions/$old.exe" "$label" "${tc:-8+0.08}" "${e0:-0}" "${e1:-5}" 16 | tail -n 12
+  "$root/source/tools/sprt.sh" "$root/tools-bin/versions/$new.exe" "$root/tools-bin/versions/$old.exe" "$label" "${tc:-8+0.08}" "${e0:-0}" "${e1:-5}" "${CONC:-16}" | tail -n 12
 done < "$q"
 echo "=== queue done ($(date)) ==="
