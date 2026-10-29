@@ -66,8 +66,12 @@ p3-02 SEE in qsearch, p3-03 TT, p3-04 staged ordering, p3-05 PVS, p3-06 aspirati
 - With engines at Idle priority and another job saturating all cores, 317/528 games in the TT SPRT were lost on time (~100 ms overruns). Rules for testing from now on: no other heavy job while a time-control SPRT runs; engines at BelowNormal (not Idle) with concurrency <= ~14.
 - Same lesson for competition day: the hosting laptop must run nothing heavy while the bot plays (added to MY_TODO).
 
+## Phase 4: Texel tuning (done 2026-10-30)
+- Data: 493,215 human Lichess games (BOT accounts removed) -> 18,388,189 positions -> 13,519,190 quiet (our qsearch == our eval). See DATA_PROVENANCE.md.
+- `corvus tune data/lichess/positions_quiet.txt 800 22 1.0 source/src/evaltuned.h`: K = 0.8657, error 0.192112 -> 0.187941 (4 min). Linear model matches eval within 0.96 cp.
+- Bug found: `writeparams` left out the comma at each line end, so the generated header did not compile. Fixed, and a writeparams round trip gives the same values.
+- SPRT tuned (p4-tuned) vs untuned (p7-smp-ttfix): running, see sprt_log.md.
+
 ## Status
-- **PAUSED by the user (2026-10-29 ~19:05 IST)**: SPRT queue stopped (resume from p3f-03-tt), Lichess position extraction (agent, PID 23572) suspended with NtSuspendProcess � resume with NtResumeProcess.
-- Phase: 3 SPRTs running; Phase 4 HCE + tuner + quiet filter written; Phase 5 datagen written.
-- Running jobs: SPRT queue (`source/tools/sprt_queue.sh logs/queue_p3.txt`, log logs/sprt_queue_p3.out, per-test logs in logs/sprt/); Lichess download (agent); NNUE trainer smoke test (agent).
-- Next step: quiet-filter Lichess positions → Texel tune → SPRT tuned vs untuned → package v-submit-hce.
+- 2026-10-30 ~00:40 IST: the user asked for **low load only** overnight (laptop was ~95 C). Running at ~17% CPU: SPRT p4-tuned vs p7-smp-ttfix with concurrency 2 at BelowNormal, then the p3f queue (CONC=2, ROUNDS=1000 i.e. max 2000 games per test; inconclusive results get logged as such). No datagen / tuning / builds above 2 jobs until the user says so.
+- Next: log results, package v-submit-hce, then (when the user allows load) NNUE datagen + GPU training.
