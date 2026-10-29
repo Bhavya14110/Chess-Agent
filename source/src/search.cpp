@@ -99,9 +99,10 @@ struct Searcher {
         bool inchk = pos.incheck();
         if (ply >= MAXPLY - 1) return inchk ? 0 : evaluate(pos);
 
+        bool pvnode = beta - alpha > 1;
         TTHit h;
         bool tthit = tt.probe(pos.key(), ply, h);
-        if (tthit && (h.bound == BEXACT || (h.bound == BLOWER && h.score >= beta) || (h.bound == BUPPER && h.score <= alpha)))
+        if (!pvnode && tthit && (h.bound == BEXACT || (h.bound == BLOWER && h.score >= beta) || (h.bound == BUPPER && h.score <= alpha)))
             return h.score;
         Move ttmove = tthit ? h.move : NOMOVE;
         int oldalpha = alpha;
@@ -147,6 +148,7 @@ struct Searcher {
         nodes++;
         if (ply > seldepth) seldepth = ply;
         bool root = ply == 0;
+        bool pvnode = beta - alpha > 1;
         if (!root) {
             if (timeup()) return 0;
             if (pos.isdraw(ply)) return 0;
@@ -162,7 +164,7 @@ struct Searcher {
         TTHit h;
         bool tthit = tt.probe(pos.key(), ply, h);
         Move ttmove = root ? rootbest : tthit ? h.move : NOMOVE;
-        if (!root && tthit && h.depth >= depth &&
+        if (!pvnode && tthit && h.depth >= depth &&
             (h.bound == BEXACT || (h.bound == BLOWER && h.score >= beta) || (h.bound == BUPPER && h.score <= alpha)))
             return h.score;
         int oldalpha = alpha;
@@ -177,7 +179,14 @@ struct Searcher {
             if (!pos.legal(m)) continue;
             legal++;
             makemove(m, ply);
-            int score = -negamax(-beta, -alpha, depth - 1, ply + 1);
+            int score;
+            if (legal == 1) {
+                score = -negamax(-beta, -alpha, depth - 1, ply + 1);
+            } else {
+                // PVS: prove the move is no better with a null window, re-search if it is
+                score = -negamax(-alpha - 1, -alpha, depth - 1, ply + 1);
+                if (score > alpha && score < beta) score = -negamax(-beta, -alpha, depth - 1, ply + 1);
+            }
             pos.unmake();
             if (stopflag.load(std::memory_order_relaxed)) return 0;
             if (score > best) {
