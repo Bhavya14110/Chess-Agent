@@ -175,6 +175,9 @@ struct Searcher {
         int oldalpha = alpha;
         Move bestmv = NOMOVE;
 
+        // no tt move: ordering here will be poor, so spend less on this node for now
+        if (!root && depth >= 4 && ttmove == NOMOVE) depth--;
+
         int staticeval = NOSCORE;
         if (!inchk) staticeval = (tthit && h.eval != NOSCORE) ? h.eval : evaluate(pos);
         ss[ply].staticeval = staticeval;
