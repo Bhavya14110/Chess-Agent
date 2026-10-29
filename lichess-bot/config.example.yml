@@ -1,0 +1,232 @@
+# =============================================================================
+# lichess-bot configuration for the Corvus chess-agent competition entry.
+#
+# Based on config.yml.default from the official bridge
+#   https://github.com/lichess-bot-devs/lichess-bot
+#   commit afa430da25cb6d506c878d3ca2fa155be8da625d (lichess-bot version 2026.10.27.3)
+# Key names below are exactly the ones that version expects. If you use a newer
+# lichess-bot, diff its config.yml.default against this file before running.
+#
+# USAGE: copy this file to <your lichess-bot folder>/config.yml and fill in the
+# token there. config.yml (with a real token) must NEVER be committed.
+#
+# Competition rules honoured here (docs/guidelines.pdf, sections 2 and 5):
+#   - every move is chosen by our own engine: no opening book, no tablebases,
+#     no online move sources of any kind;
+#   - standard chess only, casual only, 3+2 (blitz) and 10+5 (rapid) only;
+#   - matchmaking disabled; challenges accepted automatically;
+#   - resign / draw only on our engine's own evaluation;
+#   - courteous chat only.
+# =============================================================================
+
+# Lichess OAuth2 token with ONLY the "Play games with the bot API" (bot:play)
+# scope. Fill it in your LOCAL config.yml only. Alternative: leave this
+# placeholder and set the environment variable LICHESS_BOT_TOKEN, which
+# lichess-bot uses instead of this value when it is set.
+token: "PUT_BOT_PLAY_TOKEN_HERE"
+url: "https://lichess.org/"        # Lichess base URL.
+
+engine:                            # Engine settings.
+  # ABSOLUTE path to the `engine` folder of OUR repo on the machine that hosts
+  # the bot (lichess-bot itself lives in a different folder).
+  #   Windows example: "C:/Users/Bhavya/Downloads/chess agent/engine/"
+  #                    (forward slashes are fine on Windows and need no escaping;
+  #                     if you use backslashes, use single quotes: 'C:\path\engine\')
+  #   Linux example:   "/home/team/chess-agent/engine/"
+  dir: "C:/Users/Bhavya/Downloads/chess agent/engine/"
+  name: "Corvus.exe"               # Launch command of the agent, run from engine/ (guidelines 3.2).
+  debug: false                     # When enabled, log all startup communication with the engine.
+  # Corvus loads its files relative to its own folder (guidelines 3.4), so the
+  # working directory is the engine folder itself. Must match `dir` above.
+  working_dir: "C:/Users/Bhavya/Downloads/chess agent/engine/"
+  protocol: "uci"                  # Corvus is a UCI engine.
+  ponder: false                    # We do not ponder (think on the opponent's time). Corvus has no Ponder option.
+
+  # --- Opening book: DISABLED (opening books are prohibited, guidelines 2 & 5) ---
+  # enabled: false is the switch; max_depth: 0 and the empty book list are a
+  # second safeguard so that no book move can ever be played even if someone
+  # flips `enabled` by mistake.
+  polyglot:
+    enabled: false                 # Activate polyglot book. MUST stay false.
+    book:
+      standard: []                 # No book files. Do not add any.
+    min_weight: 1
+    selection: "weighted_random"   # Irrelevant while disabled (value must still be a valid choice).
+    max_depth: 0                   # Book never consulted (0 moves from the start).
+    normalization: "none"
+
+  # --- Resign / draw: ALLOWED, based ONLY on our engine's own evaluation ---
+  # (guidelines 5: "Resigning or offering draws based on the agent's own
+  # evaluation is permitted"). Thresholds are deliberately conservative.
+  # "moves" below count consecutive moves played by OUR bot, using the score
+  # Corvus reported for each of them.
+  draw_or_resign:
+    resign_enabled: true           # Resign when hopelessly lost...
+    resign_score: -1000            # ...i.e. our eval <= -1000 cp (mate scores count as +-40000)...
+    resign_moves: 10               # ...for 10 consecutive moves of ours.
+    resign_for_egtb_minus_two: false # Tablebase-based resign: OFF (tablebases are prohibited).
+    offer_draw_enabled: true       # Offer draws, and accept the opponent's draw offer, when...
+    offer_draw_score: 10           # ...|our eval| <= 10 cp...
+    offer_draw_moves: 10           # ...for 10 consecutive moves of ours...
+    # ...and only when at most this many pieces (kings and pawns included) are
+    # left on the board. NOTE: this lichess-bot version has NO "minimum move
+    # number" setting, so "only after move 40" cannot be expressed directly.
+    # Requiring <= 12 men (i.e. 20+ captures) is our proxy for "late in the
+    # game"; in practice that is well past move 40 in almost every game.
+    offer_draw_pieces: 12
+    offer_draw_for_egtb_zero: false # Tablebase-based draw: OFF (tablebases are prohibited).
+
+  # --- Online move sources: ALL DISABLED (prohibited, guidelines 2, 5 and 9) ---
+  # These query Lichess cloud analysis, the Lichess opening explorer, ChessDB
+  # and online endgame tablebases, i.e. they would supply moves NOT chosen by
+  # our engine and access an external service during play (disqualification).
+  # Each source has enabled: false; max_depth: 0 / max_out_of_book_moves: 0 /
+  # max_pieces: 0 are extra safeguards.
+  online_moves:
+    max_out_of_book_moves: 0       # Never try online opening books.
+    max_retries: 0                 # Never retry an online request.
+    max_depth: 0                   # Online books never consulted (0 moves from the start).
+    chessdb_book:
+      enabled: false               # ChessDB book: OFF.
+      min_time: 20
+      max_time: 10800
+      move_quality: "good"         # Irrelevant while disabled (must be a valid choice).
+      min_depth: 20
+    lichess_cloud_analysis:
+      enabled: false               # Lichess cloud analysis: OFF.
+      min_time: 20
+      max_time: 10800
+      move_quality: "best"         # Irrelevant while disabled (must be a valid choice).
+      max_score_difference: 50
+      min_depth: 20
+      min_knodes: 0
+    lichess_opening_explorer:
+      enabled: false               # Lichess opening explorer: OFF.
+      min_time: 20
+      max_time: 10800
+      source: "masters"            # Irrelevant while disabled (must be a valid choice).
+      player_name: ""
+      sort: "winrate"
+      min_games: 10
+    online_egtb:
+      enabled: false               # Online endgame tablebases (Lichess / ChessDB): OFF.
+      min_time: 20
+      max_time: 10800
+      max_pieces: 0                # Extra safeguard: never applicable.
+      source: "lichess"            # Irrelevant while disabled (must be a valid choice).
+      move_quality: "best"
+
+  # --- Local tablebases read by lichess-bot: DISABLED (prohibited) ---
+  lichess_bot_tbs:
+    syzygy:
+      enabled: false               # Local Syzygy tablebases: OFF.
+      paths: []                    # No tablebase files. Do not add any.
+      max_pieces: 0                # Extra safeguard: never applicable.
+      move_quality: "best"         # Irrelevant while disabled (must be a valid choice).
+    gaviota:
+      enabled: false               # Local Gaviota tablebases: OFF.
+      paths: []
+      max_pieces: 0
+      min_dtm_to_consider_as_wdl_1: 120
+      move_quality: "best"
+
+  # No engine_options (command-line args) and no homemade_options: Corvus is
+  # started exactly with its launch command `Corvus.exe`.
+
+  uci_options:                     # Sent to Corvus with setoption after startup.
+    # Only options Corvus actually declares (Hash, Threads, Move Overhead) may
+    # be listed: python-chess refuses unknown options. In particular the
+    # default's SyzygyPath / UCI_ShowWDL are removed (no tablebases; not
+    # supported by Corvus).
+    # Values are PROVISIONAL - we tune them later on the hosting machine.
+    Threads: 15                    # Keep below the host's logical core count.
+    Hash: 256                      # MB.
+    Move Overhead: 150             # ms reserved per move by Corvus for lag. Increase if we ever flag.
+    # NO go_commands (depth/nodes/movetime limits): Corvus manages its own
+    # time from wtime/btime/winc/binc (guidelines 4).
+
+  silence_stderr: false            # Corvus writes debug info to stderr only; keep it visible in the logs.
+
+abort_time: 30                     # Abort a game (only possible before both sides moved) after this many seconds without activity.
+fake_think_time: false             # Never artificially slow down.
+rate_limiting_delay: 0             # Time (in ms) to delay after sending a move.
+# lichess-bot subtracts this (ms) from OUR remaining clock before passing it to
+# Corvus (network/lag safety margin). It stacks with Corvus's own
+# "Move Overhead" above. Default value kept; tune later together with it.
+move_overhead: 2000
+max_takebacks_accepted: 0          # Never accept takebacks.
+# true: Ctrl-C waits for the current game to finish instead of abandoning it
+# (no restarts or interventions during a game are allowed, guidelines 9).
+quit_after_all_games_finish: true
+
+correspondence:                    # Correspondence games are not accepted (see challenge.time_controls).
+  move_time: 60
+  checkin_period: 300
+  disconnect_time: 150
+  ponder: false                    # No pondering anywhere.
+
+challenge:                         # Incoming challenges.
+  concurrency: 1                   # One game at a time.
+  games_reserved_for_humans: 0
+  sort_by: "first"                 # Queue challenges first-come first-served (no rating-based priority).
+  preference: "none"
+  accept_bot: true                 # Competing bots must be able to challenge us.
+  only_bot: false                  # Chess-club members (humans) challenge us in the final stage.
+  # Competition time controls: 3+2 (knockout, Lichess "blitz") and 10+5
+  # (final stage vs the chess club, Lichess "rapid"). This range accepts both;
+  # lichess-bot cannot restrict to an exact list of time controls.
+  min_base: 180                    # seconds (3 minutes)
+  max_base: 600                    # seconds (10 minutes)
+  min_increment: 2                 # seconds
+  max_increment: 5                 # seconds
+  min_days: 1                      # Correspondence only; not accepted anyway.
+  max_days: 1
+  variants:                        # Standard chess ONLY.
+    - standard
+  time_controls:                   # Lichess speed categories: blitz (3+2) and rapid (10+5) ONLY.
+    - blitz                        # No bullet, classical or correspondence.
+    - rapid
+  modes:                           # Casual (unrated) games ONLY.
+    - casual
+  # ALLOW-LIST - MUST be filled in before the competition (guidelines 5:
+  # "accept challenges only from the organisers' accounts, competing bots and
+  # chess club members taking part in the final stage").
+  # When the list is non-empty, every other challenger is declined. When it is
+  # missing or empty, ANY user may challenge us (fine for testing only).
+  # Usernames are compared exactly as Lichess spells them (capitalisation matters).
+  # Keep your own personal test account in the list while testing.
+  # allow_list:
+  #   - OrganiserAccount1          # placeholder - organisers' account(s)
+  #   - OrganiserAccount2          # placeholder
+  #   - CompetingBot1              # placeholder - every competing bot
+  #   - CompetingBot2              # placeholder
+  #   - ClubMember1                # placeholder - chess-club members in the final stage
+  # Do NOT set recent_bot_challenge_age / max_recent_bot_challenges: they would
+  # decline repeated challenges from the same bot (e.g. replays after a draw).
+  max_simultaneous_games_per_user: 1  # Matches concurrency 1.
+
+greeting:
+  # Courteous, fixed messages only (guidelines 5: chat must remain courteous).
+  # {opponent} and {me} are substituted by lichess-bot.
+  hello: "Good luck and have fun!"           # To the opponent at the start of a game.
+  goodbye: "Thanks for the game!"            # To the opponent at the end of a game.
+  hello_spectators: "Hi! I'm {me}, a competition entry. Enjoy the game!"
+  goodbye_spectators: "Thanks for watching!"
+
+# pgn_directory: "game_records"    # Optional: keep local PGN records of our games for later review.
+# pgn_file_grouping: "game"
+
+matchmaking:
+  allow_matchmaking: false         # DISABLED (required by guidelines 5). Never set to true.
+  allow_during_games: false
+  challenge_variant: "random"      # Unused while matchmaking is disabled.
+  challenge_timeout: 30
+  challenge_initial_time:
+    - 180
+  challenge_increment:
+    - 2
+  opponent_rating_difference: 300
+  rating_preference: "none"
+  challenge_mode: "casual"
+  challenge_filter: none
+  include_challenge_block_list: false
