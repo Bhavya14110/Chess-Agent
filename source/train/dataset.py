@@ -88,6 +88,16 @@ class RecordStore:
     def __len__(self):
         return self.n
 
+    def gather(self, idx) -> np.ndarray:
+        """Copy the records at sorted global indices `idx` into memory."""
+        idx = np.asarray(idx, dtype=np.int64)
+        f = np.searchsorted(self.starts, idx, side="right") - 1
+        out = np.empty(len(idx), dtype=RECORD_DTYPE)
+        for k in np.unique(f):
+            m = f == k
+            out[m] = self.arrays[k][idx[m] - self.starts[k]]
+        return out
+
     def read_range(self, lo: int, hi: int) -> np.ndarray:
         """Copy records [lo, hi) of the global index space into memory."""
         parts = []
@@ -221,7 +231,7 @@ def fen_to_pieces(fen: str):
         else:
             out.append((r * 8 + f, PIECE_CHARS.index(ch)))
             f += 1
-    return out, stm
+    return sorted(out), stm
 
 
 def fen_features(fen: str):

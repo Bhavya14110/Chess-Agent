@@ -1,5 +1,6 @@
 #include "search.h"
 #include "eval.h"
+#include "movepick.h"
 #include "timeman.h"
 #include "tt.h"
 #include <algorithm>
@@ -32,6 +33,12 @@ using search::stopflag;
 
 namespace {
 
+struct Stack {
+    Move mv;          // move played to reach the next ply
+    int piece;        // piece that moved
+    Move killers[2];
+};
+
 struct Searcher {
     Position pos;
     Limits lim;
@@ -42,6 +49,9 @@ struct Searcher {
     int seldepth = 0;
     Move pv[MAXPLY + 2][MAXPLY + 2];
     int pvlen[MAXPLY + 2];
+    Stack stackbuf[MAXPLY + 8];
+    Stack* ss = stackbuf + 4;   // a few entries of slack so ss[ply - k] is always valid
+    Histories hist;
 
     Move rootbest = NOMOVE;
     int rootscore = 0;
@@ -55,27 +65,30 @@ struct Searcher {
         return false;
     }
 
-    static int mvvlva(const Position& p, Move m) {
-        int victim = mflag(m) == MEP ? PAWN : (p.board[mto(m)] == NOPIECE ? NOTYPE : ptype(p.board[mto(m)]));
-        int v = victim == NOTYPE ? 0 : seevalue[victim];
-        if (ispromo(m)) v += seevalue[promotype(m)];
-        return v * 8 - ptype(p.board[mfrom(m)]);
+    void makemove(Move m, int ply) {
+        ss[ply].mv = m;
+        ss[ply].piece = pos.board[mfrom(m)];
+        pos.make(m);
+        tt.prefetch(pos.key());
     }
 
-    void scoremoves(MoveList& ml, Move ttmove) {
-        for (int i = 0; i < ml.n; i++) {
-            Move m = ml.mv[i];
-            ml.sc[i] = m == ttmove ? (1 << 30) : isnoisy(m) ? 1000000 + mvvlva(pos, m) : 0;
+    Move countermove(int ply) const {
+        if (ply == 0 || ss[ply - 1].mv == NOMOVE) return NOMOVE;
+        return hist.counter[ss[ply - 1].piece][mto(ss[ply - 1].mv)];
+    }
+
+    // reward the quiet move that caused a cutoff, punish the quiets tried before it
+    void updatequiets(Move best, const Move* tried, int ntried, int depth, int ply) {
+        int bonus = std::min(16 * depth * depth + 32 * depth, 1600);
+        int us = pos.stm;
+        histupdate(hist.butterfly[us][best & 4095], bonus);
+        for (int i = 0; i < ntried; i++)
+            if (tried[i] != best) histupdate(hist.butterfly[us][tried[i] & 4095], -bonus);
+        if (ss[ply].killers[0] != best) {
+            ss[ply].killers[1] = ss[ply].killers[0];
+            ss[ply].killers[0] = best;
         }
-    }
-
-    static Move pickbest(MoveList& ml, int i) {
-        int b = i;
-        for (int j = i + 1; j < ml.n; j++)
-            if (ml.sc[j] > ml.sc[b]) b = j;
-        std::swap(ml.mv[i], ml.mv[b]);
-        std::swap(ml.sc[i], ml.sc[b]);
-        return ml.mv[i];
+        if (ply > 0 && ss[ply - 1].mv != NOMOVE) hist.counter[ss[ply - 1].piece][mto(ss[ply - 1].mv)] = best;
     }
 
     int qsearch(int alpha, int beta, int ply) {
@@ -100,19 +113,16 @@ struct Searcher {
             if (best >= beta) return best;
             if (best > alpha) alpha = best;
         }
-        MoveList ml;
-        if (inchk) genall(pos, ml);
-        else gennoisy(pos, ml);
-        scoremoves(ml, ttmove);
+        MovePicker mp(pos, hist, ttmove);
         int legal = 0;
-        for (int i = 0; i < ml.n; i++) {
-            Move m = pickbest(ml, i);
+        Move m;
+        while ((m = mp.next()) != NOMOVE) {
             if (!inchk && ispromo(m) && promotype(m) != QUEEN) continue;
             // captures that lose material by SEE aren't worth looking at in qsearch
             if (!inchk && !pos.see(m, 0)) continue;
             if (!pos.legal(m)) continue;
             legal++;
-            pos.make(m);
+            makemove(m, ply);
             int score = -qsearch(-beta, -alpha, ply + 1);
             pos.unmake();
             if (stopflag.load(std::memory_order_relaxed)) return 0;
@@ -147,6 +157,7 @@ struct Searcher {
             if (alpha >= beta) return alpha;
         }
         bool inchk = pos.incheck();
+        ss[ply + 1].killers[0] = ss[ply + 1].killers[1] = NOMOVE;
 
         TTHit h;
         bool tthit = tt.probe(pos.key(), ply, h);
@@ -157,16 +168,15 @@ struct Searcher {
         int oldalpha = alpha;
         Move bestmv = NOMOVE;
 
-        MoveList ml;
-        genall(pos, ml);
-        scoremoves(ml, ttmove);
-
+        MovePicker mp(pos, hist, ttmove, ss[ply].killers[0], ss[ply].killers[1], countermove(ply));
+        Move quiets[MAXMOVES];
+        int nquiets = 0;
         int best = -INF, legal = 0;
-        for (int i = 0; i < ml.n; i++) {
-            Move m = pickbest(ml, i);
+        Move m;
+        while ((m = mp.next()) != NOMOVE) {
             if (!pos.legal(m)) continue;
             legal++;
-            pos.make(m);
+            makemove(m, ply);
             int score = -negamax(-beta, -alpha, depth - 1, ply + 1);
             pos.unmake();
             if (stopflag.load(std::memory_order_relaxed)) return 0;
@@ -182,9 +192,13 @@ struct Searcher {
                         rootbest = m;
                         rootscore = score;
                     }
-                    if (alpha >= beta) break;
+                    if (alpha >= beta) {
+                        if (!isnoisy(m)) updatequiets(m, quiets, nquiets, depth, ply);
+                        break;
+                    }
                 }
             }
+            if (!isnoisy(m) && nquiets < MAXMOVES) quiets[nquiets++] = m;
         }
         if (!legal) return inchk ? -MATE + ply : 0;
         tt.store(pos.key(), ply, bestmv, best, NOSCORE, depth,
@@ -201,6 +215,7 @@ struct Searcher {
 
     void iterate() {
         nodes = 0;
+        for (auto& st : stackbuf) st = Stack{};
         completed = 0;
         rootbest = NOMOVE;
         // always have a legal move ready, even if we get stopped right away
@@ -254,6 +269,7 @@ void search::init() {
 void search::newgame() {
     wait();
     tt.clear();
+    mainsearcher->hist.clear();
 }
 
 void search::go(const Position& pos, const Limits& lim) {
