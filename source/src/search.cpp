@@ -238,7 +238,27 @@ struct Searcher {
         int stable = 0;
         for (int d = 1; d <= lim.depth; d++) {
             seldepth = 0;
-            int score = negamax(-INF, INF, d, 0);
+            int score;
+            if (d >= 4) {
+                // aspiration window around last iteration's score, widened on failure
+                int delta = 20;
+                int alpha = std::max(rootscore - delta, -INF), beta = std::min(rootscore + delta, INF);
+                while (true) {
+                    score = negamax(alpha, beta, d, 0);
+                    if (stopflag.load()) break;
+                    if (score <= alpha) {
+                        beta = (alpha + beta) / 2;
+                        alpha = std::max(score - delta, -INF);
+                    } else if (score >= beta) {
+                        beta = std::min(score + delta, INF);
+                    } else {
+                        break;
+                    }
+                    delta += delta / 2;
+                }
+            } else {
+                score = negamax(-INF, INF, d, 0);
+            }
             // a half-finished iteration is still usable: rootbest only changes
             // when a root move was searched all the way through
             if (stopflag.load()) break;
