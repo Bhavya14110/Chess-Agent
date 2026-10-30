@@ -24,7 +24,7 @@ fi
 if [[ " $steps " == *" train "* ]]; then
   echo "== train: H=$HIDDEN, $EPOCHS epochs -> source/train/checkpoints/$RUN"
   python source/train/train.py --data "data/selfplay/*.bin" --hidden "$HIDDEN" --epochs "$EPOCHS" \
-    --lambda 0.75 --lr 1e-3 --batch 16384 --seed 12345 --qat-epochs 2 \
+    --lambda 0.75 --lr 1e-3 --batch 16384 --seed 12345 --qat-epochs 2 --threads "${TORCH_THREADS:-2}" \
     --out "source/train/checkpoints/$RUN" --device cuda 2>&1 | tee "logs/train_$RUN.log" | grep -E "epoch|val" || true
 fi
 
