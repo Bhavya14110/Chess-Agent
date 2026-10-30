@@ -70,8 +70,20 @@ p3-02 SEE in qsearch, p3-03 TT, p3-04 staged ordering, p3-05 PVS, p3-06 aspirati
 - Data: 493,215 human Lichess games (BOT accounts removed) -> 18,388,189 positions -> 13,519,190 quiet (our qsearch == our eval). See DATA_PROVENANCE.md.
 - `corvus tune data/lichess/positions_quiet.txt 800 22 1.0 source/src/evaltuned.h`: K = 0.8657, error 0.192112 -> 0.187941 (4 min). Linear model matches eval within 0.96 cp.
 - Bug found: `writeparams` left out the comma at each line end, so the generated header did not compile. Fixed, and a writeparams round trip gives the same values.
-- SPRT tuned (p4-tuned) vs untuned (p7-smp-ttfix): running, see sprt_log.md.
+- SPRT tuned (p4-tuned) vs untuned (p7-smp-ttfix): **H1, +67.7 +/- 19.0 Elo**, 966 games, 0 time losses.
+
+## Phase 8 (first package): `v-submit-hce` tagged 2026-10-30 (d7846ad)
+- Native + portable builds of the tuned HCE, both pass uci_test (17 checks); bench signature 28634 at depth 6 equals the SPRT'd build.
+- Prohibited-item grep over all tracked files: only disclaimers / disabled settings match.
+
+## Phase 6: NNUE in search (done 2026-10-30)
+- Lazy accumulator stack: one slot per search ply, a slot is valid when its stored key equals the position key at that ply, so unmake needs no work and only nodes that evaluate pay for updates. `State.moved` records the moving piece.
+- `nnuecheck`: 27,678 incremental-vs-refresh checks with null moves and take-backs, 0 mismatches. `nnuetest` vs python reference: 0/1000 mismatches. AVX2 lane sum now 64-bit.
+- UCI: `UseNNUE`, `EvalFile` (`<embedded>` default). Tools that tune the HCE never load the net.
+- Datagen can start games from human-game positions (3 in 4 games), see OPEN_QUESTIONS #4.
+- Pipeline: `source/tools/nnue_pipeline.sh` (datagen -> train -> export -> bit-exact checks -> engine/corvus.nnue).
 
 ## Status
-- 2026-10-30 ~00:40 IST: the user asked for **low load only** overnight (laptop was ~95 C). Running at ~17% CPU: SPRT p4-tuned vs p7-smp-ttfix with concurrency 2 at BelowNormal, then the p3f queue (CONC=2, ROUNDS=1000 i.e. max 2000 games per test; inconclusive results get logged as such). No datagen / tuning / builds above 2 jobs until the user says so.
-- Next: log results, package v-submit-hce, then (when the user allows load) NNUE datagen + GPU training.
+- 2026-10-30 08:50 IST: user allowed full power. Datagen seed 201: 25M positions, 22 threads, 5000 nodes, ~6800 pos/s.
+- Overnight the laptop slept from ~00:45 to ~08:30 (keep-awake lapsed when the session went idle); only code work happened at night, by the user's choice (laptop at 95 C).
+- Next: train H=256 on GPU -> embed -> SPRT NNUE vs HCE (8+0.08, then 40+0.4) -> Phase 3 re-runs -> gates -> v-submit-final.
