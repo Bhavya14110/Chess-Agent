@@ -1,7 +1,31 @@
 # PROGRESS
 
 ## Final summary
-_(filled in at the end of the run)_
+**Submitted version: tag `v-submit-final`.** Launch `engine/Corvus.exe` (UCI); fallback `engine/Corvus-portable.exe`.
+Lichess BOT: `Bahubali8421` (lichess-bot 2026.10.27.3, config from `lichess-bot/config.example.yml`).
+
+- **Engine:** our own C++20 bitboard engine (PEXT magics), PVS + aspiration + quiescence/SEE, bucketed TT, staged
+  move ordering with history/continuation history, NMP, LMR, RFP/FP/LMP/SEE pruning, IIR, Lazy SMP, time management
+  with panic mode. Perft exact on the CPW suite and 2000 cross-checked positions.
+- **Evaluation:** NNUE `nnue1` ((768 -> 256) x 2 -> 1, SCReLU, int16), trained on 15.0M positions of Corvus self-play
+  scored by Corvus's own search. Fallback: Texel-tuned hand-crafted eval.
+- **Strength chain (SPRT, 8+0.08, our own openings):** Texel tuning **+67.7 +/- 19.0** (966 games);
+  NNUE vs tuned HCE **+137** (526 games, LLR 2.95). Both H1.
+- **Robustness:** uci_test 17/17 on both builds; 500 games at 10+0.1, 24 at 3+2 and 4 at 10+5 with 0 time losses,
+  illegal moves, crashes or stalls; first Lichess game (3+2) won with 1:00 left on the clock.
+- **Reproducibility:** a fresh `git clone` + `./build.sh` gives the same bench signature (218421 nodes) and the same
+  net (sha256 94a27334...60c4) as the shipped binaries; uci_test passes on the clone build. The exe bytes differ
+  (build paths), the behaviour does not.
+- **Rules:** no opening book, no tablebases, no external engine, no engine-made data, no network access during play.
+  Data: Lichess open database games (results only) and our own self-play. See DATA_PROVENANCE.md and README "Declared sources".
+
+**Known gaps (honest list):**
+- The Phase 3 per-feature SPRTs were spoiled by CPU starvation (see "Lesson") and the clean re-runs (`p3f-*`) were not
+  finished; the features ship untested one by one. The two SPRTs after them (tuning, NNUE) were run under clean conditions.
+- The NNUE gain was not re-confirmed at 40+0.4 (would take days at the laptop's allowed load); +137 is far outside any
+  TC effect.
+- Gate game counts at 3+2 / 10+5 are small (24 / 4) because the laptop runs hot and was often unattended.
+- Competition config: lichess-bot runs with Threads 4 (heat). Raise it on the day if the laptop stays cool.
 
 ## Section 0 values (detected / chosen)
 
