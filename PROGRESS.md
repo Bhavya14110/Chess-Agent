@@ -83,8 +83,15 @@ p3-02 SEE in qsearch, p3-03 TT, p3-04 staged ordering, p3-05 PVS, p3-06 aspirati
 - Datagen can start games from human-game positions (3 in 4 games), see OPEN_QUESTIONS #4.
 - Pipeline: `source/tools/nnue_pipeline.sh` (datagen -> train -> export -> bit-exact checks -> engine/corvus.nnue).
 
+## Phase 6: pipeline check with an interim net (2026-10-30)
+- Trained H=256 for 6 epochs on the 7.0M seed-201 positions: 42 s on the RTX 4060 (~1.7M pos/s), val loss 0.00964.
+- Export: worst-case |acc| 4756 (int16 safe), max |sum| 32.3M (int32 safe). Float vs quantised: max 1.02 cp, mean 0.51 cp.
+- C++ vs python reference: 0/1000 mismatches; incremental vs refresh: 0/7032 mismatches.
+- Sanity evals (stm): start +28, queen down -870, K+P vs K +256, K vs K +12.
+
 ## Status
 - 2026-10-30 08:50 IST: user allowed full power. Datagen seed 201: 25M positions, 22 threads, 5000 nodes, ~6800 pos/s.
 - Overnight the laptop slept from ~00:45 to ~08:30 (keep-awake lapsed when the session went idle); only code work happened at night, by the user's choice (laptop at 95 C).
 - **PAUSED by the user (2026-10-30 ~09:15 IST)**: datagen seed 201 stopped at ~7.0M positions (224 MB in data/selfplay, kept). Resume with a NEW seed so games don't repeat: `THREADS=22 POSITIONS=18000000 SEED=202 source/tools/nnue_pipeline.sh data`.
+- Resumed 2026-10-30 at user-limited load: seed 202 (8 threads, ~0.7M positions), then **seed 203 with 4 threads** (user: 3-4 threads, ~5 GB RAM max), target 18M total.
 - Next: train H=256 on GPU -> embed -> SPRT NNUE vs HCE (8+0.08, then 40+0.4) -> Phase 3 re-runs -> gates -> v-submit-final.
