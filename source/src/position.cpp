@@ -244,6 +244,7 @@ void Position::make(Move m) {
     int us = stm, them = us ^ 1;
     int from = mfrom(m), to = mto(m), flag = mflag(m);
     int pc = board[from];
+    s.moved = pc;
 
     if (flag == MEP) {
         int capsq = to ^ 8;
@@ -334,6 +335,7 @@ void Position::makenull() {
     s.nullply = 0;
     s.mv = NOMOVE;
     s.captured = NOPIECE;
+    s.moved = NOPIECE;
     stm ^= 1;
     gameply++;
     setcheckinfo();

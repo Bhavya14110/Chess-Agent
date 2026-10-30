@@ -27,6 +27,7 @@ extern "C" const unsigned char corvus_net_end[];
 namespace nnue {
 
 bool loaded = false;
+bool use = true;
 int H = 0;
 
 static std::vector<int16_t> ftw;   // [768][H]
@@ -155,4 +156,55 @@ int evaluate(const Accumulator& acc, int stm) {
     return int(t1 * SCALE / (QA * QB));
 }
 
+// accumulator of the child from the parent, using what make() left in the child's state
+static void apply(const State& s, const Accumulator& parent, Accumulator& child) {
+    Move m = s.mv;
+    if (m == NOMOVE) {   // null move: same pieces
+        for (int p = 0; p < 2; p++) std::memcpy(child.v[p], parent.v[p], H * 2);
+        return;
+    }
+    int from = mfrom(m), to = mto(m), flag = mflag(m), pc = s.moved, us = pcolor(pc);
+    if (flag == MOO || flag == MOOO) {
+        int rf = flag == MOO ? to + 1 : to - 2, rt = flag == MOO ? to - 1 : to + 1, rk = mkpiece(us, ROOK);
+        update(parent, child, pc, to, pc, from, rk, rt, rk, rf);
+        return;
+    }
+    int newp = ispromo(m) ? mkpiece(us, promotype(m)) : pc;
+    int capsq = flag == MEP ? to ^ 8 : to;
+    update(parent, child, newp, to, pc, from, NOPIECE, 0, s.captured, s.captured == NOPIECE ? 0 : capsq);
+}
+
+void AccStack::reset(const Position& pos) {
+    rootsp = pos.sp;
+    for (auto& k : key) k = 0;
+    if (!loaded) return;
+    refresh(pos, acc[0]);
+    key[0] = pos.key();
+}
+
+int AccStack::eval(const Position& pos) {
+    int idx = pos.sp - rootsp;
+    if (idx < 0 || idx >= MAXPLY + 8) {   // shouldn't happen, but never index out of range
+        thread_local Accumulator tmp;
+        refresh(pos, tmp);
+        return evaluate(tmp, pos.stm);
+    }
+    int j = idx;
+    while (j > 0 && key[j] != pos.st[rootsp + j].key) j--;
+    if (j == 0 && key[0] != pos.st[rootsp].key) {
+        // root slot is stale only if someone forgot reset(); rebuild from the current board then
+        refresh(pos, acc[idx]);
+        key[idx] = pos.key();
+        j = idx;
+    }
+    for (int k = j + 1; k <= idx; k++) {
+        apply(pos.st[rootsp + k], acc[k - 1], acc[k]);
+        key[k] = pos.st[rootsp + k].key;
+    }
+    int v = evaluate(acc[idx], pos.stm);
+    // fade towards a draw as the 50-move counter runs up
+    return v * (200 - pos.cur().rule50) / 200;
+}
+
 } // namespace nnue
+

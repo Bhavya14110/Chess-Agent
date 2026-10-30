@@ -21,6 +21,7 @@ struct State {
     int rule50;
     int nullply;      // plies since last null move (repetition scan stops there)
     int captured;     // piece captured by the move that led here
+    int moved;        // piece that made that move (before promotion), for nnue updates
     Move mv;          // move that led here
 };
 

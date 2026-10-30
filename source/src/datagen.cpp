@@ -8,6 +8,7 @@
 #include <atomic>
 #include <cstdio>
 #include <cstring>
+#include <fstream>
 #include <random>
 #include <string>
 #include <thread>
@@ -52,7 +53,26 @@ struct Stats {
     std::atomic<u64> games{0}, positions{0}, wwins{0}, bwins{0}, draws{0}, plies{0};
 };
 
-void worker(int id, const DatagenConfig& cfg, Stats& st, std::atomic<bool>& done) {
+// up to `cap` FENs, spread evenly over the file
+std::vector<std::string> loadstarts(const std::string& path, size_t cap) {
+    std::vector<std::string> all, out;
+    std::ifstream in(path);
+    std::string line;
+    size_t n = 0;
+    while (std::getline(in, line)) n++;
+    in.clear();
+    in.seekg(0);
+    size_t step = std::max<size_t>(1, n / cap);
+    for (size_t i = 0; std::getline(in, line); i++) {
+        if (i % step) continue;
+        auto p = line.find(';');
+        out.push_back(p == std::string::npos ? line : line.substr(0, p));
+    }
+    return out;
+}
+
+void worker(int id, const DatagenConfig& cfg, const std::vector<std::string>& starts, Stats& st,
+            std::atomic<bool>& done) {
     std::mt19937_64 rng(cfg.seed * 1000003ULL + u64(id));
     SearchHandle sh(cfg.ttmb);
     std::string path = cfg.outdir + "/data_" + std::to_string(cfg.seed) + "_" + std::to_string(id) + ".bin";
@@ -64,12 +84,19 @@ void worker(int id, const DatagenConfig& cfg, Stats& st, std::atomic<bool>& done
     Position pos;
     std::vector<Record> game;
     while (!done.load()) {
-        pos.setfen(STARTFEN);
         sh.newgame();
         game.clear();
 
-        // random opening walk
-        int nrand = 8 + int(rng() % 3);
+        // 3 in 4 games start from a human position plus 1-2 random moves, the rest from a
+        // random walk out of the start position
+        int nrand;
+        if (!starts.empty() && rng() % 4) {
+            if (!pos.setfen(starts[rng() % starts.size()])) continue;
+            nrand = 1 + int(rng() % 2);
+        } else {
+            pos.setfen(STARTFEN);
+            nrand = 8 + int(rng() % 3);
+        }
         bool ok = true;
         for (int i = 0; i < nrand && ok; i++) {
             MoveList ml;
@@ -156,8 +183,14 @@ void worker(int id, const DatagenConfig& cfg, Stats& st, std::atomic<bool>& done
 void datagen(const DatagenConfig& cfg) {
     Stats st;
     std::atomic<bool> done{false};
+    std::vector<std::string> starts;
+    if (!cfg.startfile.empty()) {
+        starts = loadstarts(cfg.startfile, 2000000);
+        std::fprintf(stderr, "[datagen] %zu start positions from %s\n", starts.size(), cfg.startfile.c_str());
+    }
     std::vector<std::thread> ts;
-    for (int i = 0; i < cfg.threads; i++) ts.emplace_back(worker, i, std::cref(cfg), std::ref(st), std::ref(done));
+    for (int i = 0; i < cfg.threads; i++)
+        ts.emplace_back(worker, i, std::cref(cfg), std::cref(starts), std::ref(st), std::ref(done));
     i64 t0 = nowms();
     while (!done.load()) {
         for (int i = 0; i < 60 && !done.load(); i++) std::this_thread::sleep_for(std::chrono::seconds(1));

@@ -1,6 +1,7 @@
 #include "search.h"
 #include "eval.h"
 #include "movepick.h"
+#include "nnue.h"
 #include "timeman.h"
 #include "tt.h"
 #include <algorithm>
@@ -59,6 +60,7 @@ struct Searcher {
     Stack stackbuf[MAXPLY + 8];
     Stack* ss = stackbuf + 4;   // a few entries of slack so ss[ply - k] is always valid
     Histories hist;
+    nnue::AccStack nn;
     TT* ttab = &tt;   // datagen threads bring their own table
     int threadid = 0;
     std::function<u64()> totalnodes;   // set for the uci main thread to report all threads' nodes
@@ -76,6 +78,9 @@ struct Searcher {
         if ((nodes & 1023) == 0 && tm.timed && tm.elapsed() >= tm.hard) return *stopp = true;
         return false;
     }
+
+    // the net when we have one, the hand-crafted eval otherwise
+    int ev() { return nnue::active() ? nn.eval(pos) : evaluate(pos); }
 
     void makemove(Move m, int ply) {
         ss[ply].mv = m;
@@ -116,7 +121,7 @@ struct Searcher {
         if (timeup()) return 0;
         if (pos.isdraw(ply)) return 0;
         bool inchk = pos.incheck();
-        if (ply >= MAXPLY - 1) return inchk ? 0 : evaluate(pos);
+        if (ply >= MAXPLY - 1) return inchk ? 0 : ev();
 
         bool pvnode = beta - alpha > 1;
         TTHit h;
@@ -129,7 +134,7 @@ struct Searcher {
 
         int best = -INF;
         if (!inchk) {
-            best = evaluate(pos);
+            best = ev();
             if (best >= beta) return best;
             if (best > alpha) alpha = best;
         }
@@ -171,7 +176,7 @@ struct Searcher {
         if (!root) {
             if (timeup()) return 0;
             if (pos.isdraw(ply)) return 0;
-            if (ply >= MAXPLY - 1) return pos.incheck() ? 0 : evaluate(pos);
+            if (ply >= MAXPLY - 1) return pos.incheck() ? 0 : ev();
             // mate distance pruning
             alpha = std::max(alpha, -MATE + ply);
             beta = std::min(beta, MATE - ply - 1);
@@ -193,7 +198,7 @@ struct Searcher {
         if (!root && depth >= 4 && ttmove == NOMOVE) depth--;
 
         int staticeval = NOSCORE;
-        if (!inchk) staticeval = (tthit && h.eval != NOSCORE) ? h.eval : evaluate(pos);
+        if (!inchk) staticeval = (tthit && h.eval != NOSCORE) ? h.eval : ev();
         ss[ply].staticeval = staticeval;
 
         bool improving = !inchk && ply >= 2 && ss[ply - 2].staticeval != NOSCORE && staticeval > ss[ply - 2].staticeval;
@@ -312,6 +317,7 @@ struct Searcher {
 
     void iterate() {
         nodes = 0;
+        nn.reset(pos);
         for (auto& st : stackbuf) {
             st = Stack{};
             st.piece = NOPIECE;
@@ -464,6 +470,7 @@ int search::qsearchscore(const Position& pos) {
     std::memcpy(static_cast<void*>(&s->pos), &pos, sizeof(Position));
     s->mainthread = false;
     s->nodes = 0;
+    s->nn.reset(pos);
     return s->qsearch(-INF, INF, 0);
 }
 

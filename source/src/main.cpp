@@ -116,6 +116,12 @@ static void setoption(std::istringstream& in) {
         if (name == "hash") tt.resize(std::clamp(std::stoi(value), 1, 65536));
         else if (name == "threads") search::nthreads = std::clamp(std::stoi(value), 1, 256);
         else if (name == "move overhead") search::moveoverhead = std::clamp(std::stoi(value), 0, 5000);
+        else if (name == "usennue") nnue::use = value == "true";
+        else if (name == "evalfile") {
+            // "<embedded>" goes back to the net inside the exe; a path is read relative to the cwd
+            bool ok = value == "<embedded>" ? nnue::loadembedded() : nnue::loadfile(value);
+            std::fprintf(stderr, ok ? "net loaded: %s\n" : "could not load net: %s\n", value.c_str());
+        }
     } catch (...) {
         std::fprintf(stderr, "bad option value: %s\n", value.c_str());
     }
@@ -136,6 +142,8 @@ static void uciloop() {
             uciout("option name Hash type spin default 64 min 1 max 65536");
             uciout("option name Threads type spin default 1 min 1 max 256");
             uciout("option name Move Overhead type spin default 150 min 0 max 5000");
+            uciout("option name UseNNUE type check default true");
+            uciout("option name EvalFile type string default <embedded>");
             uciout("uciok");
         } else if (cmd == "isready") {
             uciout("readyok");
@@ -161,7 +169,13 @@ static void uciloop() {
         } else if (cmd == "d") {
             pos.print();
         } else if (cmd == "eval") {
-            std::fprintf(stderr, "eval (stm): %d\n", evaluate(pos));
+            std::fprintf(stderr, "hce eval (stm): %d\n", evaluate(pos));
+            if (nnue::loaded) {
+                auto* acc = new nnue::Accumulator;
+                nnue::refresh(pos, *acc);
+                std::fprintf(stderr, "nnue eval (stm): %d (H=%d)\n", nnue::evaluate(*acc, pos.stm), nnue::H);
+                delete acc;
+            }
         } else if (cmd == "perft") {
             int d = 1;
             in >> d;
@@ -208,7 +222,49 @@ int main(int argc, char** argv) {
         std::printf("%d vectors, %d mismatches (H=%d)\n", n, bad, nnue::H);
         return bad ? 1 : 0;
     }
-    // datagen <outdir> <threads> <nodes> <maxpositions> <seed>
+    // nnuecheck <net> <games>: incremental accumulator updates vs a from-scratch refresh on random
+    // games, with null moves and take-backs mixed in (stale slots must never be used)
+    if (argc >= 4 && !std::strcmp(argv[1], "nnuecheck")) {
+        if (!nnue::loadfile(argv[2])) {
+            std::printf("can't load %s\n", argv[2]);
+            return 1;
+        }
+        auto* stk = new nnue::AccStack;
+        auto* ref = new nnue::Accumulator;
+        u64 seed = 12345, checks = 0, bad = 0;
+        auto rnd = [&] { seed ^= seed << 13; seed ^= seed >> 7; seed ^= seed << 17; return seed; };
+        auto check = [&](const Position& pos) {
+            nnue::refresh(pos, *ref);
+            checks++;
+            if (stk->eval(pos) != nnue::evaluate(*ref, pos.stm) * (200 - pos.cur().rule50) / 200) bad++;
+        };
+        for (int g = 0; g < std::atoi(argv[3]); g++) {
+            Position pos;
+            pos.setfen(STARTFEN);
+            stk->reset(pos);
+            for (int ply = 0; ply < MAXPLY; ply++) {
+                MoveList ml;
+                genlegal(pos, ml);
+                if (ml.n == 0) break;
+                int r = int(rnd() % 10);
+                if (r == 0 && !pos.incheck()) pos.makenull();
+                else pos.make(ml.mv[rnd() % ml.n]);
+                check(pos);
+                if (r == 1) {   // take the move back and go another way next time
+                    pos.unmake();
+                    check(pos);
+                }
+            }
+        }
+        std::printf("%llu checks, %llu mismatches (H=%d)\n", (unsigned long long)checks, (unsigned long long)bad,
+                    nnue::H);
+        return bad ? 1 : 0;
+    }
+    // the hce tools (tune, quiet, writeparams) must see the hand-crafted eval only
+    bool hcetool = argc >= 2 && (!std::strcmp(argv[1], "tune") || !std::strcmp(argv[1], "quiet") ||
+                                 !std::strcmp(argv[1], "writeparams"));
+    if (!hcetool) nnue::loadembedded();
+    // datagen <outdir> <threads> <nodes> <maxpositions> <seed> [startfens file]
     if (argc >= 7 && !std::strcmp(argv[1], "datagen")) {
         DatagenConfig cfg;
         cfg.outdir = argv[2];
@@ -216,6 +272,7 @@ int main(int argc, char** argv) {
         cfg.nodes = std::strtoull(argv[4], nullptr, 10);
         cfg.maxpositions = std::strtoull(argv[5], nullptr, 10);
         cfg.seed = std::strtoull(argv[6], nullptr, 10);
+        if (argc >= 8) cfg.startfile = argv[7];
         std::filesystem::create_directories(cfg.outdir);
         datagen(cfg);
         return 0;

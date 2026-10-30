@@ -34,4 +34,18 @@ void update(const Accumulator& parent, Accumulator& child, int addp1, int addsq1
             int addp2, int addsq2, int subp2, int subsq2);
 int evaluate(const Accumulator& acc, int stm);
 
+extern bool use;   // uci "UseNNUE"; the net is only used when this is on and a net is loaded
+inline bool active() { return loaded && use; }
+
+// one accumulator per search ply, filled lazily: a ply's accumulator is only built when that
+// node wants an eval, starting from the nearest valid one below it. a slot is valid when its
+// stored key matches the position key at that ply, so nothing needs undoing on unmake.
+struct AccStack {
+    Accumulator acc[MAXPLY + 8];
+    u64 key[MAXPLY + 8];
+    int rootsp = 0;
+    void reset(const Position& pos);
+    int eval(const Position& pos);
+};
+
 } // namespace nnue
