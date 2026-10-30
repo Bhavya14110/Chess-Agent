@@ -89,9 +89,17 @@ p3-02 SEE in qsearch, p3-03 TT, p3-04 staged ordering, p3-05 PVS, p3-06 aspirati
 - C++ vs python reference: 0/1000 mismatches; incremental vs refresh: 0/7032 mismatches.
 - Sanity evals (stm): start +28, queen down -870, K+P vs K +256, K vs K +12.
 
+## Phase 7: first real net `nnue1` (2026-10-30)
+- Data: 15,000,236 self-play positions (seeds 101-204, see DATA_PROVENANCE 2), made at user-limited load (3-8 threads, CPU capped at 85% for heat).
+- Training: H=256, 30 epochs (last 2 QAT), ~4.5 min on the RTX 4060. Val loss 0.00989 (epoch 1) -> 0.00837 (epoch 27), 0.00853 after QAT.
+- Export: worst-case |acc| 13951 (int16 safe), max |sum| 36.6M (int32 safe), float vs quantised max 1.02 cp. C++ vs python 0/1000, incremental vs refresh 0/13938.
+- **SPRT vs tuned HCE: H1, about +137 Elo, 526 games, concurrency 1** (sprt_log.md). Net committed as `engine/corvus.nnue`, release binaries rebuilt with it embedded; uci_test PASS on both; bench 218421 nodes.
+- Decision: the 40+0.4 confirm is skipped for this change for now. +137 at 8+0.08 is far outside any TC effect, and a 40+0.4 SPRT at concurrency 1 would take days. Revisit if the laptop can run it at higher concurrency.
+
 ## Status
 - 2026-10-30 08:50 IST: user allowed full power. Datagen seed 201: 25M positions, 22 threads, 5000 nodes, ~6800 pos/s.
 - Overnight the laptop slept from ~00:45 to ~08:30 (keep-awake lapsed when the session went idle); only code work happened at night, by the user's choice (laptop at 95 C).
 - **PAUSED by the user (2026-10-30 ~09:15 IST)**: datagen seed 201 stopped at ~7.0M positions (224 MB in data/selfplay, kept). Resume with a NEW seed so games don't repeat: `THREADS=22 POSITIONS=18000000 SEED=202 source/tools/nnue_pipeline.sh data`.
 - Resumed 2026-10-30 at user-limited load: seed 202 (8 threads, ~0.7M positions), then **seed 203 with 4 threads** (user: 3-4 threads, ~5 GB RAM max), target 18M total.
 - Next: train H=256 on GPU -> embed -> SPRT NNUE vs HCE (8+0.08, then 40+0.4) -> Phase 3 re-runs -> gates -> v-submit-final.
+- 2026-10-30 16:47 IST: `nnue1` passed its SPRT (+137 Elo) and is embedded in engine/. Next: Phase 3 re-runs (low concurrency), 3+2 and 10+5 gates, clean-clone build check, v-submit-final.

@@ -102,14 +102,24 @@ SHA-256:
 - Runs (files `data/selfplay/data_<seed>_<thread>.bin`, appended):
   - seed 101: ~1 min, 2 threads (test of the start-position option)
   - seed 201: 22 threads, stopped by the user at ~7.0M positions
-  - seed 202: 8 threads, 11M positions
+  - seed 202: 8 threads, stopped at 366,023 positions (load cut at the user's request)
+  - seed 203: 4 threads, stopped at 3,489,752 positions (paused for heat)
+  - seed 204: 3 threads, ran to its 3,823,059 target (3,823,295 written)
+  - **total used for net `nnue1`: 15,000,236 positions** (101: 49,332; 201: 7,271,834;
+    202: 366,023; 203: 3,489,752; 204: 3,823,295)
   ```
   THREADS=22 POSITIONS=25000000 SEED=201 source/tools/nnue_pipeline.sh data
   THREADS=8  POSITIONS=11000000 SEED=202 source/tools/nnue_pipeline.sh data
+  THREADS=4  POSITIONS=10312811 SEED=203 source/tools/nnue_pipeline.sh data
+  THREADS=3  POSITIONS=3823059  SEED=204 source/tools/nnue_pipeline.sh data
   ```
+  The stopped runs mean the exact data set is "these seeds until these counts"; any ~15M positions
+  made this way give a net of about the same strength.
   Thread scheduling makes the exact game set vary between machines; the seeds and settings are fixed.
 - Training / export / checks: `source/tools/nnue_pipeline.sh train export` (hyperparameters in that script
   and in `source/train/checkpoints/<run>/hparams.json`).
+- Net `engine/corvus.nnue` (run `nnue1`): `RUN=nnue1 HIDDEN=256 EPOCHS=30 source/tools/nnue_pipeline.sh train export`
+  (lambda 0.75, lr 1e-3, batch 16384, seed 12345, last 2 epochs QAT), RTX 4060, ~4.5 min.
 
 ## 3. Test openings
 
