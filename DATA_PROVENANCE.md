@@ -90,9 +90,26 @@ SHA-256:
 
 ## 2. Self-play data (NNUE training)
 
-- Generated only by our own engine (`Corvus datagen`), scored by our own search at a fixed node
-  count; game openings are 8-10 uniformly random legal moves from the start position (no book).
-- Commands and the seed/node settings are recorded in PROGRESS.md and `source/train/README.md`.
+- Generated only by our own engine (`corvus datagen`, tuned HCE build without a net), scored by our
+  own search at 5000 nodes per move. Record format: 32 bytes (see `source/train/README.md`):
+  position, our search score (white POV, cp), game result.
+- Start positions: 1 in 4 games start with 8-10 uniformly random legal moves from the initial
+  position; 3 in 4 start from a position of the human Lichess set above (`positions_raw.txt`,
+  every 9th line -> 2,043,133 candidates) plus 1-2 uniformly random legal moves. Openings with
+  |our score| > 300 are discarded. Nothing from these starts is stored in the engine.
+- Kept positions: not in check, our best move not noisy, score not a mate score.
+- Adjudication: |score| > 2500 for 4 plies = win; after ply 80, |score| < 10 for 10 plies = draw.
+- Runs (files `data/selfplay/data_<seed>_<thread>.bin`, appended):
+  - seed 101: ~1 min, 2 threads (test of the start-position option)
+  - seed 201: 22 threads, stopped by the user at ~7.0M positions
+  - seed 202: 8 threads, 11M positions
+  ```
+  THREADS=22 POSITIONS=25000000 SEED=201 source/tools/nnue_pipeline.sh data
+  THREADS=8  POSITIONS=11000000 SEED=202 source/tools/nnue_pipeline.sh data
+  ```
+  Thread scheduling makes the exact game set vary between machines; the seeds and settings are fixed.
+- Training / export / checks: `source/tools/nnue_pipeline.sh train export` (hyperparameters in that script
+  and in `source/train/checkpoints/<run>/hparams.json`).
 
 ## 3. Test openings
 
