@@ -138,11 +138,10 @@ int evaluate(const Accumulator& acc, int stm) {
         __m256i w2 = _mm256_loadu_si256((const __m256i*)(w1 + i));
         s = _mm256_add_epi32(s, _mm256_madd_epi16(_mm256_mullo_epi16(b, w2), b));
     }
-    __m128i lo = _mm256_castsi256_si128(s), hi = _mm256_extracti128_si256(s, 1);
-    __m128i t = _mm_add_epi32(lo, hi);
-    t = _mm_add_epi32(t, _mm_shuffle_epi32(t, 0x4E));
-    t = _mm_add_epi32(t, _mm_shuffle_epi32(t, 0xB1));
-    sum = _mm_cvtsi128_si32(t);
+    // each lane stays below 2^31 for H <= 512, but 8 lanes added together might not: sum in 64 bits
+    alignas(32) int32_t lanes[8];
+    _mm256_store_si256((__m256i*)lanes, s);
+    for (int i = 0; i < 8; i++) sum += lanes[i];
 #else
     for (int i = 0; i < H; i++) {
         int a = std::min(std::max<int>(us[i], 0), QA);
