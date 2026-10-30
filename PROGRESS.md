@@ -86,4 +86,5 @@ p3-02 SEE in qsearch, p3-03 TT, p3-04 staged ordering, p3-05 PVS, p3-06 aspirati
 ## Status
 - 2026-10-30 08:50 IST: user allowed full power. Datagen seed 201: 25M positions, 22 threads, 5000 nodes, ~6800 pos/s.
 - Overnight the laptop slept from ~00:45 to ~08:30 (keep-awake lapsed when the session went idle); only code work happened at night, by the user's choice (laptop at 95 C).
+- **PAUSED by the user (2026-10-30 ~09:15 IST)**: datagen seed 201 stopped at ~7.0M positions (224 MB in data/selfplay, kept). Resume with a NEW seed so games don't repeat: `THREADS=22 POSITIONS=18000000 SEED=202 source/tools/nnue_pipeline.sh data`.
 - Next: train H=256 on GPU -> embed -> SPRT NNUE vs HCE (8+0.08, then 40+0.4) -> Phase 3 re-runs -> gates -> v-submit-final.
