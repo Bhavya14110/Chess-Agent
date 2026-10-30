@@ -96,6 +96,13 @@ p3-02 SEE in qsearch, p3-03 TT, p3-04 staged ordering, p3-05 PVS, p3-06 aspirati
 - **SPRT vs tuned HCE: H1, about +137 Elo, 526 games, concurrency 1** (sprt_log.md). Net committed as `engine/corvus.nnue`, release binaries rebuilt with it embedded; uci_test PASS on both; bench 218421 nodes.
 - Decision: the 40+0.4 confirm is skipped for this change for now. +137 at 8+0.08 is far outside any TC effect, and a 40+0.4 SPRT at concurrency 1 would take days. Revisit if the laptop can run it at higher concurrency.
 
+## Phase 8 gates on the release build with `nnue1` (2026-10-30)
+- Self-play with the exact `engine/Corvus.exe` (f3656b0), no adjudication, Hash 64, 1 thread, 3 games at a time.
+- **3+2: 24/24 games ended normally, 0 time losses / illegal moves / crashes / stalls.** Log: logs/selfplay/gate8-3p2.log
+- **10+5: 4/4 finished games clean** (2 more were stopped mid-game when the user asked to stop all load). Log: logs/selfplay/gate8-10p5.log
+- Decision: game counts are small because the laptop runs hot and is unattended; earlier gates (500 games at 10+0.1, Phase 2) cover crash/time robustness at volume.
+- Live check: Lichess BOT `Bahubali8421` (lichess-bot 2026.10.27.3, local config, Threads 4) won its first 3+2 casual game, ending with 1:00 on the clock, normal chat.
+
 ## Status
 - 2026-10-30 08:50 IST: user allowed full power. Datagen seed 201: 25M positions, 22 threads, 5000 nodes, ~6800 pos/s.
 - Overnight the laptop slept from ~00:45 to ~08:30 (keep-awake lapsed when the session went idle); only code work happened at night, by the user's choice (laptop at 95 C).
@@ -103,3 +110,4 @@ p3-02 SEE in qsearch, p3-03 TT, p3-04 staged ordering, p3-05 PVS, p3-06 aspirati
 - Resumed 2026-10-30 at user-limited load: seed 202 (8 threads, ~0.7M positions), then **seed 203 with 4 threads** (user: 3-4 threads, ~5 GB RAM max), target 18M total.
 - Next: train H=256 on GPU -> embed -> SPRT NNUE vs HCE (8+0.08, then 40+0.4) -> Phase 3 re-runs -> gates -> v-submit-final.
 - 2026-10-30 16:47 IST: `nnue1` passed its SPRT (+137 Elo) and is embedded in engine/. Next: Phase 3 re-runs (low concurrency), 3+2 and 10+5 gates, clean-clone build check, v-submit-final.
+- 2026-10-30 19:20 IST: all load stopped at the user's request (test games and lichess-bot). Next: clean-clone build check, v-submit-final.
