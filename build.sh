@@ -7,9 +7,9 @@ W="$(ls -d /c/Users/*/AppData/Local/Microsoft/WinGet/Packages/BrechtSanders.WinL
 [ -n "$W" ] && export PATH="$W:$PATH"
 ext=""; case "$(uname -s)" in MINGW*|MSYS*|CYGWIN*) ext=".exe";; esac
 cmake -S "$here/source" -B "$here/build-native" -G Ninja -DCMAKE_BUILD_TYPE=Release -DNATIVE=ON >/dev/null
-cmake --build "$here/build-native" -j
+cmake --build "$here/build-native" -j ${JOBS:-}
 cmake -S "$here/source" -B "$here/build-portable" -G Ninja -DCMAKE_BUILD_TYPE=Release -DNATIVE=OFF >/dev/null
-cmake --build "$here/build-portable" -j
+cmake --build "$here/build-portable" -j ${JOBS:-}
 mkdir -p "$here/engine"
 cp "$here/build-native/corvus$ext" "$here/engine/Corvus$ext"
 cp "$here/build-portable/corvus$ext" "$here/engine/Corvus-portable$ext"

@@ -16,7 +16,8 @@ The engine reads nothing from disk at startup: the evaluation weights are compil
 
 - **Lichess bot username:** _to be filled in once the account exists (see MY_TODO.md)_
 - **Protocol:** UCI (via lichess-bot; config template in `lichess-bot/config.example.yml`)
-- **UCI options:** `Hash` (MB, default 64), `Threads` (default 1), `Move Overhead` (ms, default 150)
+- **UCI options:** `Hash` (MB, default 64), `Threads` (default 1), `Move Overhead` (ms, default 150),
+  `UseNNUE` (default true; only matters when a net is built in), `EvalFile` (default `<embedded>`)
 
 ## Approach
 
