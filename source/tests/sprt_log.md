@@ -11,3 +11,8 @@ Draw adjudication (move 40+, |score| < 8 for 8 moves) and resignation (|score| >
 | 26c9dcd+fix | transposition table (fixed key check) | p3-02-see | 8+0.08 | **INVALID** (re-run) | 528 | (-151) | — |
 
 Note on the invalid TT run: 317/528 games were lost on time (~100 ms overruns, both builds) because the engines ran at Windows Idle priority while the data-extraction job used every core at a higher priority. Time-control SPRTs must not share the CPU with other heavy jobs; re-run planned under clean conditions.
+
+## p4-tuned: Texel-tuned HCE vs hand-picked HCE (2026-10-30)
+- new `p4-tuned` (be4bf1c) vs old `p7-smp-ttfix`, 8+0.08, Hash 16, 1 thread, concurrency 20, Normal priority, nothing else running.
+- **H1 accepted.** Elo **+67.74 +/- 18.95** (nElo +80.4), 966 games: +496 -310 =160, Ptnml [39, 45, 205, 79, 115], LLR 2.96. 0 time losses.
+- An earlier attempt at concurrency 2 (night, low load) was stopped after 29 games at the user's request; not counted.
