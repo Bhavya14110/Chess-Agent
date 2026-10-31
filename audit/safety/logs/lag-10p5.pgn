@@ -1,0 +1,925 @@
+[Event "Fastchess Tournament"]
+[Site "?"]
+[Date "2026.10.31"]
+[Round "1"]
+[White "CorvusB"]
+[Black "CorvusA"]
+[Result "1/2-1/2"]
+[EngineWhiteName "Corvus 0.2"]
+[EngineWhiteAuthor "chess-agent team"]
+[EngineBlackName "Corvus 0.2"]
+[EngineBlackAuthor "chess-agent team"]
+[SetUp "1"]
+[FEN "rnbqkbnr/ppp2pp1/3pp2p/8/P7/2P5/1P1PPPPP/RNBQKBNR w KQkq - 0 1"]
+[GameDuration "00:34:48"]
+[GameStartTime "2026-10-31T11:57:59 +0530"]
+[GameEndTime "2026-10-31T12:32:49 +0530"]
+[PlyCount "170"]
+[Termination "normal"]
+[TimeControl "600+5"]
+
+1. d4 {+0.09/25 20.428s, tl=589.572s, latency=0.126s}
+Nf6 {-0.10/27 39.403s, tl=570.597s, latency=0.268s}
+2. Nf3 {+0.11/28 44.596s, tl=549.976s, latency=0.290s}
+Nbd7 {-0.17/26 24.845s, tl=550.752s, latency=0.304s}
+3. Qc2 {+0.13/29 26.504s, tl=528.472s, latency=0.268s}
+d5 {-0.18/28 44.997s, tl=510.755s, latency=0.241s}
+4. Bf4 {+0.20/28 27.660s, tl=505.812s, latency=0.222s}
+Nh5 {0.00/29 53.159s, tl=462.596s, latency=0.253s}
+5. Be5 {+0.21/30 20.514s, tl=490.298s, latency=0.263s}
+Nhf6 {-0.26/30 28.933s, tl=438.663s, latency=0.219s}
+6. Bg3 {+0.08/30 40.684s, tl=454.614s, latency=0.297s}
+c5 {-0.21/31 24.453s, tl=419.210s, latency=0.295s}
+7. Nbd2 {+0.31/32 39.186s, tl=420.428s, latency=0.220s}
+Be7 {-0.31/31 38.586s, tl=385.624s, latency=0.193s}
+8. e4 {+0.33/29 15.225s, tl=410.203s, latency=0.137s}
+O-O {-0.23/31 30.582s, tl=360.042s, latency=0.251s}
+9. Be2 {+0.36/30 23.485s, tl=391.718s, latency=0.219s}
+Nh5 {-0.20/30 17.039s, tl=348.003s, latency=0.205s}
+10. exd5 {+0.15/32 21.987s, tl=374.731s, latency=0.244s}
+exd5 {-0.38/29 14.826s, tl=338.177s, latency=0.174s}
+11. O-O {0.00/29 20.812s, tl=358.919s, latency=0.288s}
+Nxg3 {-0.28/28 13.663s, tl=329.514s, latency=0.258s}
+12. hxg3 {+0.09/28 15.524s, tl=348.395s, latency=0.267s}
+a6 {-0.14/29 19.417s, tl=315.097s, latency=0.292s}
+13. Bd3 {+0.20/28 16.217s, tl=337.178s, latency=0.253s}
+Nf6 {-0.16/28 12.052s, tl=308.045s, latency=0.174s}
+14. Rfe1 {0.00/28 16.615s, tl=325.563s, latency=0.275s}
+cxd4 {-0.24/28 14.450s, tl=298.595s, latency=0.290s}
+15. Nxd4 {+0.09/28 18.615s, tl=311.948s, latency=0.277s}
+Bc5 {-0.10/28 21.973s, tl=281.622s, latency=0.251s}
+16. Nf1 {+0.24/28 35.106s, tl=281.842s, latency=0.202s}
+Bd7 {-0.19/27 40.744s, tl=245.878s, latency=0.213s}
+17. a5 {+0.12/25 12.806s, tl=274.036s, latency=0.304s}
+Qc7 {-0.06/26 10.755s, tl=240.123s, latency=0.217s}
+18. Ne3 {+0.16/27 10.575s, tl=268.461s, latency=0.203s}
+Rfe8 {0.00/29 10.623s, tl=234.500s, latency=0.255s}
+19. Bf5 {0.00/26 14.485s, tl=258.976s, latency=0.289s}
+Re5 {0.00/30 10.620s, tl=228.880s, latency=0.233s}
+20. Bxd7 {0.00/29 13.177s, tl=250.799s, latency=0.279s}
+Qxd7 {+0.08/29 17.446s, tl=216.434s, latency=0.231s}
+21. Re2 {0.00/29 12.864s, tl=242.935s, latency=0.274s}
+Rae8 {+0.17/29 15.653s, tl=205.781s, latency=0.271s}
+22. Qd3 {0.00/29 20.498s, tl=227.437s, latency=0.232s}
+Re4 {+0.15/28 14.359s, tl=196.422s, latency=0.164s}
+23. b4 {-0.38/28 20.999s, tl=211.438s, latency=0.232s}
+Ba7 {+0.22/28 18.157s, tl=183.265s, latency=0.249s}
+24. Rae1 {-0.26/28 18.625s, tl=197.813s, latency=0.266s}
+g6 {+0.32/29 29.413s, tl=158.852s, latency=0.282s}
+25. Ndc2 {-0.48/26 13.784s, tl=189.029s, latency=0.225s}
+Kg7 {+0.39/25 9.106s, tl=154.746s, latency=0.283s}
+26. Rd1 {-0.72/27 15.621s, tl=178.408s, latency=0.255s}
+h5 {+0.92/26 8.252s, tl=151.494s, latency=0.204s}
+27. Qd2 {-0.76/26 12.332s, tl=171.076s, latency=0.255s}
+Qc6 {+0.81/28 9.421s, tl=147.073s, latency=0.204s}
+28. Nd4 {-0.92/27 8.587s, tl=167.489s, latency=0.189s}
+Bxd4 {+1.38/28 10.480s, tl=141.593s, latency=0.297s}
+29. cxd4 {-0.98/28 11.467s, tl=161.022s, latency=0.271s}
+Qd6 {+1.13/28 8.243s, tl=138.350s, latency=0.243s}
+30. Rf1 {-1.27/29 24.249s, tl=141.773s, latency=0.251s}
+b5 {+1.07/27 7.739s, tl=135.611s, latency=0.160s}
+31. Rfe1 {-0.77/28 8.224s, tl=138.549s, latency=0.212s}
+R8e7 {+1.24/29 7.969s, tl=132.642s, latency=0.273s}
+32. Kf1 {-0.99/29 7.582s, tl=135.967s, latency=0.213s}
+Re8 {+1.34/28 8.936s, tl=128.706s, latency=0.289s}
+33. Kg1 {-1.25/29 11.002s, tl=129.965s, latency=0.236s}
+Kh7 {+1.22/28 7.530s, tl=126.176s, latency=0.251s}
+34. Qb2 {-1.29/28 12.348s, tl=122.617s, latency=0.252s}
+Rc8 {+0.95/29 11.336s, tl=119.840s, latency=0.276s}
+35. Qd2 {-1.38/29 7.673s, tl=119.944s, latency=0.212s}
+Re6 {+1.04/29 14.489s, tl=110.351s, latency=0.218s}
+36. Qb2 {-1.45/28 7.563s, tl=117.381s, latency=0.207s}
+Kg7 {+1.10/29 6.118s, tl=109.233s, latency=0.165s}
+37. Qd2 {-1.24/30 7.840s, tl=114.541s, latency=0.258s}
+Ree8 {+1.24/28 6.079s, tl=108.154s, latency=0.277s}
+38. Qb2 {-1.52/26 6.680s, tl=112.861s, latency=0.275s}
+Re4 {+1.13/28 7.224s, tl=105.930s, latency=0.298s}
+39. Qd2 {-1.70/29 8.116s, tl=109.745s, latency=0.314s}
+Ree8 {+1.18/29 5.957s, tl=104.973s, latency=0.288s}
+40. Qb2 {-1.81/29 13.107s, tl=101.638s, latency=0.285s}
+Rh8 {+1.71/28 11.040s, tl=98.933s, latency=0.259s}
+41. Rc1 {-1.91/28 6.137s, tl=100.501s, latency=0.276s}
+Rce8 {+1.73/28 6.743s, tl=97.190s, latency=0.249s}
+42. Qc3 {-1.90/29 11.560s, tl=93.941s, latency=0.152s}
+h4 {+1.97/28 6.211s, tl=95.979s, latency=0.278s}
+43. gxh4 {-2.09/29 7.763s, tl=91.178s, latency=0.212s}
+Rc8 {+1.69/30 14.279s, tl=86.700s, latency=0.267s}
+44. Qxc8 {-2.63/31 7.727s, tl=88.451s, latency=0.268s}
+Rxc8 {+1.99/30 6.549s, tl=85.151s, latency=0.313s}
+45. Rxc8 {-2.45/30 5.712s, tl=87.739s, latency=0.286s}
+Qxb4 {+2.42/27 5.758s, tl=84.393s, latency=0.259s}
+46. h5 {-2.53/30 17.554s, tl=75.185s, latency=0.228s}
+Nxh5 {+2.59/29 10.251s, tl=79.142s, latency=0.130s}
+47. Nc2 {-2.31/29 5.620s, tl=74.565s, latency=0.283s}
+Qd6 {+2.79/27 5.899s, tl=78.243s, latency=0.297s}
+48. Ne1 {-2.84/27 5.807s, tl=73.758s, latency=0.255s}
+Nf6 {+2.91/29 10.132s, tl=73.111s, latency=0.255s}
+49. Nf3 {-3.11/28 5.671s, tl=73.087s, latency=0.263s}
+Ne4 {+3.10/31 15.289s, tl=62.822s, latency=0.252s}
+50. Ne5 {-2.88/30 5.292s, tl=72.795s, latency=0.304s}
+Qb4 {+3.01/29 5.075s, tl=62.747s, latency=0.254s}
+51. Rc7 {-2.94/28 6.442s, tl=71.353s, latency=0.140s}
+Qxd4 {+3.24/32 5.506s, tl=62.241s, latency=0.139s}
+52. Rxf7+ {-3.00/34 7.498s, tl=68.855s, latency=0.272s}
+Kg8 {+2.86/34 4.764s, tl=62.477s, latency=0.321s}
+53. Nf3 {-2.99/35 7.660s, tl=66.195s, latency=0.261s}
+Qd1+ {+2.75/35 5.045s, tl=62.432s, latency=0.248s}
+54. Re1 {-2.89/35 5.808s, tl=65.387s, latency=0.244s}
+Qxe1+ {+2.98/33 5.502s, tl=61.930s, latency=0.198s}
+55. Nxe1 {-2.82/35 7.397s, tl=62.990s, latency=0.257s}
+Kxf7 {+3.00/33 5.319s, tl=61.611s, latency=0.148s}
+56. Nd3 {-3.20/34 5.614s, tl=62.376s, latency=0.255s}
+Ke6 {+2.88/32 6.105s, tl=60.506s, latency=0.295s}
+57. Kf1 {-3.01/33 7.226s, tl=60.150s, latency=0.306s}
+g5 {+3.13/32 5.770s, tl=59.736s, latency=0.233s}
+58. Ke2 {-3.35/33 5.042s, tl=60.108s, latency=0.298s}
+Kd6 {+3.20/33 5.092s, tl=59.644s, latency=0.231s}
+59. Nb4 {-3.42/32 5.036s, tl=60.072s, latency=0.255s}
+Nc5 {+3.06/34 5.955s, tl=58.689s, latency=0.301s}
+60. g3 {-3.09/33 11.226s, tl=53.846s, latency=0.273s}
+Nb3 {+3.54/33 10.178s, tl=53.511s, latency=0.248s}
+61. f4 {-2.71/34 5.297s, tl=53.549s, latency=0.302s}
+g4 {+2.72/35 6.955s, tl=51.556s, latency=0.259s}
+62. Nxa6 {-2.82/36 6.638s, tl=51.911s, latency=0.283s}
+Nxa5 {+2.61/35 5.508s, tl=51.048s, latency=0.220s}
+63. f5 {-2.79/34 4.422s, tl=52.489s, latency=0.221s}
+d4 {+3.58/34 5.864s, tl=50.184s, latency=0.344s}
+64. f6 {-3.33/34 6.051s, tl=51.438s, latency=0.261s}
+Ke6 {+3.36/37 7.145s, tl=48.039s, latency=0.275s}
+65. Kd3 {-3.06/37 4.712s, tl=51.726s, latency=0.217s}
+Nc6 {+3.08/37 5.001s, tl=48.038s, latency=0.122s}
+66. Nc5+ {-3.00/36 5.831s, tl=50.895s, latency=0.242s}
+Kxf6 {+3.02/37 4.452s, tl=48.586s, latency=0.137s}
+67. Ke4 {-2.95/36 4.732s, tl=51.163s, latency=0.253s}
+Ne7 {+2.88/35 4.378s, tl=49.208s, latency=0.243s}
+68. Kxd4 {-2.77/35 4.405s, tl=51.758s, latency=0.307s}
+Nf5+ {+2.78/35 4.789s, tl=49.419s, latency=0.252s}
+69. Ke4 {-2.79/36 5.365s, tl=51.393s, latency=0.202s}
+Nxg3+ {+2.74/36 4.802s, tl=49.617s, latency=0.216s}
+70. Kf4 {-2.59/35 4.725s, tl=51.668s, latency=0.285s}
+Nf1 {+2.57/35 6.306s, tl=48.311s, latency=0.296s}
+71. Kxg4 {-2.63/36 4.678s, tl=51.990s, latency=0.278s}
+Ke5 {+2.54/35 4.344s, tl=48.967s, latency=0.278s}
+72. Kf3 {-2.59/34 4.389s, tl=52.601s, latency=0.301s}
+Kd4 {+2.27/31 5.059s, tl=48.908s, latency=0.266s}
+73. Na6 {-2.59/33 4.377s, tl=53.224s, latency=0.203s}
+Ne3 {+2.06/32 7.918s, tl=45.990s, latency=0.259s}
+74. Ke2 {-2.16/32 5.611s, tl=52.613s, latency=0.285s}
+Nd5 {+2.04/33 5.125s, tl=45.865s, latency=0.204s}
+75. Kd2 {-2.00/32 5.080s, tl=52.533s, latency=0.254s}
+Kc4 {+1.85/34 4.946s, tl=45.919s, latency=0.186s}
+76. Nb8 {-1.51/31 10.940s, tl=46.593s, latency=0.301s}
+Nb4 {+1.66/31 4.612s, tl=46.307s, latency=0.194s}
+77. Nd7 {-1.36/31 5.171s, tl=46.422s, latency=0.201s}
+Kb3 {+1.60/31 13.989s, tl=37.318s, latency=8.114s}
+78. Nc5+ {-0.93/30 6.074s, tl=45.348s, latency=0.212s}
+Ka3 {+0.79/33 6.431s, tl=35.887s, latency=0.282s}
+79. Ke3 {-0.54/33 4.717s, tl=45.631s, latency=0.307s}
+Nc2+ {+0.71/29 6.952s, tl=33.935s, latency=0.280s}
+80. Kd3 {-0.49/34 5.623s, tl=45.008s, latency=0.274s}
+Ne1+ {0.00/29 3.930s, tl=35.005s, latency=0.183s}
+81. Kd2 {-0.33/32 4.674s, tl=45.334s, latency=0.147s}
+Nf3+ {+0.30/31 4.085s, tl=35.920s, latency=0.285s}
+82. Ke3 {-0.13/33 4.890s, tl=45.444s, latency=0.289s}
+Ne5 {+0.07/33 9.834s, tl=31.086s, latency=0.181s}
+83. Ke4 {0.00/34 6.652s, tl=43.792s, latency=0.173s}
+Ng4 {0.00/33 4.065s, tl=32.021s, latency=0.245s}
+84. Na6 {0.00/37 4.475s, tl=44.317s, latency=0.215s}
+b4 {0.00/41 3.803s, tl=33.218s, latency=0.188s}
+85. Nxb4 {0.00/52 4.630s, tl=44.687s, latency=0.246s}
+Kxb4 {0.00/79 3.856s, tl=34.362s, latency=0.237s, Draw by insufficient mating material}
+1/2-1/2
+
+[Event "Fastchess Tournament"]
+[Site "?"]
+[Date "2026.10.31"]
+[Round "2"]
+[White "CorvusA"]
+[Black "CorvusB"]
+[Result "1/2-1/2"]
+[EngineWhiteName "Corvus 0.2"]
+[EngineWhiteAuthor "chess-agent team"]
+[EngineBlackName "Corvus 0.2"]
+[EngineBlackAuthor "chess-agent team"]
+[SetUp "1"]
+[FEN "rnbqkb1r/1ppppppp/5n2/p7/P6P/1P4P1/2PPPP2/RNBQKBNR b KQkq - 0 1"]
+[GameDuration "00:13:59"]
+[GameStartTime "2026-10-31T12:32:49 +0530"]
+[GameEndTime "2026-10-31T12:46:50 +0530"]
+[PlyCount "38"]
+[Termination "normal"]
+[TimeControl "600+5"]
+
+1... e5 {+0.60/27 26.124s, tl=583.876s, latency=0.301s}
+2. Bb2 {-0.61/25 24.301s, tl=585.699s, latency=0.266s}
+Nc6 {+0.60/28 23.268s, tl=565.608s, latency=0.264s}
+3. c4 {-0.67/28 27.267s, tl=563.432s, latency=0.295s}
+Bc5 {+0.66/29 20.327s, tl=550.281s, latency=0.238s}
+4. Nc3 {-0.51/29 22.931s, tl=545.501s, latency=0.159s}
+d6 {+0.57/29 22.546s, tl=532.735s, latency=0.247s}
+5. Bg2 {-0.61/28 27.891s, tl=522.610s, latency=0.291s}
+Nb4 {+0.67/29 36.958s, tl=500.777s, latency=0.270s}
+6. Nf3 {-0.56/29 29.939s, tl=497.671s, latency=0.295s}
+O-O {+0.53/28 17.245s, tl=488.532s, latency=0.297s}
+7. O-O {-0.57/27 16.938s, tl=485.733s, latency=0.302s}
+c6 {+0.58/26 24.407s, tl=469.125s, latency=0.219s}
+8. Na2 {-0.48/28 18.602s, tl=472.131s, latency=0.285s}
+Bf5 {+0.44/27 17.558s, tl=456.567s, latency=0.144s}
+9. d4 {-0.11/29 19.275s, tl=457.856s, latency=0.253s}
+exd4 {+0.40/29 17.837s, tl=443.730s, latency=0.286s}
+10. Nxd4 {-0.01/28 26.585s, tl=436.271s, latency=0.287s}
+Be4 {+0.17/28 25.330s, tl=423.400s, latency=0.293s}
+11. Nxb4 {-0.26/28 15.318s, tl=425.953s, latency=0.189s}
+axb4 {+0.17/29 36.797s, tl=391.603s, latency=0.300s}
+12. e3 {-0.25/27 14.902s, tl=416.051s, latency=0.276s}
+Re8 {+0.10/28 20.019s, tl=376.584s, latency=0.191s}
+13. Nc2 {-0.20/26 14.762s, tl=406.289s, latency=0.161s}
+Qe7 {+0.16/28 24.999s, tl=356.585s, latency=0.189s}
+14. Ne1 {-0.21/27 14.491s, tl=396.798s, latency=0.287s}
+Bg6 {+0.32/28 16.303s, tl=345.282s, latency=0.216s}
+15. Nd3 {0.00/28 17.386s, tl=384.412s, latency=0.297s}
+Ne4 {0.00/25 13.258s, tl=337.024s, latency=0.231s}
+16. Re1 {0.00/30 15.792s, tl=373.620s, latency=0.113s}
+Nc3 {0.00/30 13.775s, tl=328.249s, latency=0.259s}
+17. Qd2 {0.00/34 13.779s, tl=364.841s, latency=0.160s}
+Ne4 {0.00/32 21.275s, tl=311.974s, latency=0.286s}
+18. Qd1 {0.00/34 21.374s, tl=348.467s, latency=0.302s}
+Nc3 {0.00/32 19.050s, tl=297.924s, latency=0.201s}
+19. Qd2 {0.00/37 13.778s, tl=339.689s, latency=0.159s}
+Ne4 {0.00/37 11.296s, tl=291.628s, latency=0.300s}
+20. Qd1 {0.00/38 52.301s, tl=292.388s, latency=50.827s, Draw by 3-fold repetition}
+1/2-1/2
+
+[Event "Fastchess Tournament"]
+[Site "?"]
+[Date "2026.10.31"]
+[Round "1"]
+[White "CorvusA"]
+[Black "CorvusB"]
+[Result "1/2-1/2"]
+[EngineWhiteName "Corvus 0.2"]
+[EngineWhiteAuthor "chess-agent team"]
+[EngineBlackName "Corvus 0.2"]
+[EngineBlackAuthor "chess-agent team"]
+[SetUp "1"]
+[FEN "rnbqkbnr/ppp2pp1/3pp2p/8/P7/2P5/1P1PPPPP/RNBQKBNR w KQkq - 0 1"]
+[GameDuration "00:58:23"]
+[GameStartTime "2026-10-31T11:57:59 +0530"]
+[GameEndTime "2026-10-31T12:56:24 +0530"]
+[PlyCount "421"]
+[Termination "normal"]
+[TimeControl "600+5"]
+
+1. d4 {+0.09/25 20.584s, tl=589.416s, latency=0.176s}
+Nf6 {-0.10/27 39.389s, tl=570.611s, latency=0.210s}
+2. Nf3 {+0.11/28 44.785s, tl=549.631s, latency=0.257s}
+Nbd7 {-0.17/26 24.713s, tl=550.898s, latency=0.170s}
+3. Qc2 {+0.13/29 26.551s, tl=528.080s, latency=0.306s}
+d5 {-0.18/28 44.853s, tl=511.045s, latency=0.122s}
+4. Bf4 {+0.20/28 27.575s, tl=505.505s, latency=0.180s}
+Nh5 {0.00/29 53.025s, tl=463.020s, latency=0.243s}
+5. Be5 {+0.21/30 20.401s, tl=490.104s, latency=0.209s}
+Nhf6 {-0.26/30 28.853s, tl=439.167s, latency=0.198s}
+6. Bg3 {+0.08/30 40.657s, tl=454.447s, latency=0.242s}
+c5 {-0.21/31 24.277s, tl=419.890s, latency=0.169s}
+7. Nbd2 {+0.31/32 39.153s, tl=420.294s, latency=0.184s}
+Be7 {-0.31/31 38.603s, tl=386.287s, latency=0.233s}
+8. e4 {+0.33/29 15.367s, tl=409.927s, latency=0.275s}
+O-O {-0.23/31 30.621s, tl=360.666s, latency=0.277s}
+9. Be2 {+0.36/30 23.407s, tl=391.520s, latency=0.287s}
+Nh5 {-0.20/30 17.267s, tl=348.399s, latency=0.293s}
+10. exd5 {+0.15/32 22.021s, tl=374.499s, latency=0.293s}
+exd5 {-0.38/29 14.952s, tl=338.447s, latency=0.286s}
+11. O-O {0.00/29 20.748s, tl=358.751s, latency=0.244s}
+Nxg3 {-0.28/28 13.489s, tl=329.958s, latency=0.143s}
+12. hxg3 {+0.09/28 15.508s, tl=348.243s, latency=0.266s}
+a6 {-0.14/29 19.438s, tl=315.520s, latency=0.310s}
+13. Bd3 {+0.20/28 16.249s, tl=336.994s, latency=0.242s}
+Nf6 {-0.16/28 12.118s, tl=308.402s, latency=0.249s}
+14. Rfe1 {0.00/28 16.483s, tl=325.511s, latency=0.181s}
+cxd4 {-0.24/28 14.375s, tl=299.027s, latency=0.282s}
+15. Nxd4 {+0.09/28 18.431s, tl=312.080s, latency=0.189s}
+Bc5 {-0.10/28 21.866s, tl=282.161s, latency=0.222s}
+16. Nf1 {+0.24/28 35.264s, tl=281.816s, latency=0.272s}
+Bd7 {-0.19/27 39.997s, tl=247.164s, latency=0.239s}
+17. a5 {+0.12/25 12.780s, tl=274.036s, latency=0.251s}
+Qc7 {-0.06/26 10.864s, tl=241.300s, latency=0.247s}
+18. Ne3 {+0.16/27 10.625s, tl=268.411s, latency=0.231s}
+Rfe8 {0.00/29 10.640s, tl=235.660s, latency=0.280s}
+19. Bf5 {0.00/26 14.506s, tl=258.905s, latency=0.268s}
+Re5 {0.00/30 10.699s, tl=229.961s, latency=0.275s}
+20. Bxd7 {0.00/29 13.153s, tl=250.752s, latency=0.177s}
+Qxd7 {+0.08/29 17.515s, tl=217.446s, latency=0.307s}
+21. Re2 {0.00/29 12.938s, tl=242.814s, latency=0.259s}
+Rae8 {+0.17/29 15.655s, tl=206.791s, latency=0.212s}
+22. Qd3 {0.00/29 20.627s, tl=227.187s, latency=0.308s}
+Re4 {+0.15/28 14.439s, tl=197.352s, latency=0.204s}
+23. b4 {-0.38/28 21.061s, tl=211.126s, latency=0.271s}
+Ba7 {+0.22/28 18.270s, tl=184.082s, latency=0.265s}
+24. Rae1 {-0.26/28 18.624s, tl=197.502s, latency=0.236s}
+g6 {+0.32/29 29.567s, tl=159.515s, latency=0.309s}
+25. Ndc2 {-0.48/26 13.832s, tl=188.670s, latency=0.235s}
+Kg7 {+0.39/25 9.017s, tl=155.498s, latency=0.179s}
+26. Rd1 {-0.72/27 15.637s, tl=178.033s, latency=0.263s}
+h5 {+0.92/26 8.391s, tl=152.107s, latency=0.313s}
+27. Qd2 {-0.76/26 12.315s, tl=170.718s, latency=0.219s}
+Qc6 {+0.81/28 9.394s, tl=147.713s, latency=0.194s}
+28. Nd4 {-0.92/27 8.650s, tl=167.068s, latency=0.246s}
+Bxd4 {+1.38/28 10.338s, tl=142.375s, latency=0.163s}
+29. cxd4 {-1.41/27 7.607s, tl=164.461s, latency=0.289s}
+Qd6 {+1.13/28 8.279s, tl=139.096s, latency=0.302s}
+30. Rc1 {-1.32/28 16.821s, tl=152.640s, latency=0.287s}
+b5 {+1.05/28 9.718s, tl=134.378s, latency=0.287s}
+31. axb6 {-1.28/30 19.097s, tl=138.543s, latency=0.289s}
+Qxb6 {+1.16/29 6.623s, tl=132.755s, latency=0.214s}
+32. Rc5 {-1.31/28 7.013s, tl=136.530s, latency=0.251s}
+R4e6 {+1.44/27 9.744s, tl=128.011s, latency=0.267s}
+33. Ra5 {-1.67/28 24.979s, tl=116.551s, latency=0.305s}
+Qd8 {+1.79/28 8.304s, tl=124.707s, latency=0.228s}
+34. Ra3 {-1.86/28 13.998s, tl=107.553s, latency=0.263s}
+Qd6 {+1.79/29 6.782s, tl=122.925s, latency=0.254s}
+35. Ra5 {-1.58/29 7.966s, tl=104.587s, latency=0.273s}
+Kg8 {+1.59/29 14.272s, tl=113.653s, latency=0.234s}
+36. Qe1 {-2.03/28 6.943s, tl=102.644s, latency=0.266s}
+Ng4 {+1.82/30 7.647s, tl=111.006s, latency=0.207s}
+37. Raa2 {-1.81/30 5.948s, tl=101.696s, latency=0.274s}
+Nxe3 {+2.04/30 7.298s, tl=108.708s, latency=0.241s}
+38. Rxe3 {-2.00/31 12.311s, tl=94.385s, latency=0.171s}
+Rxe3 {+2.17/31 7.508s, tl=106.200s, latency=0.304s}
+39. fxe3 {-2.11/32 7.191s, tl=92.194s, latency=0.190s}
+Re6 {+2.06/30 7.071s, tl=104.129s, latency=0.301s}
+40. Ra5 {-2.08/29 6.207s, tl=90.987s, latency=0.282s}
+Kg7 {+2.25/31 7.362s, tl=101.767s, latency=0.242s}
+41. b5 {-2.23/31 8.623s, tl=87.364s, latency=0.176s}
+axb5 {+2.49/33 8.102s, tl=98.665s, latency=0.180s}
+42. Rxb5 {-2.47/33 6.575s, tl=85.789s, latency=0.241s}
+Qa3 {+2.37/35 6.729s, tl=96.936s, latency=0.248s}
+43. Kh2 {-2.46/34 5.336s, tl=85.453s, latency=0.255s}
+Rxe3 {+2.34/34 6.658s, tl=95.278s, latency=0.202s}
+44. Qf2 {-2.39/35 5.454s, tl=84.999s, latency=0.292s}
+Qe7 {+2.28/35 5.937s, tl=94.341s, latency=0.250s}
+45. Rxd5 {-2.40/36 7.250s, tl=82.749s, latency=0.247s}
+Re4 {+2.46/32 6.007s, tl=93.334s, latency=0.227s}
+46. Kh1 {-2.38/34 6.017s, tl=81.732s, latency=0.233s}
+Qc7 {+2.28/37 6.234s, tl=92.100s, latency=0.188s}
+47. Re5 {-2.34/37 5.310s, tl=81.422s, latency=0.266s}
+Rxe5 {+2.28/41 8.885s, tl=88.215s, latency=0.278s}
+48. dxe5 {-2.34/40 5.125s, tl=81.297s, latency=0.218s}
+Qxe5 {+2.28/40 5.425s, tl=87.790s, latency=0.242s}
+49. Kg1 {-2.31/41 20.238s, tl=66.059s, latency=0.185s}
+Kg8 {+2.26/38 8.496s, tl=84.294s, latency=0.226s}
+50. Kh1 {-2.31/38 4.824s, tl=66.235s, latency=0.210s}
+Kg7 {+2.27/40 6.104s, tl=83.190s, latency=0.298s}
+51. Kg1 {-2.30/37 6.068s, tl=65.167s, latency=0.157s}
+Qf6 {+2.26/38 5.463s, tl=82.727s, latency=0.307s}
+52. Qc5 {-2.30/39 5.047s, tl=65.120s, latency=0.177s}
+h4 {+2.27/39 5.724s, tl=82.003s, latency=0.294s}
+53. gxh4 {-2.06/37 5.179s, tl=64.941s, latency=0.275s}
+Qxh4 {+2.22/39 6.516s, tl=80.487s, latency=0.133s}
+54. Qe3 {-2.06/34 5.416s, tl=64.525s, latency=0.288s}
+Qd8 {+2.22/41 5.543s, tl=79.944s, latency=0.282s}
+55. Qc3+ {-2.06/38 5.043s, tl=64.482s, latency=0.161s}
+Kg8 {+2.22/41 8.104s, tl=76.840s, latency=0.272s}
+56. Kh2 {-2.06/33 4.872s, tl=64.610s, latency=0.225s}
+Qd6+ {+2.22/37 5.630s, tl=76.210s, latency=0.242s}
+57. Kg1 {-2.05/38 5.359s, tl=64.251s, latency=0.160s}
+Qb6+ {+2.22/40 6.584s, tl=74.626s, latency=0.165s}
+58. Kh1 {-2.05/34 5.395s, tl=63.856s, latency=0.267s}
+Kh7 {+2.18/37 6.698s, tl=72.928s, latency=0.311s}
+59. Kh2 {-2.05/33 6.610s, tl=62.246s, latency=0.223s}
+Qd6+ {+2.17/37 8.091s, tl=69.837s, latency=0.152s}
+60. Kg1 {-2.05/35 9.442s, tl=57.804s, latency=0.211s}
+Kh6 {+2.17/33 5.413s, tl=69.424s, latency=0.132s}
+61. Qc1+ {-2.05/35 4.814s, tl=57.990s, latency=0.167s}
+Kh5 {+2.17/33 5.240s, tl=69.184s, latency=0.261s}
+62. Qe3 {-2.05/34 6.558s, tl=56.432s, latency=0.272s}
+Qe6 {+2.17/33 6.230s, tl=67.954s, latency=0.258s}
+63. Qc5+ {-2.05/35 5.008s, tl=56.424s, latency=0.281s}
+Kg4 {+2.16/31 6.427s, tl=66.527s, latency=0.289s}
+64. Qc1 {-2.05/34 5.981s, tl=55.443s, latency=0.230s}
+Qd5 {+2.16/31 5.291s, tl=66.236s, latency=0.248s}
+65. Qc3 {-2.05/33 4.394s, tl=56.049s, latency=0.191s}
+Kf5 {+2.15/31 7.727s, tl=63.509s, latency=0.264s}
+66. Qc8+ {-2.05/32 5.226s, tl=55.823s, latency=0.293s}
+Qe6 {+2.15/30 8.327s, tl=60.182s, latency=0.303s}
+67. Qc3 {-2.05/33 5.178s, tl=55.645s, latency=0.233s}
+Qe5 {+2.15/31 7.660s, tl=57.522s, latency=0.270s}
+68. Qc8+ {-2.05/32 4.825s, tl=55.820s, latency=0.292s}
+Kg5 {+2.04/31 5.712s, tl=56.810s, latency=0.301s}
+69. Qd8+ {-2.05/33 5.212s, tl=55.608s, latency=0.250s}
+Kh5 {+2.05/30 5.254s, tl=56.556s, latency=0.301s}
+70. Qd2 {-2.05/35 6.282s, tl=54.326s, latency=0.197s}
+Qe6 {+2.05/31 6.118s, tl=55.438s, latency=0.233s}
+71. Kh1 {-2.05/34 5.073s, tl=54.253s, latency=0.254s}
+Qf5 {+2.06/32 5.049s, tl=55.389s, latency=0.290s}
+72. Kg1 {-2.05/35 5.215s, tl=54.038s, latency=0.174s}
+Qc5+ {+2.06/35 5.444s, tl=54.945s, latency=0.291s}
+73. Kh1 {-2.05/36 5.708s, tl=53.330s, latency=0.281s}
+Kg4 {+2.06/34 5.057s, tl=54.888s, latency=0.264s}
+74. Kh2 {-2.05/33 5.882s, tl=52.448s, latency=0.274s}
+Qc4 {+2.06/34 4.823s, tl=55.065s, latency=0.234s}
+75. Qd7+ {-2.05/33 4.447s, tl=53.001s, latency=0.312s}
+Kg5 {+2.06/34 5.299s, tl=54.766s, latency=0.204s}
+76. Qd8+ {-2.05/33 6.130s, tl=51.871s, latency=0.223s}
+Kf5 {+2.06/34 4.910s, tl=54.856s, latency=0.279s}
+77. Qd7+ {-2.05/32 4.308s, tl=52.563s, latency=0.188s}
+Kf6 {+2.06/34 7.426s, tl=52.430s, latency=0.288s}
+78. Kg1 {-2.05/32 4.835s, tl=52.728s, latency=0.297s}
+Qc1+ {+2.06/36 5.150s, tl=52.280s, latency=0.216s}
+79. Kh2 {-2.04/32 5.158s, tl=52.570s, latency=0.290s}
+Qf4+ {+2.06/35 5.060s, tl=52.220s, latency=0.118s}
+80. Kg1 {-2.04/32 4.998s, tl=52.572s, latency=0.178s}
+Qe5 {+2.06/33 4.468s, tl=52.752s, latency=0.258s}
+81. Kh1 {-2.03/30 6.171s, tl=51.401s, latency=0.293s}
+Qe1+ {+2.06/34 5.202s, tl=52.550s, latency=0.183s}
+82. Kh2 {-2.04/12 0.302s, tl=56.099s, latency=0.272s}
+Qe7 {+2.05/33 4.499s, tl=53.051s, latency=0.229s}
+83. Qc6+ {-2.03/29 4.480s, tl=56.619s, latency=0.159s}
+Kg7 {+2.05/32 4.677s, tl=53.374s, latency=0.201s}
+84. Qc3+ {-2.02/31 5.913s, tl=55.706s, latency=0.182s}
+Qf6 {+2.05/32 4.557s, tl=53.817s, latency=0.228s}
+85. Qe3 {-2.02/33 6.005s, tl=54.701s, latency=0.305s}
+Qh4+ {+2.05/32 5.040s, tl=53.777s, latency=0.200s}
+86. Kg1 {-2.02/35 5.406s, tl=54.295s, latency=0.155s}
+Qb4 {+2.05/34 4.816s, tl=53.961s, latency=0.271s}
+87. Kh2 {-2.02/33 4.492s, tl=54.803s, latency=0.252s}
+Qd6+ {+2.05/35 5.912s, tl=53.049s, latency=0.155s}
+88. Kg1 {-2.01/32 4.829s, tl=54.974s, latency=0.238s}
+Qd1+ {+2.05/35 5.012s, tl=53.037s, latency=0.248s}
+89. Kh2 {-2.01/31 5.673s, tl=54.301s, latency=0.247s}
+Qh5+ {+2.05/33 5.023s, tl=53.014s, latency=0.282s}
+90. Kg1 {-2.01/31 4.678s, tl=54.623s, latency=0.144s}
+Qd1+ {+2.05/35 4.443s, tl=53.571s, latency=0.275s}
+91. Kh2 {-2.01/31 6.210s, tl=53.413s, latency=0.231s}
+Qd6+ {+2.05/35 5.263s, tl=53.308s, latency=0.226s}
+92. Kg1 {-2.01/34 5.538s, tl=52.875s, latency=0.263s}
+Qd7 {+2.04/35 6.665s, tl=51.643s, latency=0.164s}
+93. Qe5+ {-1.92/31 4.726s, tl=53.149s, latency=0.229s}
+Kg8 {+2.05/34 7.054s, tl=49.589s, latency=0.143s}
+94. Qb8+ {-1.93/34 4.924s, tl=53.225s, latency=0.297s}
+Kg7 {+2.05/35 5.652s, tl=48.937s, latency=0.199s}
+95. Qe5+ {-1.93/35 4.844s, tl=53.381s, latency=0.245s}
+f6 {+2.05/36 6.296s, tl=47.641s, latency=0.150s}
+96. Qc3 {-1.92/33 4.488s, tl=53.893s, latency=0.239s}
+Qa7+ {+2.03/31 4.818s, tl=47.823s, latency=0.266s}
+97. Kh1 {-1.92/34 5.227s, tl=53.666s, latency=0.292s}
+Qf7 {+2.02/33 4.785s, tl=48.038s, latency=0.276s}
+98. Qd2 {-1.92/33 5.059s, tl=53.607s, latency=0.210s}
+Qe7 {+2.01/34 5.435s, tl=47.603s, latency=0.292s}
+99. Kh2 {-1.92/33 5.645s, tl=52.962s, latency=0.292s}
+Kf7 {+2.01/33 5.157s, tl=47.446s, latency=0.227s}
+100. Kg1 {-1.92/32 4.364s, tl=53.598s, latency=0.178s}
+Qe6 {+2.01/33 4.253s, tl=48.193s, latency=0.290s}
+101. Qd8 {-1.92/33 5.329s, tl=53.269s, latency=0.274s}
+Qe3+ {+2.00/32 5.172s, tl=48.021s, latency=0.276s}
+102. Kh2 {-1.92/35 4.505s, tl=53.764s, latency=0.301s}
+Qe5+ {+2.00/34 5.207s, tl=47.814s, latency=0.247s}
+103. Kg1 {-1.91/31 5.402s, tl=53.362s, latency=0.267s}
+g5 {+2.00/32 5.088s, tl=47.726s, latency=0.292s}
+104. Qd3 {-1.91/32 5.008s, tl=53.354s, latency=0.294s}
+Qc5+ {+2.00/30 4.206s, tl=48.520s, latency=0.246s}
+105. Kh2 {-1.91/32 4.931s, tl=53.423s, latency=0.260s}
+Qc7+ {+1.97/30 5.821s, tl=47.699s, latency=0.308s}
+106. Kg1 {-1.91/32 4.593s, tl=53.830s, latency=0.198s}
+Kg7 {+1.93/29 4.181s, tl=48.518s, latency=0.187s}
+107. Kh1 {-1.90/31 5.096s, tl=53.734s, latency=0.202s}
+Qc1+ {+1.89/31 4.779s, tl=48.739s, latency=0.253s}
+108. Kh2 {-1.89/31 4.504s, tl=54.230s, latency=0.240s}
+Qc7+ {+1.88/31 4.284s, tl=49.455s, latency=0.228s}
+109. Kg1 {-1.88/31 5.687s, tl=53.543s, latency=0.275s}
+Qc5+ {+1.87/31 4.411s, tl=50.044s, latency=0.146s}
+110. Kh2 {-1.88/31 4.794s, tl=53.749s, latency=0.200s}
+Qe5+ {+1.85/31 6.627s, tl=48.417s, latency=0.216s}
+111. Kh1 {-1.89/32 5.365s, tl=53.384s, latency=0.250s}
+Qe1+ {+1.86/31 5.701s, tl=47.716s, latency=0.170s}
+112. Kh2 {-1.86/29 4.891s, tl=53.493s, latency=0.226s}
+Qe6 {+1.86/31 4.536s, tl=48.180s, latency=0.303s}
+113. Qd8 {-1.85/31 5.084s, tl=53.409s, latency=0.300s}
+Qe5+ {+1.86/32 6.195s, tl=46.985s, latency=0.271s}
+114. Kh1 {-1.85/30 5.192s, tl=53.217s, latency=0.167s}
+Qe1+ {+1.84/30 6.228s, tl=45.757s, latency=0.173s}
+115. Kh2 {-1.84/15 0.296s, tl=57.921s, latency=0.270s}
+Qe5+ {+1.84/30 4.197s, tl=46.560s, latency=0.262s}
+116. Kh1 {-1.85/32 4.919s, tl=58.002s, latency=0.267s}
+Kf7 {+1.84/31 4.228s, tl=47.332s, latency=0.211s}
+117. Qd7+ {-1.85/31 6.279s, tl=56.723s, latency=0.203s}
+Qe7 {+1.84/30 5.410s, tl=46.922s, latency=0.287s}
+118. Qd5+ {-1.85/29 4.523s, tl=57.200s, latency=0.254s}
+Qe6 {+1.82/29 6.130s, tl=45.792s, latency=0.293s}
+119. Qd3 {-1.84/28 4.789s, tl=57.411s, latency=0.226s}
+Qc6 {+1.80/28 4.220s, tl=46.572s, latency=0.272s}
+120. Qh7+ {-1.70/27 5.419s, tl=56.992s, latency=0.275s}
+Ke6 {+1.65/28 4.228s, tl=47.344s, latency=0.137s}
+121. Qh3+ {-1.68/26 4.814s, tl=57.178s, latency=0.269s}
+Ke5 {+1.66/29 6.094s, tl=46.250s, latency=0.292s}
+122. Qh2+ {-1.65/28 6.593s, tl=55.585s, latency=0.239s}
+Kd5 {+1.68/29 6.563s, tl=44.687s, latency=0.252s}
+123. Qh7 {-1.65/28 5.043s, tl=55.542s, latency=0.278s}
+Ke6 {+1.68/28 5.724s, tl=43.963s, latency=0.280s}
+124. Qh3+ {-1.66/30 5.554s, tl=54.988s, latency=0.237s}
+Ke5 {+1.68/29 4.994s, tl=43.969s, latency=0.190s}
+125. Qh2+ {-1.66/29 7.385s, tl=52.603s, latency=0.193s}
+Kd4 {+1.67/28 4.260s, tl=44.709s, latency=0.288s}
+126. Qg1+ {-1.66/27 5.145s, tl=52.458s, latency=0.253s}
+Kd5 {+1.68/30 4.870s, tl=44.839s, latency=0.251s}
+127. Qe3 {-1.66/29 5.866s, tl=51.592s, latency=0.268s}
+Qc4 {+1.68/28 4.200s, tl=45.639s, latency=0.154s}
+128. Qf3+ {-1.66/29 5.550s, tl=51.042s, latency=0.195s}
+Ke5 {+1.68/29 4.581s, tl=46.058s, latency=0.169s}
+129. Qb7 {-1.65/30 4.490s, tl=51.552s, latency=0.286s}
+Kd6 {+1.67/28 4.605s, tl=46.453s, latency=0.253s}
+130. Kg1 {-1.66/29 6.079s, tl=50.473s, latency=0.300s}
+Qc5+ {+1.68/28 4.804s, tl=46.649s, latency=0.251s}
+131. Kh2 {-1.66/30 6.231s, tl=49.242s, latency=0.235s}
+Qe5+ {+1.67/27 6.434s, tl=45.215s, latency=0.284s}
+132. Kg1 {-1.65/29 6.065s, tl=48.177s, latency=0.305s}
+Qe3+ {+1.67/29 7.435s, tl=42.780s, latency=0.260s}
+133. Kh2 {-1.65/30 5.748s, tl=47.429s, latency=0.247s}
+Qe5+ {+1.67/29 6.095s, tl=41.685s, latency=0.190s}
+134. Kh1 {-1.65/27 4.164s, tl=48.265s, latency=0.154s}
+Ke6 {+1.66/30 8.514s, tl=38.171s, latency=0.310s}
+135. Qg7 {-1.64/28 5.377s, tl=47.888s, latency=0.265s}
+Qc3 {+1.67/26 4.489s, tl=38.682s, latency=0.298s}
+136. Kh2 {-1.64/28 4.955s, tl=47.933s, latency=0.283s}
+Qe5+ {+1.66/28 4.372s, tl=39.310s, latency=0.190s}
+137. Kh1 {-1.64/29 4.609s, tl=48.324s, latency=0.253s}
+Qe1+ {+1.67/30 4.688s, tl=39.622s, latency=0.301s}
+138. Kh2 {-1.62/13 0.332s, tl=52.992s, latency=0.309s}
+Qh4+ {+1.66/29 5.812s, tl=38.810s, latency=0.213s}
+139. Kg1 {-1.47/13 0.299s, tl=57.693s, latency=0.264s}
+Qd4+ {+1.62/28 4.506s, tl=39.304s, latency=0.302s}
+140. Kh2 {-1.64/29 4.768s, tl=57.925s, latency=0.299s}
+Qd6+ {+1.66/28 4.295s, tl=40.009s, latency=0.277s}
+141. Kg1 {-1.64/29 8.632s, tl=54.293s, latency=0.290s}
+Qd1+ {+1.67/29 4.099s, tl=40.910s, latency=0.187s}
+142. Kh2 {-1.64/29 4.500s, tl=54.793s, latency=0.262s}
+Qh5+ {+1.66/30 4.184s, tl=41.726s, latency=0.191s}
+143. Kg1 {-1.63/30 4.831s, tl=54.962s, latency=0.298s}
+Qf7 {+1.66/31 6.746s, tl=39.980s, latency=0.237s}
+144. Qh8 {-1.64/29 5.427s, tl=54.535s, latency=0.143s}
+Kf5 {+1.66/30 5.389s, tl=39.591s, latency=0.164s}
+145. Qc8+ {-1.64/29 4.472s, tl=55.063s, latency=0.169s}
+Kg6 {+1.66/31 4.686s, tl=39.905s, latency=0.294s}
+146. Qc2+ {-1.63/28 5.759s, tl=54.304s, latency=0.180s}
+Kg7 {+1.66/28 4.072s, tl=40.833s, latency=0.200s}
+147. Qc8 {-1.64/29 4.795s, tl=54.509s, latency=0.228s}
+Qa7+ {+1.66/30 4.635s, tl=41.198s, latency=0.214s}
+148. Kh2 {-1.46/28 4.718s, tl=54.791s, latency=0.245s}
+Qe7 {+1.66/31 4.872s, tl=41.326s, latency=0.240s}
+149. Kg1 {-1.43/28 5.004s, tl=54.787s, latency=0.226s}
+Qe3+ {+1.65/29 4.956s, tl=41.370s, latency=0.296s}
+150. Kh2 {-1.45/29 4.721s, tl=55.066s, latency=0.128s}
+Qe5+ {+1.66/29 4.550s, tl=41.820s, latency=0.228s}
+151. Kg1 {-1.44/29 6.004s, tl=54.062s, latency=0.237s}
+f5 {+1.59/28 5.617s, tl=41.203s, latency=0.284s}
+152. Qd8 {-1.44/27 4.829s, tl=54.233s, latency=0.280s}
+Qf6 {+1.45/27 6.948s, tl=39.255s, latency=0.121s}
+153. Qd5 {-1.44/28 4.577s, tl=54.656s, latency=0.237s}
+Qb6+ {+1.64/26 4.266s, tl=39.989s, latency=0.238s}
+154. Kh2 {-1.43/28 5.457s, tl=54.199s, latency=0.239s}
+Qc7+ {+1.61/29 7.067s, tl=37.922s, latency=0.156s}
+155. Kg1 {-1.43/28 4.552s, tl=54.647s, latency=0.208s}
+Kf6 {+1.61/29 8.828s, tl=34.094s, latency=0.212s}
+156. Qd4+ {-1.44/29 6.145s, tl=53.502s, latency=0.253s}
+Kg6 {+1.61/30 6.540s, tl=32.554s, latency=0.282s}
+157. Qe3 {-1.44/31 6.274s, tl=52.228s, latency=0.298s}
+g4 {+1.60/29 4.303s, tl=33.251s, latency=0.199s}
+158. g3 {-1.41/28 6.509s, tl=50.719s, latency=0.269s}
+Kf7 {+1.60/29 4.877s, tl=33.374s, latency=0.303s}
+159. Qb3+ {-1.41/28 4.630s, tl=51.089s, latency=0.192s}
+Kf6 {+1.60/29 4.870s, tl=33.504s, latency=0.293s}
+160. Qe3 {-1.41/28 5.930s, tl=50.159s, latency=0.233s}
+Qe5 {+1.60/29 5.345s, tl=33.159s, latency=0.305s}
+161. Qh6+ {-1.41/27 5.260s, tl=49.899s, latency=0.155s}
+Ke7 {+1.60/27 4.668s, tl=33.491s, latency=0.285s}
+162. Kg2 {-1.41/28 6.013s, tl=48.886s, latency=0.304s}
+Qe4+ {+1.60/27 4.391s, tl=34.100s, latency=0.142s}
+163. Kg1 {-1.41/29 6.399s, tl=47.487s, latency=0.264s}
+Qc2 {+1.59/26 4.558s, tl=34.542s, latency=0.265s}
+164. Qb6 {-1.40/27 6.978s, tl=45.509s, latency=0.287s}
+Qd1+ {+1.59/27 4.209s, tl=35.333s, latency=0.270s}
+165. Kh2 {-1.40/28 4.249s, tl=46.260s, latency=0.145s}
+Qc2+ {+1.58/28 5.060s, tl=35.273s, latency=0.187s}
+166. Kh1 {-1.40/28 6.502s, tl=44.758s, latency=0.300s}
+Qc1+ {+1.58/27 4.665s, tl=35.608s, latency=0.244s}
+167. Kg2 {-1.40/29 6.209s, tl=43.549s, latency=0.233s}
+Qd2+ {+1.58/27 4.213s, tl=36.395s, latency=0.250s}
+168. Kh1 {-1.39/28 4.576s, tl=43.973s, latency=0.190s}
+Qd3 {+1.58/28 5.203s, tl=36.192s, latency=0.269s}
+169. Kh2 {-1.37/29 5.360s, tl=43.613s, latency=0.140s}
+Kf7 {+1.58/27 5.858s, tl=35.334s, latency=0.244s}
+170. Qc7+ {-1.36/26 7.459s, tl=41.154s, latency=0.178s}
+Ke6 {+1.49/28 5.833s, tl=34.501s, latency=0.282s}
+171. Qc5 {-1.34/28 6.500s, tl=39.654s, latency=0.194s}
+Qd2+ {+1.50/28 4.689s, tl=34.812s, latency=0.243s}
+172. Kg1 {-1.33/29 6.174s, tl=38.480s, latency=0.316s}
+Qd3 {+1.46/28 5.773s, tl=34.039s, latency=0.279s}
+173. Qc6+ {-1.20/27 6.488s, tl=36.992s, latency=0.279s}
+Qd6 {+1.44/26 4.066s, tl=34.973s, latency=0.277s}
+174. Qc3 {-1.19/27 4.037s, tl=37.955s, latency=0.240s}
+Qd1+ {+1.44/27 4.157s, tl=35.816s, latency=0.140s}
+175. Kg2 {-1.19/28 3.954s, tl=39.001s, latency=0.156s}
+Qe2+ {+1.44/28 4.488s, tl=36.328s, latency=0.251s}
+176. Kg1 {-1.18/29 6.473s, tl=37.528s, latency=0.292s}
+Qd1+ {+1.43/28 5.046s, tl=36.282s, latency=0.285s}
+177. Kh2 {-1.18/29 5.341s, tl=37.187s, latency=0.195s}
+Qe2+ {+1.43/30 5.631s, tl=35.651s, latency=0.248s}
+178. Kg1 {-1.09/29 4.203s, tl=37.984s, latency=0.286s}
+Qe5 {+1.43/31 5.546s, tl=35.105s, latency=0.157s}
+179. Qc4+ {-1.08/28 4.384s, tl=38.600s, latency=0.138s}
+Kf6 {+1.43/30 4.402s, tl=35.703s, latency=0.268s}
+180. Kf2 {-1.07/30 4.056s, tl=39.544s, latency=0.253s}
+Qb2+ {+1.39/28 5.067s, tl=35.636s, latency=0.220s}
+181. Kg1 {-1.07/28 4.266s, tl=40.278s, latency=0.219s}
+Qa1+ {+1.39/28 6.058s, tl=34.578s, latency=0.303s}
+182. Kh2 {-1.07/30 4.831s, tl=40.447s, latency=0.135s}
+Qb2+ {+1.37/28 4.642s, tl=34.936s, latency=0.306s}
+183. Kg1 {-1.06/29 5.646s, tl=39.801s, latency=0.227s}
+Qb6+ {+1.37/29 5.909s, tl=34.027s, latency=0.172s}
+184. Kg2 {-1.05/31 6.942s, tl=37.859s, latency=0.192s}
+Qa5 {+1.36/28 10.307s, tl=28.720s, latency=5.746s}
+185. Kf1 {-1.05/29 5.243s, tl=37.616s, latency=0.267s}
+Ke5 {+1.29/27 4.717s, tl=29.003s, latency=0.145s}
+186. Qf4+ {-1.05/28 4.798s, tl=37.818s, latency=0.240s}
+Ke6 {+1.28/27 6.146s, tl=27.857s, latency=0.210s}
+187. Qe3+ {-0.86/28 7.299s, tl=35.519s, latency=0.297s}
+Kd6 {+1.25/26 8.600s, tl=24.257s, latency=4.407s}
+188. Qd4+ {-0.86/28 4.177s, tl=36.342s, latency=0.318s}
+Qd5 {+1.16/28 7.470s, tl=21.787s, latency=4.725s}
+189. Qb6+ {-0.85/27 4.008s, tl=37.334s, latency=0.284s}
+Qc6 {+1.07/30 4.525s, tl=22.262s, latency=0.233s}
+190. Qb4+ {-0.85/27 7.974s, tl=34.360s, latency=0.305s}
+Qc5 {+1.05/26 3.660s, tl=23.602s, latency=0.262s}
+191. Qb1 {-0.86/28 6.134s, tl=33.226s, latency=0.196s}
+Ke6 {+0.99/26 4.986s, tl=23.616s, latency=0.285s}
+192. Qb3+ {-0.82/25 4.637s, tl=33.589s, latency=0.268s}
+Ke5 {+0.89/26 4.382s, tl=24.234s, latency=0.294s}
+193. Qb2+ {-0.75/26 4.457s, tl=34.132s, latency=0.298s}
+Ke6 {+0.87/27 6.164s, tl=23.070s, latency=0.136s}
+194. Qe2+ {-0.65/27 7.160s, tl=31.972s, latency=0.282s}
+Kf6 {+0.71/27 5.595s, tl=22.475s, latency=0.295s}
+195. Qb2+ {-0.46/26 4.129s, tl=32.843s, latency=0.149s}
+Ke6 {+0.61/27 6.937s, tl=20.538s, latency=3.878s}
+196. Qe2+ {-0.36/26 3.951s, tl=33.892s, latency=0.285s}
+Kf6 {0.00/28 6.348s, tl=19.190s, latency=1.130s}
+197. Qb2+ {0.00/28 5.617s, tl=33.275s, latency=0.180s}
+Kg6 {0.00/32 4.007s, tl=20.183s, latency=0.307s}
+198. Qb3 {0.00/34 4.056s, tl=34.219s, latency=0.286s}
+Kh6 {0.00/34 4.471s, tl=20.712s, latency=0.285s}
+199. Qe6+ {0.00/34 5.090s, tl=34.129s, latency=0.301s}
+Kg5 {0.00/36 3.812s, tl=21.900s, latency=0.289s}
+200. Qb3 {0.00/35 3.955s, tl=35.174s, latency=0.310s}
+Qc1+ {0.00/35 4.282s, tl=22.618s, latency=0.141s}
+201. Ke2 {0.00/33 4.109s, tl=36.065s, latency=0.301s}
+Kf6 {0.00/33 6.263s, tl=21.355s, latency=0.135s}
+202. Qb6+ {0.00/34 4.785s, tl=36.280s, latency=0.277s}
+Ke7 {0.00/32 4.959s, tl=21.396s, latency=0.201s}
+203. Qd4 {0.00/36 4.507s, tl=36.773s, latency=0.231s}
+Qc2+ {0.00/33 3.871s, tl=22.525s, latency=0.225s}
+204. Ke3 {0.00/39 4.275s, tl=37.498s, latency=0.248s}
+Qb3+ {0.00/29 4.221s, tl=23.304s, latency=0.311s}
+205. Kf4 {0.00/30 5.101s, tl=37.397s, latency=0.292s}
+Qf3+ {0.00/31 4.047s, tl=24.257s, latency=0.191s}
+206. Kg5 {0.00/31 4.116s, tl=38.281s, latency=0.148s}
+Qxg3 {0.00/28 3.847s, tl=25.410s, latency=0.184s}
+207. Qf6+ {0.00/29 4.042s, tl=39.239s, latency=0.173s}
+Ke8 {0.00/30 5.163s, tl=25.247s, latency=0.163s}
+208. Qxf5 {0.00/30 4.758s, tl=39.481s, latency=0.163s}
+Ke7 {0.00/29 4.274s, tl=25.973s, latency=0.171s}
+209. Qc5+ {0.00/32 4.373s, tl=40.108s, latency=0.264s}
+Qd6 {0.00/36 3.748s, tl=27.225s, latency=0.265s}
+210. Qxd6+ {0.00/43 3.934s, tl=41.174s, latency=0.139s}
+Kxd6 {0.00/124 2.363s, tl=29.862s, latency=0.288s}
+211. Kxg4 {0.00/124 0.393s, tl=45.781s, latency=0.297s, Draw by insufficient mating material}
+1/2-1/2
+
+[Event "Fastchess Tournament"]
+[Site "?"]
+[Date "2026.10.31"]
+[Round "2"]
+[White "CorvusB"]
+[Black "CorvusA"]
+[Result "1/2-1/2"]
+[EngineWhiteName "Corvus 0.2"]
+[EngineWhiteAuthor "chess-agent team"]
+[EngineBlackName "Corvus 0.2"]
+[EngineBlackAuthor "chess-agent team"]
+[SetUp "1"]
+[FEN "rnbqkb1r/1ppppppp/5n2/p7/P6P/1P4P1/2PPPP2/RNBQKBNR b KQkq - 0 1"]
+[GameDuration "01:05:12"]
+[GameStartTime "2026-10-31T12:46:50 +0530"]
+[GameEndTime "2026-10-31T13:52:00 +0530"]
+[PlyCount "208"]
+[Termination "normal"]
+[TimeControl "600+5"]
+
+1... e5 {+0.54/26 19.876s, tl=590.124s, latency=0.285s}
+2. Bb2 {-0.61/25 24.588s, tl=585.412s, latency=0.218s}
+Nc6 {+0.63/28 25.626s, tl=569.498s, latency=0.134s}
+3. c4 {-0.67/28 28.114s, tl=562.298s, latency=0.250s}
+Bc5 {+0.60/29 22.742s, tl=551.756s, latency=0.275s}
+4. Nc3 {-0.51/29 22.622s, tl=544.676s, latency=0.275s}
+d6 {+0.65/29 19.941s, tl=536.815s, latency=0.206s}
+5. Bg2 {-0.61/28 27.390s, tl=522.286s, latency=0.200s}
+Nb4 {+0.61/30 46.385s, tl=495.430s, latency=0.182s}
+6. Nf3 {-0.56/29 29.192s, tl=498.094s, latency=0.272s}
+O-O {+0.70/28 19.336s, tl=481.094s, latency=0.258s}
+7. O-O {-0.49/28 40.236s, tl=462.858s, latency=0.231s}
+c6 {+0.53/28 27.138s, tl=458.956s, latency=0.178s}
+8. Na2 {-0.47/27 16.430s, tl=451.428s, latency=0.301s}
+Re8 {+0.58/29 19.036s, tl=444.920s, latency=0.280s}
+9. Nxb4 {-0.52/28 15.684s, tl=440.744s, latency=0.217s}
+Bxb4 {+0.48/28 20.264s, tl=429.656s, latency=0.276s}
+10. Ne1 {-0.58/26 21.344s, tl=424.400s, latency=0.273s}
+Bf5 {+0.59/27 37.702s, tl=396.954s, latency=0.226s}
+11. d3 {-0.63/27 49.894s, tl=379.506s, latency=0.272s}
+h6 {+0.51/26 28.415s, tl=373.539s, latency=0.294s}
+12. Nc2 {-0.34/26 15.573s, tl=368.933s, latency=0.187s}
+Bc5 {+0.52/27 15.725s, tl=362.814s, latency=0.306s}
+13. e4 {-0.45/27 16.140s, tl=357.793s, latency=0.192s}
+Bg4 {+0.33/28 15.088s, tl=352.726s, latency=0.232s}
+14. Qd2 {-0.45/29 54.306s, tl=308.487s, latency=43.840s}
+Qc8 {+0.37/23 43.547s, tl=314.179s, latency=0.287s}
+15. Kh2 {-0.22/23 15.799s, tl=297.688s, latency=0.281s}
+Bd7 {+0.17/22 13.078s, tl=306.101s, latency=0.225s}
+16. Bc3 {-0.26/25 12.578s, tl=290.110s, latency=0.257s}
+Qc7 {0.00/23 12.159s, tl=298.942s, latency=0.288s}
+17. Kg1 {-0.26/24 12.197s, tl=282.913s, latency=0.255s}
+Kh7 {+0.26/24 18.604s, tl=285.338s, latency=0.239s}
+18. Ne3 {-0.05/24 18.274s, tl=269.639s, latency=0.155s}
+Ng4 {+0.22/25 30.175s, tl=260.163s, latency=0.200s}
+19. d4 {-0.04/25 19.046s, tl=255.593s, latency=0.273s}
+exd4 {+0.03/26 15.166s, tl=249.997s, latency=0.321s}
+20. Bxd4 {0.00/26 16.946s, tl=243.647s, latency=0.249s}
+Nxe3 {-0.12/25 31.673s, tl=223.324s, latency=0.232s}
+21. Qxe3 {+0.20/25 10.136s, tl=238.511s, latency=0.187s}
+Bxd4 {-0.30/25 10.102s, tl=218.222s, latency=0.210s}
+22. Qxd4 {+0.23/25 9.535s, tl=233.976s, latency=0.229s}
+Rad8 {-0.34/26 9.854s, tl=213.368s, latency=0.131s}
+23. Rfd1 {+0.33/26 10.961s, tl=228.015s, latency=0.287s}
+Bg4 {-0.39/25 11.829s, tl=206.539s, latency=0.236s}
+24. Rd3 {+0.47/25 10.549s, tl=222.466s, latency=0.153s}
+h5 {-0.56/26 12.809s, tl=198.730s, latency=0.271s}
+25. Kh2 {+0.47/25 11.200s, tl=216.266s, latency=0.310s}
+Kg8 {-0.58/25 16.510s, tl=187.220s, latency=0.323s}
+26. Qc3 {+0.47/24 11.741s, tl=209.525s, latency=0.164s}
+Rd7 {-0.58/26 8.784s, tl=183.436s, latency=0.295s}
+27. Qd2 {+0.47/28 9.276s, tl=205.249s, latency=0.225s}
+f6 {-0.67/28 9.581s, tl=178.855s, latency=0.234s}
+28. f3 {+0.51/27 9.111s, tl=201.138s, latency=0.319s}
+Be6 {-0.48/31 11.592s, tl=172.263s, latency=0.261s}
+29. Rc1 {+0.50/28 11.044s, tl=195.094s, latency=0.222s}
+Rdd8 {-0.48/31 10.927s, tl=166.336s, latency=0.246s}
+30. Rd4 {+0.50/28 11.096s, tl=188.998s, latency=0.193s}
+Qb6 {-0.75/27 15.863s, tl=155.473s, latency=0.270s}
+31. Rc3 {+1.12/27 12.480s, tl=181.518s, latency=0.154s}
+Kf7 {-1.02/28 16.741s, tl=143.732s, latency=0.260s}
+32. Rdd3 {+0.57/26 18.563s, tl=167.955s, latency=0.284s}
+Qc5 {-0.50/25 8.194s, tl=140.538s, latency=0.299s}
+33. Rd4 {+0.50/27 19.214s, tl=153.741s, latency=0.270s}
+Re7 {-0.59/28 17.991s, tl=127.547s, latency=0.291s}
+34. Rcd3 {+0.57/28 7.459s, tl=151.282s, latency=0.201s}
+Red7 {-0.90/27 6.950s, tl=125.597s, latency=0.260s}
+35. Bh3 {+0.89/27 9.880s, tl=146.402s, latency=0.289s}
+Bxh3 {-0.90/29 7.066s, tl=123.531s, latency=0.278s}
+36. Kxh3 {+0.67/29 13.042s, tl=138.360s, latency=0.301s}
+Kg8 {-0.81/27 6.957s, tl=121.574s, latency=0.230s}
+37. Kg2 {+0.90/28 7.144s, tl=136.216s, latency=0.286s}
+Qe5 {-0.83/27 8.431s, tl=118.143s, latency=0.207s}
+38. Qf4 {+0.99/26 7.864s, tl=133.352s, latency=0.286s}
+Kf8 {-0.73/24 6.441s, tl=116.702s, latency=0.252s}
+39. Qe3 {+0.83/28 7.551s, tl=130.801s, latency=0.259s}
+Kf7 {-0.77/26 11.555s, tl=110.147s, latency=0.244s}
+40. Rd1 {+0.90/26 6.727s, tl=129.074s, latency=0.288s}
+Qc5 {-0.85/25 6.461s, tl=108.686s, latency=0.223s}
+41. Qf4 {+0.82/28 8.691s, tl=125.383s, latency=0.305s}
+Ke6 {-0.93/25 7.471s, tl=106.215s, latency=0.237s}
+42. g4 {+1.25/25 8.486s, tl=121.897s, latency=0.174s}
+hxg4 {-1.03/23 6.636s, tl=104.579s, latency=0.303s}
+43. Qxg4+ {+0.74/24 6.713s, tl=120.184s, latency=0.294s}
+Kf7 {-1.57/25 9.080s, tl=100.499s, latency=0.224s}
+44. h5 {+1.53/24 6.993s, tl=118.191s, latency=0.202s}
+Qe5 {-1.80/26 16.741s, tl=88.758s, latency=0.148s}
+45. f4 {+1.79/24 6.755s, tl=116.436s, latency=0.219s}
+Qe6 {-1.72/25 7.300s, tl=86.458s, latency=0.263s}
+46. Kh3 {+1.62/25 7.531s, tl=113.905s, latency=0.291s}
+Re7 {-1.68/25 5.606s, tl=85.852s, latency=0.257s}
+47. Qxe6+ {+1.38/27 8.091s, tl=110.814s, latency=0.185s}
+Rxe6 {-1.63/27 8.556s, tl=82.296s, latency=0.302s}
+48. Kg4 {+1.63/27 6.086s, tl=109.728s, latency=0.203s}
+b6 {-2.06/28 11.137s, tl=76.159s, latency=0.223s}
+49. Kf3 {+1.80/26 12.072s, tl=102.656s, latency=0.261s}
+Rh8 {-1.70/25 5.513s, tl=75.646s, latency=0.183s}
+50. Rh1 {+2.23/26 8.666s, tl=98.990s, latency=0.308s}
+Ke7 {-2.20/25 5.277s, tl=75.369s, latency=0.269s}
+51. Rg1 {+1.96/27 8.588s, tl=95.402s, latency=0.235s}
+Rh7 {-1.93/27 7.102s, tl=73.267s, latency=0.138s}
+52. h6 {+2.09/27 6.674s, tl=93.728s, latency=0.258s}
+Rxh6 {-2.08/27 5.454s, tl=72.813s, latency=0.231s}
+53. f5 {+2.19/27 5.749s, tl=92.979s, latency=0.233s}
+Re5 {-2.15/28 11.960s, tl=65.853s, latency=0.210s}
+54. Rxg7+ {+2.32/25 7.162s, tl=90.817s, latency=0.295s}
+Kf8 {-2.28/25 6.027s, tl=64.826s, latency=0.227s}
+55. Rb7 {+2.61/25 7.051s, tl=88.766s, latency=0.241s}
+d5 {-2.58/26 5.030s, tl=64.796s, latency=0.303s}
+56. cxd5 {+2.26/26 6.711s, tl=87.055s, latency=0.140s}
+cxd5 {-3.17/27 13.995s, tl=55.801s, latency=0.249s}
+57. Rb8+ {+2.55/28 9.200s, tl=82.855s, latency=0.249s}
+Kf7 {-3.23/32 4.918s, tl=55.883s, latency=0.255s}
+58. Rxd5 {+3.19/33 8.556s, tl=79.299s, latency=0.268s}
+Rh3+ {-3.20/38 5.675s, tl=55.208s, latency=0.202s}
+59. Kf4 {+3.14/39 6.294s, tl=78.005s, latency=0.294s}
+Rxd5 {-3.40/38 5.046s, tl=55.162s, latency=0.257s}
+60. exd5 {+3.32/38 7.296s, tl=75.709s, latency=0.281s}
+Rxb3 {-3.20/38 4.736s, tl=55.426s, latency=0.253s}
+61. d6 {+3.48/39 5.249s, tl=75.460s, latency=0.217s}
+Rd3 {-3.67/38 6.561s, tl=53.865s, latency=0.237s}
+62. Rxb6 {+3.69/40 8.318s, tl=72.142s, latency=0.263s}
+Ke8 {-3.25/38 15.122s, tl=43.743s, latency=0.258s}
+63. Ke4 {+4.34/37 6.817s, tl=70.325s, latency=0.179s}
+Rd1 {-4.02/37 4.082s, tl=44.661s, latency=0.231s}
+64. Rb7 {+4.66/37 9.616s, tl=65.709s, latency=0.225s}
+Rxd6 {-3.31/37 4.358s, tl=45.303s, latency=0.248s}
+65. Ra7 {+3.92/38 5.719s, tl=64.990s, latency=0.281s}
+Rd1 {-3.43/35 6.418s, tl=43.885s, latency=0.271s}
+66. Rxa5 {+4.00/31 5.271s, tl=64.719s, latency=0.149s}
+Re1+ {-3.21/29 5.030s, tl=43.855s, latency=0.296s}
+67. Kd3 {+4.11/31 5.166s, tl=64.553s, latency=0.121s}
+Kd7 {-3.41/30 5.254s, tl=43.601s, latency=0.154s}
+68. Ra7+ {+4.19/26 4.966s, tl=64.587s, latency=0.237s}
+Kd8 {-3.47/29 5.538s, tl=43.063s, latency=0.300s}
+69. Ra8+ {+3.67/28 5.650s, tl=63.937s, latency=0.254s}
+Kc7 {-3.26/29 4.336s, tl=43.727s, latency=0.217s}
+70. Ra6 {+3.39/31 5.448s, tl=63.489s, latency=0.209s}
+Re5 {-2.93/30 4.436s, tl=44.291s, latency=0.262s}
+71. Rxf6 {+3.17/34 5.668s, tl=62.821s, latency=0.216s}
+Kd8 {-2.93/33 5.928s, tl=43.363s, latency=0.203s}
+72. Kd4 {+2.44/32 12.594s, tl=55.227s, latency=0.228s}
+Ra5 {-2.95/34 6.168s, tl=42.195s, latency=0.296s}
+73. Rf7 {+2.44/32 4.610s, tl=55.617s, latency=0.215s}
+Ke8 {-2.48/31 5.346s, tl=41.849s, latency=0.228s}
+74. Rc7 {+2.45/31 4.488s, tl=56.129s, latency=0.292s}
+Rxf5 {-2.45/31 4.071s, tl=42.778s, latency=0.230s}
+75. Kc3 {+1.87/28 10.264s, tl=50.865s, latency=0.161s}
+Kd8 {-2.44/32 4.466s, tl=43.312s, latency=0.275s}
+76. Rc4 {+1.60/26 4.361s, tl=51.504s, latency=0.299s}
+Kd7 {-2.45/33 4.714s, tl=43.598s, latency=0.142s}
+77. Kb4 {+1.64/29 4.497s, tl=52.007s, latency=0.224s}
+Rf1 {-2.27/32 4.818s, tl=43.780s, latency=0.281s}
+78. Kb5 {+2.30/32 5.455s, tl=51.552s, latency=0.221s}
+Rb1+ {-2.27/31 4.216s, tl=44.564s, latency=0.251s}
+79. Ka6 {+1.90/33 5.135s, tl=51.417s, latency=0.293s}
+Rb8 {-2.14/33 5.665s, tl=43.899s, latency=0.290s}
+80. Rg4 {+1.48/32 15.617s, tl=40.800s, latency=4.463s}
+Kc6 {-1.74/32 8.210s, tl=40.689s, latency=0.262s}
+81. Rc4+ {+1.28/32 4.313s, tl=41.487s, latency=0.284s}
+Kd5 {-1.76/34 5.168s, tl=40.521s, latency=0.283s}
+82. Rc7 {+1.03/30 4.342s, tl=42.145s, latency=0.200s}
+Ra8+ {-1.76/32 4.426s, tl=41.095s, latency=0.298s}
+83. Kb5 {+0.94/32 5.490s, tl=41.655s, latency=0.284s}
+Rb8+ {-1.66/30 4.075s, tl=42.020s, latency=0.146s}
+84. Ka6 {+0.94/35 4.524s, tl=42.131s, latency=0.242s}
+Ra8+ {-1.55/33 6.390s, tl=40.630s, latency=0.214s}
+85. Kb5 {+0.94/37 4.389s, tl=42.742s, latency=0.245s}
+Rb8+ {-1.46/34 4.324s, tl=41.306s, latency=0.248s}
+86. Ka5 {+0.93/35 9.132s, tl=38.610s, latency=0.224s}
+Kd6 {-1.31/32 4.699s, tl=41.607s, latency=0.206s}
+87. Rc1 {+0.81/30 4.361s, tl=39.249s, latency=0.286s}
+Kd5 {-1.34/35 5.130s, tl=41.477s, latency=0.185s}
+88. Ka6 {+0.81/34 3.996s, tl=40.253s, latency=0.227s}
+Ra8+ {-1.23/36 6.441s, tl=40.036s, latency=0.273s}
+89. Kb5 {+0.81/38 5.440s, tl=39.813s, latency=0.280s}
+Rb8+ {-1.23/36 4.064s, tl=40.972s, latency=0.194s}
+90. Ka5 {+0.61/36 7.678s, tl=37.135s, latency=0.241s}
+Kd6 {-1.10/34 6.351s, tl=39.621s, latency=0.232s}
+91. Ka6 {+0.51/31 4.191s, tl=37.944s, latency=0.253s}
+Ra8+ {-1.19/36 4.667s, tl=39.954s, latency=0.173s}
+92. Kb5 {+0.51/34 5.109s, tl=37.835s, latency=0.301s}
+Rb8+ {-1.11/37 6.387s, tl=38.567s, latency=0.270s}
+93. Ka5 {+0.50/33 4.883s, tl=37.952s, latency=0.249s}
+Kd5 {-1.10/36 8.087s, tl=35.480s, latency=0.207s}
+94. Rc7 {+0.50/35 4.260s, tl=38.692s, latency=0.166s}
+Kd6 {-1.10/37 4.121s, tl=36.359s, latency=0.289s}
+95. Rc2 {+0.40/32 4.856s, tl=38.836s, latency=0.220s}
+Kd5 {-1.04/34 5.147s, tl=36.212s, latency=0.237s}
+96. Rc1 {+0.16/29 6.364s, tl=37.472s, latency=0.225s}
+Kd6 {-1.04/34 4.662s, tl=36.550s, latency=0.170s}
+97. Rc4 {+0.13/32 6.403s, tl=36.069s, latency=0.200s}
+Kd5 {-1.03/33 4.211s, tl=37.339s, latency=0.213s}
+98. Rc3 {+0.13/32 6.481s, tl=34.588s, latency=0.253s}
+Kd6 {-0.96/32 4.364s, tl=37.975s, latency=0.166s}
+99. Ka6 {+0.16/31 4.343s, tl=35.245s, latency=0.270s}
+Ra8+ {-1.00/30 4.429s, tl=38.546s, latency=0.271s}
+100. Kb5 {+0.13/32 4.030s, tl=36.215s, latency=0.299s}
+Rb8+ {-1.03/30 4.888s, tl=38.658s, latency=0.221s}
+101. Ka6 {+0.14/32 4.457s, tl=36.758s, latency=0.240s}
+Ra8+ {-0.93/30 4.846s, tl=38.812s, latency=0.245s}
+102. Kb5 {+0.40/32 4.103s, tl=37.655s, latency=0.198s}
+Rb8+ {-0.77/32 10.040s, tl=33.772s, latency=0.238s}
+103. Ka5 {+0.32/30 4.297s, tl=38.358s, latency=0.302s}
+Kd5 {-0.57/32 5.191s, tl=33.581s, latency=0.263s}
+104. Rc2 {0.00/35 4.248s, tl=39.110s, latency=0.271s}
+Kd6 {-0.47/30 4.164s, tl=34.417s, latency=0.219s}
+105. Rc1 {0.00/40 4.144s, tl=39.966s, latency=0.265s, Draw by 3-fold repetition}
+1/2-1/2
+

@@ -1,0 +1,28 @@
+Indexing opening suite...
+Started game 1 of 4 (CorvusA vs CorvusB)
+Started game 2 of 4 (CorvusB vs CorvusA)
+Warning; Bestmove does not match beginning of last PV - move c4b3 from CorvusA
+Info; info depth 31 seldepth 40 score cp 160 nodes 13017429 nps 2215732 time 5875 hashfull 120 pv c4d4 d7b8 d4c4 b8d7 c4b3 d7c5 b3a3 d2c3 b4d5 c3d4 d5f4 d4e4 f4e2 e4d3 e2g3 c5a6 g3f5 d3e4 f5e7 e4d4 e7g6 d4e4 g6f8 e4d5 a3a4 a6c5 a4a5 c5b7 a5b6 b7c5 f8g6 d5d4 b5b4
+Position; fen rnbqkbnr/ppp2pp1/3pp2p/8/P7/2P5/1P1PPPPP/RNBQKBNR w KQkq - 0 1
+Moves; d2d4 g8f6 g1f3 b8d7 d1c2 d6d5 c1f4 f6h5 f4e5 h5f6 e5g3 c7c5 b1d2 f8e7 e2e4 e8g8 f1e2 f6h5 e4d5 e6d5 e1g1 h5g3 h2g3 a7a6 e2d3 d7f6 f1e1 c5d4 f3d4 e7c5 d2f1 c8d7 a4a5 d8c7 f1e3 f8e8 d3f5 e8e5 f5d7 c7d7 e1e2 a8e8 c2d3 e5e4 b2b4 c5a7 a1e1 g7g6 d4c2 g8g7 e1d1 h6h5 d3d2 d7c6 c2d4 a7d4 c3d4 c6d6 d1f1 b7b5 f1e1 e8e7 g1f1 e7e8 f1g1 g7h7 d2b2 e8c8 b2d2 e4e6 d2b2 h7g7 b2d2 e6e8 d2b2 e8e4 b2d2 e4e8 d2b2 e8h8 e1c1 c8e8 b2c3 h5h4 g3h4 e8c8 c3c8 h8c8 c1c8 d6b4 h4h5 f6h5 e3c2 b4d6 c2e1 h5f6 e1f3 f6e4 f3e5 d6b4 c8c7 b4d4 c7f7 g7g8 e5f3 d4d1 e2e1 d1e1 f3e1 g8f7 e1d3 f7e6 g1f1 g6g5 f1e2 e6d6 d3b4 e4c5 g2g3 c5b3 f2f4 g5g4 b4a6 b3a5 f4f5 d5d4 f5f6 d6e6 e2d3 a5c6 a6c5 e6f6 d3e4 c6e7 e4d4 e7f5 d4e4 f5g3 e4f4 g3f1 f4g4 f6e5 g4f3 e5d4 c5a6 f1e3 f3e2 e3d5 e2d2 d4c4 a6b8 d5b4 b8d7
+Finished game 2 (CorvusB vs CorvusA): 1/2-1/2 {Draw by insufficient mating material}
+Started game 3 of 4 (CorvusA vs CorvusB)
+Finished game 3 (CorvusA vs CorvusB): 1/2-1/2 {Draw by 3-fold repetition}
+Started game 4 of 4 (CorvusB vs CorvusA)
+Finished game 1 (CorvusA vs CorvusB): 1/2-1/2 {Draw by insufficient mating material}
+Finished game 4 (CorvusB vs CorvusA): 1/2-1/2 {Draw by 3-fold repetition}
+--------------------------------------------------
+Results of CorvusA vs CorvusB (600+5, 1t, 64MB, openings_v1.epd):
+Elo: -0.00 +/- 0.00, nElo: -nan +/- -nan
+LOS: -nan %, DrawRatio: 100.00 %, PairsRatio: -nan
+Games: 4, Wins: 0, Losses: 0, Draws: 4, Points: 2.0 (50.00 %)
+Ptnml(0-2): [0, 0, 2, 0, 0], WL/DD Ratio: 0.00
+--------------------------------------------------
+Finished match
+Total Time: 01:54:05 (hours:minutes:seconds)
+
+games: 4
+results: {'1/2-1/2': 4}
+terminations: {'normal': 4}
+FAILURES (time/illegal/crash/stall): 0
+PASS

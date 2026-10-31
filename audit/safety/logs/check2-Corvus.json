@@ -1,0 +1,192 @@
+[
+ {
+  "name": "underpromo_knight_mate_white",
+  "ok": true,
+  "problems": [],
+  "startup_s": 0.028,
+  "elapsed_s": 0.01,
+  "bestmove": "f7f8n",
+  "stdout_lines": 135,
+  "exit_code": 0
+ },
+ {
+  "name": "underpromo_knight_mate_black",
+  "ok": true,
+  "problems": [],
+  "startup_s": 0.022,
+  "elapsed_s": 0.01,
+  "bestmove": "f2f1n",
+  "stdout_lines": 135,
+  "exit_code": 0
+ },
+ {
+  "name": "underpromo_rook_saavedra",
+  "ok": true,
+  "problems": [],
+  "startup_s": 0.023,
+  "elapsed_s": 0.193,
+  "bestmove": "c7c8r",
+  "stdout_lines": 135,
+  "exit_code": 0
+ },
+ {
+  "name": "ep_legal_only_move",
+  "ok": true,
+  "problems": [],
+  "startup_s": 0.024,
+  "elapsed_s": 0.013,
+  "bestmove": "a5b6",
+  "stdout_lines": 135,
+  "exit_code": 0
+ },
+ {
+  "name": "ep_legal_normal",
+  "ok": true,
+  "problems": [],
+  "startup_s": 0.023,
+  "elapsed_s": 0.864,
+  "bestmove": "e5f6",
+  "stdout_lines": 32,
+  "exit_code": 0
+ },
+ {
+  "name": "ep_illegal_pinned",
+  "ok": true,
+  "problems": [],
+  "startup_s": 0.022,
+  "elapsed_s": 0.864,
+  "bestmove": "b5b6",
+  "stdout_lines": 44,
+  "exit_code": 0
+ },
+ {
+  "name": "castle_after_rook_returned",
+  "ok": true,
+  "problems": [],
+  "startup_s": 0.024,
+  "elapsed_s": 0.865,
+  "bestmove": "d2d3",
+  "stdout_lines": 30,
+  "exit_code": 0
+ },
+ {
+  "name": "castle_after_rook_returned_fen",
+  "ok": true,
+  "problems": [],
+  "startup_s": 0.025,
+  "elapsed_s": 0.764,
+  "bestmove": "d2d3",
+  "stdout_lines": 31,
+  "exit_code": 0
+ },
+ {
+  "name": "one_legal_move",
+  "ok": true,
+  "problems": [],
+  "startup_s": 0.027,
+  "elapsed_s": 0.011,
+  "bestmove": "h8g8",
+  "stdout_lines": 135,
+  "exit_code": 0
+ },
+ {
+  "name": "halfmove_99",
+  "ok": true,
+  "problems": [],
+  "startup_s": 0.028,
+  "elapsed_s": 0.014,
+  "bestmove": "d2d1",
+  "stdout_lines": 135,
+  "exit_code": 0
+ },
+ {
+  "name": "halfmove_99_moves",
+  "ok": true,
+  "problems": [],
+  "startup_s": 0.027,
+  "elapsed_s": 0.009,
+  "bestmove": "d1a1",
+  "stdout_lines": 135,
+  "exit_code": 0
+ },
+ {
+  "name": "long_game_320_plies",
+  "ok": true,
+  "problems": [],
+  "startup_s": 0.026,
+  "elapsed_s": 0.655,
+  "bestmove": "c8g8",
+  "stdout_lines": 59,
+  "exit_code": 0
+ },
+ {
+  "name": "long_game_1100_plies",
+  "ok": true,
+  "problems": [],
+  "startup_s": 0.025,
+  "elapsed_s": 0.861,
+  "bestmove": "b7c7",
+  "stdout_lines": 33,
+  "exit_code": 0
+ },
+ {
+  "name": "threefold_repetition",
+  "ok": true,
+  "problems": [],
+  "startup_s": 0.024,
+  "elapsed_s": 0.854,
+  "bestmove": "e2e4",
+  "stdout_lines": 33,
+  "exit_code": 0
+ },
+ {
+  "name": "panic_wtime_50",
+  "ok": true,
+  "problems": [],
+  "startup_s": 0.026,
+  "elapsed_s": 0.012,
+  "bestmove": "b5c6",
+  "stdout_lines": 16,
+  "exit_code": 0
+ },
+ {
+  "name": "panic_wtime_1_inc",
+  "ok": true,
+  "problems": [],
+  "startup_s": 0.023,
+  "elapsed_s": 0.012,
+  "bestmove": "b5c6",
+  "stdout_lines": 16,
+  "exit_code": 0
+ },
+ {
+  "name": "go_no_params_then_stop",
+  "ok": true,
+  "problems": [],
+  "startup_s": 0.026,
+  "elapsed_s": 0.001,
+  "bestmove": "b5a4",
+  "stdout_lines": 32,
+  "exit_code": 0
+ },
+ {
+  "name": "go_infinite_then_stop",
+  "ok": true,
+  "problems": [],
+  "startup_s": 0.027,
+  "elapsed_s": 0.0,
+  "bestmove": "b5a4",
+  "stdout_lines": 33,
+  "exit_code": 0
+ },
+ {
+  "name": "first_move_movetime_10000",
+  "ok": true,
+  "problems": [],
+  "startup_s": 0.022,
+  "elapsed_s": 9.86,
+  "bestmove": "e2e4",
+  "stdout_lines": 35,
+  "exit_code": 0
+ }
+]

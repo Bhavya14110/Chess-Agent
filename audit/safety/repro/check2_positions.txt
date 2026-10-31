@@ -1,0 +1,76 @@
+# underpromo_knight_mate_white: f8=N# is the only mate; f8=Q is not even check
+position fen 7b/5Ppk/6pp/3B4/8/8/8/K7 w - - 0 1
+go wtime 3000 btime 3000 winc 2000 binc 2000
+
+# underpromo_knight_mate_black: colour-mirrored copy: black must promote ...f1=N#
+position fen k7/8/8/8/3b4/6PP/5pPK/7B b - - 0 1
+go wtime 3000 btime 3000 winc 2000 binc 2000
+
+# underpromo_rook_saavedra: Saavedra: c8=R wins, c8=Q? Rc4+ stalemates. Only legality is required
+position fen 8/2P5/8/8/3r4/8/2K5/k7 w - - 0 1
+go wtime 3000 btime 3000 winc 2000 binc 2000
+
+# ep_legal_only_move: after ...b5+ the en-passant capture axb6 is the ONLY legal move
+position fen 1r5k/1p6/n2b4/P7/K7/7r/8/8 b - - 0 1 moves b7b5
+go wtime 3000 btime 3000 winc 2000 binc 2000
+
+# ep_legal_normal: exd6 e.p. is legal (FEN ep square comes from the moves)
+position fen rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1 moves e2e4 g8f6 e4e5 d7d5
+go wtime 3000 btime 3000 winc 2000 binc 2000
+
+# ep_illegal_pinned: bxc6 e.p. would expose Ka5 to Rh5 along the 5th rank: illegal
+position fen 7k/2p5/8/KP5r/8/8/8/8 b - - 0 1 moves c7c5
+go wtime 3000 btime 3000 winc 2000 binc 2000
+
+# castle_after_rook_returned: white rook h1-g1-h1: O-O (e1g1) is illegal although king and rook are home
+position fen rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1 moves e2e4 e7e5 g1f3 b8c6 f1c4 g8f6 h1g1 f8c5 g1h1 d7d6
+go wtime 3000 btime 3000 winc 2000 binc 2000
+
+# castle_after_rook_returned_fen: same idea from a FEN without the K right
+position fen r1bqk2r/pppp1ppp/2n2n2/2b1p3/2B1P3/5N2/PPPP1PPP/RNBQK2R w Qkq - 4 5
+go wtime 3000 btime 3000 winc 2000 binc 2000
+
+# one_legal_move: 
+position fen 7k/8/5QK1/8/8/8/8/8 b - - 0 1
+go wtime 3000 btime 3000 winc 2000 binc 2000
+
+# halfmove_99: any quiet move completes the 50-move rule
+position fen 8/8/4k3/8/8/3K4/3R4/8 w - - 99 120
+go wtime 3000 btime 3000 winc 2000 binc 2000
+
+# halfmove_99_moves: clock reaches 100 from the moves list; engine must still answer
+position fen 8/8/4k3/8/8/3K4/3R4/8 w - - 98 120 moves d2d1 e6e5
+go wtime 3000 btime 3000 winc 2000 binc 2000
+
+# long_game_320_plies: 320-ply move list
+position fen rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1 moves c2c4 g7g6 d2d3 f7f5 e2e3 e7e6 d1h5 g8f6 e1d2 f6g8 b1a3 f8b4 d2c2 a7a5 e3e4 e8e7 e4e5 g8h6 a3b1 d8f8 h5d1 c7c6 g1e2 a5a4 c1d2 a8a5 d2e3 a5e5 e3c1 b4d6 g2g4 e5c5 a2a3 f5f4 e2d4 b8a6 h1g1 f8d8 d4c6 e7f7 c6d8 f7e7 f2f3 c5b5 d8f7 h6f5 f7d8 h8g8 c1e3 g8h8 g1g3 a6b4 c2c3 d6c5 b2b3 c5d4 c3d2 e7d8 f1g2 f5g3 h2g3 b5f5 e3f4 f5f4 g3f4 d8e7 b1c3 h7h5 c3b1 d4f2 d1c1 h5g4 f4f5 f2a7 a3b4 g4f3 b4b5 e7d6 b1c3 a7f2 d2d1 e6e5 d1d2 f2h4 c1b2 h8h5 a1c1 d6c7 b2a2 h5g5 d2e3 b7b6 g2f1 c7d6 a2d2 d6c5 d3d4 e5d4 e3e4 c8b7 c3d5 g5g1 d2b2 b7c8 f5g6 g1g4 e4e5 f3f2 b2b1 g4g3 b1d3 c8b7 d5f4 a4b3 d3g3 b7g2 f4h3 g2b7 e5f4 c5d6 g3g1 b7a6 f4e4 f2g1b c1c2 h4g5 c2d2 g5e7 h3g5 g1e3 e4f5 a6c8 g5h3 e7g5 d2e2 e3f2 h3g1 f2e1 e2e3 e1d2 e3d3 d2f4 f1e2 d6c7 e2f1 f4g3 d3d2 c7d6 f5g4 g3h4 g6g7 d6c5 d2e2 c5b4 g1f3 h4e1 e2c2 g5e7 g4f5 e1h4 f5e4 c8a6 e4d4 a6c8 c2c1 b4a3 c1d1 e7b4 d1a1 a3b2 f3d2 b4a5 a1d1 a5d2 f1g2 h4g5 c4c5 d7d6 d4d3 d2e1 g7g8n g5h4 g8e7 e1c3 d1c1 c8g4 g2d5 c3f6 d5f3 f6g7 d3d2 g4d7 e7c6 h4d8 f3g4 g7e5 g4e2 b6c5 c6e7 d8a5 d2d3 d7f5 d3c4 d6d5 c4c5 e5f4 e2d1 f5g4 c5d5 b2c1 d1f3 c1d2 f3e4 a5b6 d5c4 g4e6 c4b4 e6d7 e4h1 d7c6 e7c6 f4h6 b4a4 b6e3 c6b4 e3d4 h1g2 d4b6 g2h1 b6a5 b4c6 a5b6 c6b8 b6d4 h1c6 h6f4 c6h1 d2e3 h1e4 f4b8 e4f5 e3e2 f5e4 e2f1 a4a3 b3b2 e4h7 b8d6 a3a4 d4e5 a4a5 e5g3 a5b6 f1f2 h7g8 g3f4 b6a6 f2e3 a6a7 e3d3 g8f7 f4g3 b5b6 d3d2 f7h5 d2e3 h5f7 g3f4 f7g6 b2b1b a7b7 e3f2 b7c6 f2f3 g6e8 b1c2 e8g6 f3g4 g6h5 g4h3 h5g4 h3g4 c6b7 d6c7 b7a8 f4c1 b6c7 c2d1 a8b7 d1c2 b7b6 c2d1 b6b5 g4f3 c7c8r f3e4 c8h8 d1f3 b5a5 e4f4 h8a8 f4e3 a5b4 f3h1 b4b3 h1b7 a8c8 c1d2 c8c5 b7g2 c5e5 e3f2 e5e8 g2b7 b3c4 b7g2 c4d4 d2g5 e8c8 f2f1
+go wtime 3000 btime 3000 winc 2000 binc 2000
+
+# long_game_1100_plies: 1100 plies, no repetition: passes the engine's 1024-ply undo stack (guard at main.cpp:82)
+position fen rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1 moves a2a3 h7h6 g2g4 g7g5 h2h4 b7b5 h4h5 f8g7 f1h3 f7f5 h3f1 e7e6 e2e3 f5f4 d2d3 a7a6 b1d2 a6a5 f1g2 g7e5 g1f3 c7c5 e1g1 g8e7 f1e1 e7c6 a1a2 d7d5 f3h2 d8f6 g2e4 b5b4 h2f1 c6d8 e4g2 b8d7 d2b1 e8g8 f1g3 a8a6 d3d4 f6h8 c1d2 f8f7 b1c3 d8c6 g2f3 g8g7 e1f1 d7b8 d1b1 e5f6 f1e1 g7h7 b1a1 h7g7 d2c1 a6a7 g3h1 c6e5 c3d1 e5c4 f3g2 g7h7 g2e4 h7g7 g1g2 f7f8 e1f1 c4d2 g2g1 f8g8 c2c3 g8e8 e4g6 a7a6 g6f7 g7h7 a1b1 h7g7 f7g8 g7f8 b2b3 e6e5 b1a1 e8e6 c1b2 f6d8 g1h2 a6c6 g8f7 c6d6 f7g8 f8e8 f1e1 d8c7 h1g3 b8c6 e3e4 c6b8 h2h1 f4f3 a1b1 h8f6 g3f1 c7b6 b2c1 c8b7 g8f7 e8d7 e1e3 b6d8 d1b2 f6f5 f1g3 b7a8 b1a1 b8a6 h1g1 a8b7 c3c4 d8f6 f7g6 d7d8 a1b1 d6c6 g6e8 d8c7 b2d1 f6h8 a2b2 c7d6 g3h1 d6e7 e8g6 d2f1 g6h7 f5g6 h1g3 e7f6 b1d3 a5a4 b2a2 e6e7 d1c3 e7d7 a2b2 d7d6 g1h1 f1h2 e3e1 a6c7 g3f1 b7a6 c3b5 f6f7 d3d2 g6f6 e1e3 h8g7 d2e2 d6d8 e3d3 f6g6 b5c3 a6b7 c1e3 g7f6 e3f4 f7g7 c3b1 c7b5 e2e3 f6e7 e3c1 b7c8 c1e1 c6f6 b1c3 g6e8 e1d2 f6c6 d2e1 d8d7 f1g3 g7f7 e1c1 e8h8 c1e1 h8g8 e1d1 d7c7 d1e1 f7e6 c3d1 c7b7 f4e3 b7c7 g3f5 c6a6 b2c2 a6d6 f5g7 e6f7 e1c3 d6b6 e3d2 b6b7 d2f4 e7f8 c2e2 c7d7 d3d2 d7e7 e2e3 b5a7 h7f5 a7b5 c3a1 b7c7 d2c2 e7e6 d1b2 e6g6 f5d7 g6b6 g7e6 b6a6 b2d1 a6a8 c2d2 c8b7 a1c1 a8a6 e3c3 b5d6 d7e8 f7f6 d1e3 f8e7 f4h2 g8f7 c1g1 f7g7 e8g6 a6a8 e3d1 a8h8 d2a2 d6e8 g1e1 c7d7 e1d2 b7c8 d1b2 g7f8 c3c2 d7c7 h1g1 h8h7 a2a1 c8b7 g1h1 f8g7 c2c3 e7d8 c3e3 c7d7 d2c1 g7f7 c1e1 f6e7 a1b1 e7f6 e3c3 f7g7 h1g1 e8c7 e1e2 b7a8 e2e3 c7b5 e3c1 g7f8 c1d1 d7e7 b1a1 f8e8 d1c2 b5d6 a1d1 e8b5 d1f1 a8c6 c3d3 d6b7 f1c1 b5a5 c1b1 h7h8 d3d1 e7d7 e6c7 h8g8 d1f1 g8f8 b1e1 f8e8 g6f5 d8e7 c2d2 e8f8 d2c2 f8f7 c7a6 f7f8 c2c1 b7d8 g1h1 f8e8 a6c7 d7d6 h2g1 a5b6 c1c2 b6a7 f5h7 a7a8 e1e3 e7f8 b2d3 f6e7 f1d1 a8b7 d3f4 b7b8 d1d2 d6d7 d2e2 e5d4 g1h2 c6b7 c2b2 e7f6 b2b1 d8e6 c7a6 e8e7 e2c2 e7g7 c2c1 f6f7 a6c7 b7a6 c7e8 a6b5 h7g8 f7e7 g8h7 b8c7 h1g1 c7d8 e3d3 g7g6 d3e3 e7f7 b1a2 d7e7 c1c2 d4d3 e4e5 e7d7 a2b1 d8b8 f4g2 d7d6 b1e1 b8d8 c2c3 f7e7 e8g7 e6c7 c3c2 b5e8 e1c3 c7b5 c3b2 d6d7 g2h4 d8b8 e3e1 e7d8 g1h1 f8d6 h4g2 g6f6 h7g8 b8c7 e1f1 d8e7 c2e2 e8g6 h2f4 c7c8 b2d2 c8f8 f1a1 b5c7 h1g1 c7e8 a1e1 f8f7 g7f5 e7e6 f5d4 e6e7 f4h2 e7d8 e1c1 g6f5 g2h4 d6e7 d2c3 d8c8 c3a1 e7d6 g8h7 c8c7 e2c2 d6f8 e5e6 c7b6 e6e7 f6d6 c1b1 e8f6 c2e2 f5e6 h4g2 d7b7 e2e5 b6c7 h7e4 d6c6 e7e8r f8g7 b1b2 c7d6 g1f1 f7f8 a1a2 f8f7 e8a8 c6c8 g2e3 f7e8 e3g2 b7d7 e4h7 g7h8 d4b5 d6e7 g2f4 e8g6 e5e3 f6e4 h2g3 c8b8 g3h2 d7b7 b2e2 e4f6 a8a7 d5d4 b5d6 f6e8 d6b5 d3d2 h2g3 e7f7 f1g1 e6f5 f4d3 e8d6 d3c1 f7g7 a2c2 b7c7 g1h1 g6f6 h1h2 c7f7 a7b7 f5c8 b5a7 d2d1n c2b2 d6b5 b7c7 c8a6 b2b1 b8b7 e2e1 b7b8 h7g6 f6e7 c7b7 b5d6 e3e4 e7c7 g3e5 g7g8 e5f6 c7d7 e4f4 d7c6 a7c8 c6b6 f6d8 d1e3 d8e7 g8g7 b7d7 g7g8 f4f6 d6b7 c8d6 b6c6 f6e6 b7a5 d6e4 c6a8 d7d5 f7f8 e6e5 b8b7 e1g1 a8a7 d5d7 b7b8 g6f7 g8h7 f7d5 f8e8 e5f5 e3d1 c1d3 e8f8 f5f7 h7g8 e4d6 d1e3 g1g2 a7a8 h2g3 b8b7 d3c1 e3d1 c1e2 d1b2 b1f1 b7b6 f7h7 f8f7 d5e6 d4d3 f1d1 a8c8 d6e4 c8c6 d7d5 h8e5 e2f4 e5c7 d1f1 b6b7 g2h2 c6d7 e4c3 c7d8 h2h4 d7e8 c3b1 b7c7 f1e1 c7a7 e1e3 a7c7 h4h3 a6b5 e3e1 c7b7 h3h1 a5c6 e1d2 d8c7 e6f5 c7d8 h1h2 f7f8 d5d7 d8c7 h7g7 g8h8 f5e4 b2d1 e4h7 b7b8 g3h3 e8f7 e7f6 d1b2 d2e1 f8g8 h2h1 f7f8 e1e4 b8c8 f6e5 f8f6 d7f7 c8f8 h1h2 f8d8 b1c3 c6e7 e4f5 d8d6 c3b1 e7c6 f5e4 c6a7 e5d4 b2d1 f7d7 d3d2 h3g3 g8d8 h7f5 d6a6 g7g8 d8g8 e4c6 g8d8 c6a8 d8f8 a8c8 d1b2 d4e5 b5c6 e5d4 c6b7 d7d5 a6b6 h2h1 f8d8 d4c3 a7c6 h1g1 d8g8 d5d6 c6b8 g1d1 c7d8 f4d5 b7a8 c3d4 b8d7 d4e5 f6g7 d5f4 d8e7 d6f6 b6b5 b1c3 b5a5 c3e2 g7g6 e2c3 h8g7 e5d4 a8c6 f6f8 g7h7 f4e6 g8g7 g3h3 c6d5 c3e4 b2d3 e6f4 d3e1 h3h2 a5a7 c8e8 d5c6 d4e3 e7f6 f5e6 f6e5 d1b1 d7f6 e4g3 e1g2 e8e7 c6b5 g3h1 d2d1r e7f7 g6e4 f8e8 d1d5 b1f1 e5b8 e8e7 e4g6 f1b1 d5d3 h1g3 b5a6 h2g1 g6e4 e6c8 e4d4 f4d5 f6e8 g1f1 g2f4 b1a1 d4c3 c8b7 f4g6 e7e4 d3d1 a1d1 c3b2 e4e6 a7a8 e3f4 e8f6 d5c3 a8a7 e6b6 b2b1 f7e6 g6h8 e6d5 g7f7 d5d6 b1f5 f4d2 a6b5 d6d4 b5d7 d2c1 f5e6 c3e2 e6d5 e2c3 b8c7 d4f4 f6e4 g3h1 e4d2 f1g1 d7f5 b6c6 f5d3 f4g3 c7b8 g3e5 f7g7 e5f6 d2b1 c6e6 d5d6 c1d2 g7e7 d1e1 d3e4 f6g7 h7g7 d2f4 d6d1 f4e5 g7h7 g1f1 d1c1 c3a2 e4f5 e5g7 a7a5 g7b2 f5c2 b7e4 h7g8 b2g7 b8e5 e1d1 e7b7 e6b6 e5b2 g7c3 b7b8 e4h7 g8f8 h1g3 b8a8 b6e6 a8a7 e6e8 f8f7 c3e5 c1e3 e8g8 a7a8 d1d2 f7e6 g3h1 a8a7 d2d5 b1c3 g8c8 a7e7 h1g3 e7a7 f1g1 c2g6 c8f8 e3d3 g3f5 a5a6 g1h2 a7e7 f5g7 e7g7 f8f7 c3b5 e5f4 d3d1 f4e5 d1d4 f7a7 a6b6 a7a5 b6c6 d5d7 g7f7 d7d6 e6e7 d6d5 d4e3 a5a7 e7e8 e5c7 e3d4 a2c1 d4f4 h2h1 b2f6 c7e5 f7c7 d5d7 b5d6 c1d3 c6a6 d3c1 g6b1 c1d3 a6b6 d3b2 f6d8 a7b7 f4g3 b2d3 g3h3 h1g1 b6b5 d3c1 b5b6 d7e7 e8f8 e7e6 f8f7 e6e7 f7e7 c1d3 b6c6 e5b2 d6e4 h7f5 c6d6 f5h7 d6a6 h7g6 e7d7 d3e1 a6d6 e1d3 h8f7 d3e5 d7e7 b7a7 e7e6 b2d4 c7d7 d4b2 e4g3 b2d4 b1e4 a7a8 e6f6 d4b2 d8b6 a8a5 d6e6 a5a7 e4b1 g6c2 d7d2 a7a8 e6e8 c2h7 f7h8 b2d4 b1e4 d4c3 e8g8 h7g6 e4b1 a8a6 f6e7 e5d7 d2d4 g6f7 d4f4 c3d4 g8c8 f7e8 e7e6 d7f8 e6e7 e8f7 b1a2 d4e3 c8c6 f7d5 c6c7 d5b7 h8g6 a6a7 c7c6 a7a8 f4f5 f8e6 f5f6 e6d4 c6e6 a8c8 b6c7 c8a8 a2b1 a8c8 g6h4 c8e8 e7f7 e3f4 c7b8 b7c6 b8a7 f4d2 f6g6 d2f4 e6e1 e8e1 g3h1 d4e6 h4g2 c6e8 f7e7 e6c7 g6e6 f4e3 b1c2 e3d4 c2d1 d4e3 e7f8 e3c1 h3g3 e8c6 f8g8 e1e5 g3f4 c6a8 e6c6 g1f1 g8f7 a8b7 f7g8 e5f5 c6g6 b7e4 g6c6 f5f7 g2e3 f1e1 f4h2 e4d3 h2g1 d3f1 a7b8 c7a6 b8c7 c1d2 c6g6 d2c3 c7b8 c3e5 g6b6 e5a1 h1g3 a1f6 e3g2 e1d2 b6b5 d2c1 g3e4 f6d4 b5b6 f7b7 e4d6 d4g7 d6f7 b7a7 b8e5 g7f8 b6d6 f8g7 d6d4 f1e2 e5c7 a6b8 f7d8 a7a8 d4d5 g7h8 g8f8 b8a6 c7d6 a8b8 d6h2 b8b5 h2e5 h8g7 f8e7 e2d3 e5b8 d3e2 g2e3 e2d3 g1g2 g7c3 d1c2 c3e1 b8h2 d3e2 c2g6 a6b8 g2f1 e2d1 d5d7 b5a5 a4b3 a3a4 b3b2 c1b2 f1h3 d1e2 h3g2 b2c1 g2f1 a5a7 f1g1 b8c6 e7f7 e2f1 f7g7 a7b7 g6f5 c1b2 h2c7 b2b3 f5e4 c6b8 e3c2 b8c6 d8e6 c6b8 e4d3
+go wtime 3000 btime 3000 winc 2000 binc 2000
+
+# threefold_repetition: start position for the 3rd time
+position fen rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1 moves g1f3 g8f6 f3g1 f6g8 g1f3 g8f6 f3g1 f6g8
+go wtime 3000 btime 3000 winc 2000 binc 2000
+
+# panic_wtime_50: 
+position fen rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1 moves e2e4 e7e5 g1f3 b8c6 f1b5 a7a6
+go wtime 50 btime 50 winc 0 binc 0
+
+# panic_wtime_1_inc: what lichess-bot sends once clock - move_overhead(2000) <= 0 (floored at 1 ms)
+position fen rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1 moves e2e4 e7e5 g1f3 b8c6 f1b5 a7a6
+go wtime 1 btime 180000 winc 2000 binc 2000
+
+# go_no_params_then_stop: 
+position fen rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1 moves e2e4 e7e5 g1f3 b8c6 f1b5 a7a6
+go | @1.0 | stop
+
+# go_infinite_then_stop: 
+position fen rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1 moves e2e4 e7e5 g1f3 b8c6 f1b5 a7a6
+go infinite | @1.0 | stop
+
+# first_move_movetime_10000: lichess-bot's first move of every game (engine_wrapper.first_move_time)
+position fen rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
+go movetime 10000
+

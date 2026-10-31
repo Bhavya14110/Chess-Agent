@@ -1,0 +1,28 @@
+1793424830.742 sim start
+1793424830.745 sim waiting for bot move at ply 1
+1793424833.230 sim bot move h7h6 at ply 1 after 2.49s
+1793424833.232 sim waiting for bot move at ply 3
+1793424833.237 sim bot move h6h5 at ply 3 after 0.01s
+1793424833.239 sim waiting for bot move at ply 5
+1793424833.246 sim bot move a7a6 at ply 5 after 0.01s
+1793424833.247 sim waiting for bot move at ply 7
+1793424833.252 sim bot move a6a5 at ply 7 after 0.01s
+1793424833.253 sim waiting for bot move at ply 9
+1793424833.259 sim bot move b7b6 at ply 9 after 0.00s
+1793424833.260 sim waiting for bot move at ply 11
+1793424833.286 sim bot move b6b5 at ply 11 after 0.03s
+1793424833.288 sim waiting for bot move at ply 13
+1793424833.293 sim bot move g7g6 at ply 13 after 0.01s
+1793424833.295 sim waiting for bot move at ply 15
+1793424833.300 sim bot move g6g5 at ply 15 after 0.01s
+1793424833.302 sim waiting for bot move at ply 17
+1793424833.307 sim bot move e7e5 at ply 17 after 0.00s
+1793424833.308 sim waiting for bot move at ply 19
+1793424834.131 sim game stream reopened by lichess-bot (play_game retried)
+1793424834.201 sim bot move f8c5 at ply 19 after 0.89s
+1793424834.202 sim waiting for bot move at ply 21
+1793424834.230 sim bot move d8f6 at ply 21 after 0.03s
+1793424834.232 sim waiting for bot move at ply 23
+1793424834.237 sim bot move f6f2 at ply 23 after 0.01s
+1793424834.239 sim game over: Outcome(termination=<Termination.CHECKMATE: 1>, winner=False)
+1793424835.413 sim RESULT bot_won=True

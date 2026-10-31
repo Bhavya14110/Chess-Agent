@@ -1,0 +1,10 @@
+games: 10
+results: {'1/2-1/2': 8, '1-0': 1, '0-1': 1}
+terminations: {'normal': 10}
+FAILURES (time/illegal/crash/stall): 0
+PASS
+games: 4
+results: {'1/2-1/2': 4}
+terminations: {'normal': 4}
+FAILURES (time/illegal/crash/stall): 0
+PASS

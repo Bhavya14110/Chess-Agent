@@ -1,0 +1,21 @@
+ok   underpromo_knight_mate_white     bestmove=f7f8n t=0.01s startup=0.159s  
+ok   underpromo_knight_mate_black     bestmove=f2f1n t=0.01s startup=0.161s  
+ok   underpromo_rook_saavedra         bestmove=c7c8r t=0.196s startup=0.166s  
+ok   ep_legal_only_move               bestmove=a5b6 t=0.014s startup=0.162s  
+ok   ep_legal_normal                  bestmove=e5f6 t=0.864s startup=0.174s  
+ok   ep_illegal_pinned                bestmove=b5b6 t=0.866s startup=0.161s  
+ok   castle_after_rook_returned       bestmove=b1c3 t=0.865s startup=0.167s  
+ok   castle_after_rook_returned_fen   bestmove=b1c3 t=0.865s startup=0.166s  
+ok   one_legal_move                   bestmove=h8g8 t=0.011s startup=0.211s  
+ok   halfmove_99                      bestmove=d2d1 t=0.011s startup=0.156s  
+ok   halfmove_99_moves                bestmove=d1a1 t=0.01s startup=0.159s  
+ok   long_game_320_plies              bestmove=c8g8 t=0.667s startup=0.164s  
+ok   long_game_1100_plies             bestmove=b8c6 t=0.856s startup=0.171s  
+ok   threefold_repetition             bestmove=e2e4 t=0.865s startup=0.159s  
+ok   panic_wtime_50                   bestmove=b5c6 t=0.01s startup=0.164s  
+ok   panic_wtime_1_inc                bestmove=b5c6 t=0.011s startup=0.165s  
+ok   go_no_params_then_stop           bestmove=b5a4 t=0.0s startup=0.16s  
+ok   go_infinite_then_stop            bestmove=b5a4 t=0.0s startup=0.171s  
+ok   first_move_movetime_10000        bestmove=e2e4 t=9.862s startup=0.164s  
+check2: 19/19 cases clean
+PASS

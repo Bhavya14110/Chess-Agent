@@ -1,0 +1,12 @@
+3+2: games 10, failures (time/illegal/crash/stall) 0, moves 1442
+  lowest clock left after a move: 6.532s (round 3, move 62, white)
+  longest single move: 21.498s (round 1, move 7)
+  fastchess latency: median 0.256s, p99 3.287s, max 16.789s
+  PASS
+10+5: games 4, failures (time/illegal/crash/stall) 0, moves 837
+  lowest clock left after a move: 19.190s (round 1, move 196, black)
+  longest single move: 54.306s (round 2, move 13)
+  fastchess latency: median 0.251s, p99 1.130s, max 50.827s
+  PASS
+chart: check1-lag-chart.png
+check1: PASS

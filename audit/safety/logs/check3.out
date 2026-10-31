@@ -1,0 +1,31 @@
+PASS     protocol uci, ponder off: protocol=uci ponder=False
+PASS     engine is our Corvus.exe: dir=C:/Users/Bhavya/Downloads/chess agent/engine/ name=Corvus.exe working_dir=C:/Users/Bhavya/Downloads/chess agent/engine/
+PASS     polyglot book disabled: enabled=False book=[] max_depth=0
+PASS     online_moves.chessdb_book disabled: enabled=False
+PASS     online_moves.lichess_cloud_analysis disabled: enabled=False
+PASS     online_moves.lichess_opening_explorer disabled: enabled=False
+PASS     online_moves.online_egtb disabled: enabled=False
+PASS     syzygy disabled: enabled=False paths=[]
+PASS     gaviota disabled: enabled=False paths=[]
+PASS     no go_commands (engine manages its own clock): go_commands=None
+PASS     standard only: variants=['standard']
+PASS     casual only: modes=['casual']
+PASS     only 3+2 .. 10+5 accepted: base 180-600 s, inc 2-5 s, speeds ['blitz', 'rapid']
+PASS     matchmaking off: allow_matchmaking=False
+PASS     concurrency 1: concurrency=1
+PASS     chat messages courteous: {'hello': 'Good luck and have fun!', 'goodbye': 'Thanks for the game!', 'hello_spectators': "Hi! I'm {me}, a competition entry. Enjoy the game!", 'goodbye_spectators': 'Thanks for watching!'}
+PASS     resign not too eager: resign_enabled=True score<=-1000cp for 10 own moves
+PASS     draw offers not too eager: offer_draw_enabled=True |eval|<=10cp for 10 moves, <= 12 men
+PASS     no tablebase resign/draw: egtb-based resign/draw off
+PASS     no fake think time / takebacks: fake_think_time=False takebacks=0 rate_limiting_delay=0
+PASS     lichess-bot move_overhead sane: lichess-bot move_overhead=2000 ms is subtracted from our clock before every go; Corvus Move Overhead=150 ms on top
+REMINDER allow_list: missing/empty: ANY user can challenge and occupy the single game slot - fill it on competition day
+PASS     live config == template (except token/Threads/Hash): no value differences
+info    Threads: template=15 live=4; Hash: template=256 live=256
+raw line diff (token lines removed):
+    --- template
+    +++ live
+    @@ -141 +141 @@
+    -    Threads: 15                    # Keep below the host's logical core count.
+    +    Threads: 4                    # Keep below the host's logical core count.
+check3: PASS

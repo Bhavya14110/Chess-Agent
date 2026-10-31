@@ -1,0 +1,556 @@
+[10/31/26 11:03:50] INFO     You're now connected to         lichess_bot.py:258
+                             https://lichess.org/ and                          
+                             awaiting challenges.                              
+[10/31/26 11:03:51] INFO     Refreshing 0 online blocklists     blocklist.py:41
+                    INFO     Refreshing 0 online blocklists     blocklist.py:41
+                    INFO     When quitting, lichess-bot will lichess_bot.py:374
+                             first wait for all running                        
+                             games to finish.                                  
+                    INFO     Press Ctrl-C twice to quit      lichess_bot.py:375
+                             immediately.                                      
+[10/31/26 11:03:52] DEBUG    Event: {'type': 'gameStart',    lichess_bot.py:459
+                             'game': {'id': 'zzzzzzzz',                        
+                             'source': 'friend', 'compat':                     
+                             {'bot': True, 'board': True}}}                    
+                    INFO     --- Process Used. Count: 1.     lichess_bot.py:319
+                             IDs: {'zzzzzzzz'}                                 
+[10/31/26 11:03:53] DEBUG    Initial state: {'id':           lichess_bot.py:690
+                             'zzzzzzzz', 'variant': {'key':                    
+                             'standard', 'name': 'Standard',                   
+                             'short': 'Std'}, 'clock':                         
+                             {'initial': 60000, 'increment':                   
+                             2000}, 'speed': 'bullet',                         
+                             'perf': {'name': 'Bullet'},                       
+                             'rated': True, 'createdAt':                       
+                             1600000000000, 'white': {'id':                    
+                             'bo', 'name': 'bo', 'title':                      
+                             'BOT', 'rating': 3000},                           
+                             'black': {'id': 'b', 'name':                      
+                             'b', 'title': 'BOT', 'rating':                    
+                             3000, 'provisional': True},                       
+                             'initialFen': 'startpos',                         
+                             'type': 'gameFull', 'state':                      
+                             {'type': 'gameState', 'moves':                    
+                             '', 'wtime': 10000, 'btime':                      
+                             10000, 'winc': 100, 'binc':                       
+                             100, 'status': 'started'}}                        
+                    DEBUG    Starting engine:              engine_wrapper.py:71
+                             ['C:\\Users\\Bhavya\\Download                     
+                             s\\lichess-bot-src\\venv\\Scr                     
+                             ipts\\python.exe',                                
+                             'C:\\Users\\Bhavya\\Downloads                     
+                             \\chess                                           
+                             agent\\audit\\safety\\repro\\                     
+                             stub_engine.py']                                  
+                    DEBUG    Using proactor:             proactor_events.py:634
+                             IocpProactor                                      
+                    DEBUG    <UciProtocol (pid=25128)>:           engine.py:928
+                             Connection made                                   
+                    DEBUG    <UciProtocol (pid=25128)>: << uci    engine.py:950
+                    DEBUG    <UciProtocol (pid=25128)>: >> id     engine.py:976
+                             name SafetyStub                                   
+                    DEBUG    <UciProtocol (pid=25128)>: >> id     engine.py:976
+                             author audit                                      
+                    DEBUG    <UciProtocol (pid=25128)>: >> uciok  engine.py:976
+                    DEBUG    The engine for game zzzzzzzz    lichess_bot.py:696
+                             has pid=25128                                     
+                    INFO     +++ zzzzzzzz/black Bullet vs    lichess_bot.py:699
+                             BOT bo (3000) (zzzzzzzz)                          
+                    DEBUG    Game state: {'type':            lichess_bot.py:864
+                             'gameState', 'moves': '',                         
+                             'wtime': 10000, 'btime': 10000,                   
+                             'winc': 100, 'binc': 100,                         
+                             'status': 'started'}                              
+                    DEBUG    Game state: {'type':            lichess_bot.py:864
+                             'gameState', 'moves': 'b1a3',                     
+                             'wtime': 180000, 'btime':                         
+                             180000, 'winc': 2000, 'binc':                     
+                             2000, 'status': 'started'}                        
+                    INFO     *** zzzzzzzz/black [player] b: conversation.py:100
+                             Good luck and have fun!                           
+                    INFO     *** zzzzzzzz/black [spectator] conversation.py:100
+                             b: Hi! I'm b, a competition                       
+                             entry. Enjoy the game!                            
+                    INFO                                     lichess_bot.py:855
+                    INFO     move: 1                         lichess_bot.py:856
+                    INFO     Searching for time 10        engine_wrapper.py:706
+                             seconds for game zzzzzzzz                         
+                    DEBUG    <UciProtocol (pid=25128)>: <<        engine.py:950
+                             ucinewgame                                        
+                    DEBUG    <UciProtocol (pid=25128)>: <<        engine.py:950
+                             isready                                           
+                    DEBUG    <UciProtocol (pid=25128)>: >>        engine.py:976
+                             readyok                                           
+                    DEBUG    <UciProtocol (pid=25128)>: <<        engine.py:950
+                             position startpos moves b1a3                      
+                    DEBUG    <UciProtocol (pid=25128)>: << go     engine.py:950
+                             movetime 10000                                    
+                    DEBUG    <UciProtocol (pid=25128)>: >>        engine.py:976
+                             bestmove h7h6                                     
+                    INFO     Source: Engine               engine_wrapper.py:335
+                    DEBUG    Game state: {'type':            lichess_bot.py:864
+                             'gameState', 'moves': 'b1a3                       
+                             h7h6 a3b1', 'wtime': 180000,                      
+                             'btime': 180000, 'winc': 2000,                    
+                             'binc': 2000, 'status':                           
+                             'started'}                                        
+                    INFO                                     lichess_bot.py:855
+                    INFO     move: 2                         lichess_bot.py:856
+                    INFO     Searching for wtime 180000   engine_wrapper.py:728
+                             btime 177999 for game                             
+                             zzzzzzzz                                          
+                    DEBUG    <UciProtocol (pid=25128)>: <<        engine.py:950
+                             position startpos moves b1a3 h7h6                 
+                             a3b1                                              
+                    DEBUG    <UciProtocol (pid=25128)>: << go     engine.py:950
+                             wtime 180000 btime 177999 winc 2000               
+                             binc 2000                                         
+                    DEBUG    <UciProtocol (pid=25128)>: >>        engine.py:976
+                             bestmove h6h5                                     
+                    INFO     Source: Engine               engine_wrapper.py:335
+                    DEBUG    Game state: {'type':            lichess_bot.py:864
+                             'gameState', 'moves': 'b1a3                       
+                             h7h6 a3b1 h6h5 b1a3', 'wtime':                    
+                             180000, 'btime': 181994,                          
+                             'winc': 2000, 'binc': 2000,                       
+                             'status': 'started'}                              
+                    INFO                                     lichess_bot.py:855
+                    INFO     move: 3                         lichess_bot.py:856
+                    INFO     Searching for wtime 180000   engine_wrapper.py:728
+                             btime 179993 for game                             
+                             zzzzzzzz                                          
+                    DEBUG    <UciProtocol (pid=25128)>: <<        engine.py:950
+                             position startpos moves b1a3 h7h6                 
+                             a3b1 h6h5 b1a3                                    
+                    DEBUG    <UciProtocol (pid=25128)>: << go     engine.py:950
+                             wtime 180000 btime 179993 winc 2000               
+                             binc 2000                                         
+                    DEBUG    <UciProtocol (pid=25128)>: >>        engine.py:976
+                             bestmove a7a6                                     
+                    INFO     Source: Engine               engine_wrapper.py:335
+                    DEBUG    Game state: {'type':            lichess_bot.py:864
+                             'gameState', 'moves': 'b1a3                       
+                             h7h6 a3b1 h6h5 b1a3 a7a6 a3b1',                   
+                             'wtime': 180000, 'btime':                         
+                             183987, 'winc': 2000, 'binc':                     
+                             2000, 'status': 'started'}                        
+                    INFO                                     lichess_bot.py:855
+                    INFO     move: 4                         lichess_bot.py:856
+                    INFO     Searching for wtime 180000   engine_wrapper.py:728
+                             btime 181986 for game                             
+                             zzzzzzzz                                          
+                    DEBUG    <UciProtocol (pid=25128)>: <<        engine.py:950
+                             position startpos moves b1a3 h7h6                 
+                             a3b1 h6h5 b1a3 a7a6 a3b1                          
+                    DEBUG    <UciProtocol (pid=25128)>: << go     engine.py:950
+                             wtime 180000 btime 181986 winc 2000               
+                             binc 2000                                         
+                    DEBUG    <UciProtocol (pid=25128)>: >>        engine.py:976
+                             bestmove a6a5                                     
+                    INFO     Source: Engine               engine_wrapper.py:335
+                    DEBUG    Game state: {'type':            lichess_bot.py:864
+                             'gameState', 'moves': 'b1a3                       
+                             h7h6 a3b1 h6h5 b1a3 a7a6 a3b1                     
+                             a6a5 b1a3', 'wtime': 180000,                      
+                             'btime': 185982, 'winc': 2000,                    
+                             'binc': 2000, 'status':                           
+                             'started'}                                        
+                    INFO                                     lichess_bot.py:855
+                    INFO     move: 5                         lichess_bot.py:856
+                    INFO     Searching for wtime 180000   engine_wrapper.py:728
+                             btime 183981 for game                             
+                             zzzzzzzz                                          
+                    DEBUG    <UciProtocol (pid=25128)>: <<        engine.py:950
+                             position startpos moves b1a3 h7h6                 
+                             a3b1 h6h5 b1a3 a7a6 a3b1 a6a5 b1a3                
+                    DEBUG    <UciProtocol (pid=25128)>: << go     engine.py:950
+                             wtime 180000 btime 183981 winc 2000               
+                             binc 2000                                         
+                    DEBUG    <UciProtocol (pid=25128)>: >>        engine.py:976
+                             bestmove b7b6                                     
+                    INFO     Source: Engine               engine_wrapper.py:335
+                    DEBUG    Game state: {'type':            lichess_bot.py:864
+                             'gameState', 'moves': 'b1a3                       
+                             h7h6 a3b1 h6h5 b1a3 a7a6 a3b1                     
+                             a6a5 b1a3 b7b6 a3b1', 'wtime':                    
+                             180000, 'btime': 187977,                          
+                             'winc': 2000, 'binc': 2000,                       
+                             'status': 'started'}                              
+                    INFO                                     lichess_bot.py:855
+                    INFO     move: 6                         lichess_bot.py:856
+                    INFO     Searching for wtime 180000   engine_wrapper.py:728
+                             btime 185977 for game                             
+                             zzzzzzzz                                          
+                    DEBUG    <UciProtocol (pid=25128)>: <<        engine.py:950
+                             position startpos moves b1a3 h7h6                 
+                             a3b1 h6h5 b1a3 a7a6 a3b1 a6a5 b1a3                
+                             b7b6 a3b1                                         
+                    DEBUG    <UciProtocol (pid=25128)>: << go     engine.py:950
+                             wtime 180000 btime 185977 winc 2000               
+                             binc 2000                                         
+                    DEBUG    <UciProtocol (pid=25128)>: >>        engine.py:976
+                             bestmove b6b5                                     
+                    INFO     Source: Engine               engine_wrapper.py:335
+                    DEBUG    Game state: {'type':            lichess_bot.py:864
+                             'gameState', 'moves': 'b1a3                       
+                             h7h6 a3b1 h6h5 b1a3 a7a6 a3b1                     
+                             a6a5 b1a3 b7b6 a3b1 b6b5 b1a3',                   
+                             'wtime': 180000, 'btime':                         
+                             189951, 'winc': 2000, 'binc':                     
+                             2000, 'status': 'started'}                        
+                    INFO                                     lichess_bot.py:855
+                    INFO     move: 7                         lichess_bot.py:856
+                    INFO     Searching for wtime 180000   engine_wrapper.py:728
+                             btime 187950 for game                             
+                             zzzzzzzz                                          
+                    DEBUG    <UciProtocol (pid=25128)>: <<        engine.py:950
+                             position startpos moves b1a3 h7h6                 
+                             a3b1 h6h5 b1a3 a7a6 a3b1 a6a5 b1a3                
+                             b7b6 a3b1 b6b5 b1a3                               
+                    DEBUG    <UciProtocol (pid=25128)>: << go     engine.py:950
+                             wtime 180000 btime 187950 winc 2000               
+                             binc 2000                                         
+                    DEBUG    <UciProtocol (pid=25128)>: >>        engine.py:976
+                             bestmove g7g6                                     
+                    INFO     Source: Engine               engine_wrapper.py:335
+                    DEBUG    Game state: {'type':            lichess_bot.py:864
+                             'gameState', 'moves': 'b1a3                       
+                             h7h6 a3b1 h6h5 b1a3 a7a6 a3b1                     
+                             a6a5 b1a3 b7b6 a3b1 b6b5 b1a3                     
+                             g7g6 a3b1', 'wtime': 180000,                      
+                             'btime': 191946, 'winc': 2000,                    
+                             'binc': 2000, 'status':                           
+                             'started'}                                        
+                    INFO                                     lichess_bot.py:855
+                    INFO     move: 8                         lichess_bot.py:856
+                    INFO     Searching for wtime 180000   engine_wrapper.py:728
+                             btime 189945 for game                             
+                             zzzzzzzz                                          
+                    DEBUG    <UciProtocol (pid=25128)>: <<        engine.py:950
+                             position startpos moves b1a3 h7h6                 
+                             a3b1 h6h5 b1a3 a7a6 a3b1 a6a5 b1a3                
+                             b7b6 a3b1 b6b5 b1a3 g7g6 a3b1                     
+                    DEBUG    <UciProtocol (pid=25128)>: << go     engine.py:950
+                             wtime 180000 btime 189945 winc 2000               
+                             binc 2000                                         
+                    DEBUG    <UciProtocol (pid=25128)>: >>        engine.py:976
+                             bestmove g6g5                                     
+                    INFO     Source: Engine               engine_wrapper.py:335
+                    DEBUG    Game state: {'type':            lichess_bot.py:864
+                             'gameState', 'moves': 'b1a3                       
+                             h7h6 a3b1 h6h5 b1a3 a7a6 a3b1                     
+                             a6a5 b1a3 b7b6 a3b1 b6b5 b1a3                     
+                             g7g6 a3b1 g6g5 b1a3', 'wtime':                    
+                             180000, 'btime': 193940,                          
+                             'winc': 2000, 'binc': 2000,                       
+                             'status': 'started'}                              
+                    INFO                                     lichess_bot.py:855
+                    INFO     move: 9                         lichess_bot.py:856
+                    INFO     Searching for wtime 180000   engine_wrapper.py:728
+                             btime 191939 for game                             
+                             zzzzzzzz                                          
+                    DEBUG    <UciProtocol (pid=25128)>: <<        engine.py:950
+                             position startpos moves b1a3 h7h6                 
+                             a3b1 h6h5 b1a3 a7a6 a3b1 a6a5 b1a3                
+                             b7b6 a3b1 b6b5 b1a3 g7g6 a3b1 g6g5                
+                             b1a3                                              
+                    DEBUG    <UciProtocol (pid=25128)>: << go     engine.py:950
+                             wtime 180000 btime 191939 winc 2000               
+                             binc 2000                                         
+                    DEBUG    <UciProtocol (pid=25128)>: >>        engine.py:976
+                             bestmove e7e5                                     
+                    INFO     Source: Engine               engine_wrapper.py:335
+                    DEBUG    Game state: {'type':            lichess_bot.py:864
+                             'gameState', 'moves': 'b1a3                       
+                             h7h6 a3b1 h6h5 b1a3 a7a6 a3b1                     
+                             a6a5 b1a3 b7b6 a3b1 b6b5 b1a3                     
+                             g7g6 a3b1 g6g5 b1a3 e7e5 a3b1',                   
+                             'wtime': 180000, 'btime':                         
+                             195935, 'winc': 2000, 'binc':                     
+                             2000, 'status': 'started'}                        
+                    INFO                                     lichess_bot.py:855
+                    INFO     move: 10                        lichess_bot.py:856
+                    INFO     Searching for wtime 180000   engine_wrapper.py:728
+                             btime 193934 for game                             
+                             zzzzzzzz                                          
+                    DEBUG    <UciProtocol (pid=25128)>: <<        engine.py:950
+                             position startpos moves b1a3 h7h6                 
+                             a3b1 h6h5 b1a3 a7a6 a3b1 a6a5 b1a3                
+                             b7b6 a3b1 b6b5 b1a3 g7g6 a3b1 g6g5                
+                             b1a3 e7e5 a3b1                                    
+                    DEBUG    <UciProtocol (pid=25128)>: << go     engine.py:950
+                             wtime 180000 btime 193934 winc 2000               
+                             binc 2000                                         
+                    DEBUG    <UciProtocol (pid=25128)>: Process   engine.py:947
+                             exited                                            
+                    DEBUG    <UciProtocol (pid=25128)>:           engine.py:934
+                             Connection lost (exit code: 3,                    
+                             error: None)                                      
+                    INFO     Backing off play_game(...) for 0.8s _common.py:105
+                             (chess.engine.EngineTerminatedError               
+                             : engine process died unexpectedly                
+                             (exit code: 3))                                   
+                    DEBUG    Backing off 0.8 seconds after 1     lichess.py:117
+                             tries calling function <function                  
+                             play_game at 0x000002C695144C20>                  
+                             with args () and kwargs {'li':                    
+                             <test_bot.lichess.Lichess object at               
+                             0x000002C6917BA0C0>,                              
+                             'control_queue': <AutoProxy[Queue]                
+                             object, typeid 'Queue' at                         
+                             0x2c693f81a30>, 'user_profile':                   
+                             {'id': 'b', 'username': 'b',                      
+                             'online': True, 'title': 'BOT',                   
+                             'url': 'https://lichess.org/@/b',                 
+                             'followable': True, 'following':                  
+                             False, 'blocking': False,                         
+                             'followsYou': False, 'perfs': {}},                
+                             'config': <lib.config.Configuration               
+                             object at 0x000002C69519DA00>,                    
+                             'challenge_queue': <ListProxy                     
+                             object, typeid 'list' at                          
+                             0x2c69519e4e0>,                                   
+                             'correspondence_queue':                           
+                             <AutoProxy[Queue] object, typeid                  
+                             'Queue' at 0x2c693eefc50>,                        
+                             'logging_queue': <AutoProxy[Queue]                
+                             object, typeid 'Queue' at                         
+                             0x2c694a37b90>, 'pgn_queue':                      
+                             <AutoProxy[Queue] object, typeid                  
+                             'Queue' at 0x2c69519e510>,                        
+                             'game_id': 'zzzzzzzz'}                            
+                    DEBUG    Exception: Traceback (most recent   lichess.py:119
+                             call last):                                       
+                               File                                            
+                             "C:\Users\Bhavya\Downloads\lichess-               
+                             bot-src\venv\Lib\site-packages\back               
+                             off\_sync.py", line 105, in retry                 
+                                 ret = target(*args, **kwargs)                 
+                                       ^^^^^^^^^^^^^^^^^^^^^^^                 
+                               File                                            
+                             "C:\Users\Bhavya\Downloads\lichess-               
+                             bot-src\lib\lichess_bot.py", line                 
+                             745, in play_game                                 
+                                 engine.play_move(board,                       
+                               File                                            
+                             "C:\Users\Bhavya\Downloads\lichess-               
+                             bot-src\lib\engine_wrapper.py",                   
+                             line 188, in play_move                            
+                                 best_move = self.search(board,                
+                             time_limit, can_ponder,                           
+                             draw_offered, best_move)                          
+                                             ^^^^^^^^^^^^^^^^^^^               
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^               
+                             ^^^^^^^^^^^^^                                     
+                               File                                            
+                             "C:\Users\Bhavya\Downloads\lichess-               
+                             bot-src\lib\engine_wrapper.py",                   
+                             line 266, in search                               
+                                 result =                                      
+                             self.engine.play(board,                           
+                                          ^^^^^^^^^^^^^^^^^^^^^^               
+                             ^                                                 
+                               File                                            
+                             "C:\Users\Bhavya\Downloads\lichess-               
+                             bot-src\venv\Lib\site-packages\ches               
+                             s\engine.py", line 2980, in play                  
+                                 return future.result()                        
+                                        ^^^^^^^^^^^^^^^                        
+                               File                                            
+                             "C:\Users\Bhavya\AppData\Local\Prog               
+                             rams\Python\Python312\Lib\concurren               
+                             t\futures\_base.py", line 456, in                 
+                             result                                            
+                                 return self.__get_result()                    
+                                        ^^^^^^^^^^^^^^^^^^^                    
+                               File                                            
+                             "C:\Users\Bhavya\AppData\Local\Prog               
+                             rams\Python\Python312\Lib\concurren               
+                             t\futures\_base.py", line 401, in                 
+                             __get_result                                      
+                                 raise self._exception                         
+                               File                                            
+                             "C:\Users\Bhavya\AppData\Local\Prog               
+                             rams\Python\Python312\Lib\asyncio\t               
+                             asks.py", line 520, in wait_for                   
+                                 return await fut                              
+                                        ^^^^^^^^^                              
+                               File                                            
+                             "C:\Users\Bhavya\Downloads\lichess-               
+                             bot-src\venv\Lib\site-packages\ches               
+                             s\engine.py", line 1703, in play                  
+                                 return await                                  
+                             self.communicate(UciPlayCommand)                  
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^               
+                             ^^^^^^^^^^^^^^                                    
+                               File                                            
+                             "C:\Users\Bhavya\Downloads\lichess-               
+                             bot-src\venv\Lib\site-packages\ches               
+                             s\engine.py", line 1021, in                       
+                             communicate                                       
+                                 return await command.result                   
+                                        ^^^^^^^^^^^^^^^^^^^^                   
+                             chess.engine.EngineTerminatedError:               
+                             engine process died unexpectedly                  
+                             (exit code: 3)                                    
+                                                                               
+[10/31/26 11:03:54] DEBUG    Initial state: {'id':           lichess_bot.py:690
+                             'zzzzzzzz', 'variant': {'key':                    
+                             'standard', 'name': 'Standard',                   
+                             'short': 'Std'}, 'clock':                         
+                             {'initial': 60000, 'increment':                   
+                             2000}, 'speed': 'bullet',                         
+                             'perf': {'name': 'Bullet'},                       
+                             'rated': True, 'createdAt':                       
+                             1600000000000, 'white': {'id':                    
+                             'bo', 'name': 'bo', 'title':                      
+                             'BOT', 'rating': 3000},                           
+                             'black': {'id': 'b', 'name':                      
+                             'b', 'title': 'BOT', 'rating':                    
+                             3000, 'provisional': True},                       
+                             'initialFen': 'startpos',                         
+                             'type': 'gameFull', 'state':                      
+                             {'type': 'gameState', 'moves':                    
+                             '', 'wtime': 10000, 'btime':                      
+                             10000, 'winc': 100, 'binc':                       
+                             100, 'status': 'started'}}                        
+                    DEBUG    Starting engine:              engine_wrapper.py:71
+                             ['C:\\Users\\Bhavya\\Download                     
+                             s\\lichess-bot-src\\venv\\Scr                     
+                             ipts\\python.exe',                                
+                             'C:\\Users\\Bhavya\\Downloads                     
+                             \\chess                                           
+                             agent\\audit\\safety\\repro\\                     
+                             stub_engine.py']                                  
+                    DEBUG    Using proactor:             proactor_events.py:634
+                             IocpProactor                                      
+                    DEBUG    <UciProtocol (pid=24280)>:           engine.py:928
+                             Connection made                                   
+                    DEBUG    <UciProtocol (pid=24280)>: << uci    engine.py:950
+                    DEBUG    <UciProtocol (pid=24280)>: >> id     engine.py:976
+                             name SafetyStub                                   
+                    DEBUG    <UciProtocol (pid=24280)>: >> id     engine.py:976
+                             author audit                                      
+                    DEBUG    <UciProtocol (pid=24280)>: >> uciok  engine.py:976
+                    DEBUG    The engine for game zzzzzzzz    lichess_bot.py:696
+                             has pid=24280                                     
+                    INFO     +++ zzzzzzzz/black Bullet vs    lichess_bot.py:699
+                             BOT bo (3000) (zzzzzzzz)                          
+                    DEBUG    Game state: {'type':            lichess_bot.py:864
+                             'gameState', 'moves': '',                         
+                             'wtime': 10000, 'btime': 10000,                   
+                             'winc': 100, 'binc': 100,                         
+                             'status': 'started'}                              
+                    DEBUG    Game state: {'type':            lichess_bot.py:864
+                             'gameState', 'moves': 'b1a3                       
+                             h7h6 a3b1 h6h5 b1a3 a7a6 a3b1                     
+                             a6a5 b1a3 b7b6 a3b1 b6b5 b1a3                     
+                             g7g6 a3b1 g6g5 b1a3 e7e5 a3b1',                   
+                             'wtime': 180000, 'btime':                         
+                             195935, 'winc': 2000, 'binc':                     
+                             2000, 'status': 'started'}                        
+                    INFO                                     lichess_bot.py:855
+                    INFO     move: 10                        lichess_bot.py:856
+                    INFO     Searching for wtime 180000   engine_wrapper.py:728
+                             btime 193935 for game                             
+                             zzzzzzzz                                          
+                    DEBUG    <UciProtocol (pid=24280)>: <<        engine.py:950
+                             ucinewgame                                        
+                    DEBUG    <UciProtocol (pid=24280)>: <<        engine.py:950
+                             isready                                           
+                    DEBUG    <UciProtocol (pid=24280)>: >>        engine.py:976
+                             readyok                                           
+                    DEBUG    <UciProtocol (pid=24280)>: <<        engine.py:950
+                             position startpos moves b1a3 h7h6                 
+                             a3b1 h6h5 b1a3 a7a6 a3b1 a6a5 b1a3                
+                             b7b6 a3b1 b6b5 b1a3 g7g6 a3b1 g6g5                
+                             b1a3 e7e5 a3b1                                    
+                    DEBUG    <UciProtocol (pid=24280)>: << go     engine.py:950
+                             wtime 180000 btime 193935 winc 2000               
+                             binc 2000                                         
+                    DEBUG    <UciProtocol (pid=24280)>: >>        engine.py:976
+                             bestmove f8c5                                     
+                    INFO     Source: Engine               engine_wrapper.py:335
+                    DEBUG    Game state: {'type':            lichess_bot.py:864
+                             'gameState', 'moves': 'b1a3                       
+                             h7h6 a3b1 h6h5 b1a3 a7a6 a3b1                     
+                             a6a5 b1a3 b7b6 a3b1 b6b5 b1a3                     
+                             g7g6 a3b1 g6g5 b1a3 e7e5 a3b1                     
+                             f8c5 b1a3', 'wtime': 180000,                      
+                             'btime': 197044, 'winc': 2000,                    
+                             'binc': 2000, 'status':                           
+                             'started'}                                        
+                    INFO                                     lichess_bot.py:855
+                    INFO     move: 11                        lichess_bot.py:856
+                    INFO     Searching for wtime 180000   engine_wrapper.py:728
+                             btime 195043 for game                             
+                             zzzzzzzz                                          
+                    DEBUG    <UciProtocol (pid=24280)>: <<        engine.py:950
+                             position startpos moves b1a3 h7h6                 
+                             a3b1 h6h5 b1a3 a7a6 a3b1 a6a5 b1a3                
+                             b7b6 a3b1 b6b5 b1a3 g7g6 a3b1 g6g5                
+                             b1a3 e7e5 a3b1 f8c5 b1a3                          
+                    DEBUG    <UciProtocol (pid=24280)>: << go     engine.py:950
+                             wtime 180000 btime 195043 winc 2000               
+                             binc 2000                                         
+                    DEBUG    <UciProtocol (pid=24280)>: >>        engine.py:976
+                             bestmove d8f6                                     
+                    INFO     Source: Engine               engine_wrapper.py:335
+                    DEBUG    Game state: {'type':            lichess_bot.py:864
+                             'gameState', 'moves': 'b1a3                       
+                             h7h6 a3b1 h6h5 b1a3 a7a6 a3b1                     
+                             a6a5 b1a3 b7b6 a3b1 b6b5 b1a3                     
+                             g7g6 a3b1 g6g5 b1a3 e7e5 a3b1                     
+                             f8c5 b1a3 d8f6 a3b1', 'wtime':                    
+                             180000, 'btime': 199015,                          
+                             'winc': 2000, 'binc': 2000,                       
+                             'status': 'started'}                              
+                    INFO                                     lichess_bot.py:855
+                    INFO     move: 12                        lichess_bot.py:856
+                    INFO     Searching for wtime 180000   engine_wrapper.py:728
+                             btime 197014 for game                             
+                             zzzzzzzz                                          
+                    DEBUG    <UciProtocol (pid=24280)>: <<        engine.py:950
+                             position startpos moves b1a3 h7h6                 
+                             a3b1 h6h5 b1a3 a7a6 a3b1 a6a5 b1a3                
+                             b7b6 a3b1 b6b5 b1a3 g7g6 a3b1 g6g5                
+                             b1a3 e7e5 a3b1 f8c5 b1a3 d8f6 a3b1                
+                    DEBUG    <UciProtocol (pid=24280)>: << go     engine.py:950
+                             wtime 180000 btime 197014 winc 2000               
+                             binc 2000                                         
+                    DEBUG    <UciProtocol (pid=24280)>: >>        engine.py:976
+                             bestmove f6f2                                     
+                    INFO     Source: Engine               engine_wrapper.py:335
+                    DEBUG    Game state: {'type':            lichess_bot.py:864
+                             'gameState', 'moves': 'b1a3                       
+                             h7h6 a3b1 h6h5 b1a3 a7a6 a3b1                     
+                             a6a5 b1a3 b7b6 a3b1 b6b5 b1a3                     
+                             g7g6 a3b1 g6g5 b1a3 e7e5 a3b1                     
+                             f8c5 b1a3 d8f6 a3b1 f6f2',                        
+                             'wtime': 180000, 'btime':                         
+                             201009, 'winc': 2000, 'binc':                     
+                             2000, 'status': 'outoftime',                      
+                             'winner': 'black'}                                
+                    INFO     b won!                          lichess_bot.py:968
+                    INFO     bo forfeited on time.           lichess_bot.py:990
+                    INFO     *** zzzzzzzz/black [player] b: conversation.py:100
+                             Thanks for the game!                              
+                    INFO     *** zzzzzzzz/black [spectator] conversation.py:100
+                             b: Thanks for watching!                           
+                    DEBUG    <UciProtocol (pid=24280)>: <<        engine.py:950
+                             isready                                           
+                    DEBUG    <UciProtocol (pid=24280)>: >>        engine.py:976
+                             readyok                                           
+                    DEBUG    <UciProtocol (pid=24280)>: << quit   engine.py:950
+                    DEBUG    <UciProtocol (pid=24280)>: Process   engine.py:947
+                             exited                                            
+                    DEBUG    <UciProtocol (pid=24280)>:           engine.py:934
+                             Connection lost (exit code: 0,                    
+                             error: None)                                      
+                    INFO     --- zzzzzzzz/black Game over    lichess_bot.py:941
+                    DEBUG    Event: {'type':                 lichess_bot.py:459
+                             'local_game_done', 'game':                        
+                             {'id': 'zzzzzzzz'}}                               
+                    INFO     +++ Process Freed. Count: 0.    lichess_bot.py:319
+                             IDs: None                                         
+{"mode": "crash", "bot_won": true}
